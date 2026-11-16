@@ -118,6 +118,8 @@ Workgraph's current package differs from the five-skill version in the attachmen
 
 ## 7. Incremental implementation order
 
+The next executable slice is [the foundation and shared-skill-loading plan](docs/NEXT_STEP.md). It includes a copyable prompt, verified facts, explicit unknowns, required outcomes, and the user's rule to stop on the first mandatory failure and rethink before retrying. It does not authorize starting the rest of the implementation in the same run.
+
 Develop directly here. For each step: assemble one useful capability, check it in the real Crew path, update the evidence/status, and commit. No Git worktree is needed for this repository. Every step preserves the single VS Code startup task. First-time setup, login, and genuine approval decisions may require user action.
 
 ### Step 1 — Establish the capability and component foundation

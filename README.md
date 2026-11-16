@@ -18,6 +18,8 @@ The research guides the initial choices, but we can try alternatives or write a 
 
 ## Plan and research
 
+- [Next step and copyable execution prompt](docs/NEXT_STEP.md) — verified baseline facts, one bounded integration trial, and stop-on-failure instructions.
+
 - [System and build plan](WORK_PLAN.md) — the complete workflow, core capabilities, implementation order, deliverables, and progress.
 - [Research alignment](docs/RESEARCH_ALIGNMENT.md) — how the existing findings and candidate components support each requirement, including known gaps.
 - [Earlier Crew research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [usage/routing findings](docs/history/RESEARCH_COST_NOTES.md) — dated evidence and limitations.
