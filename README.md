@@ -1,49 +1,54 @@
-# Crew Development Workflow
+# Intelligent Crew Development Workflow
 
-A reusable, Kiro Crew-based workflow for developing software with AI across multiple projects. The goal is to turn a well-defined issue into a reviewed, tested change while keeping the human in control of the important decisions.
+A reusable, TARS-inspired AI development system built by assembling existing Kiro Crew capabilities and compatible skills, agent profiles, routing policies, and monitoring components. It should work across software projects, including KovacsTrader.
 
-**Status: preparation and research. The workflow described below is the target, not a completed implementation.** Kiro and Codex delegation have been demonstrated locally; the complete workflow and its security boundaries have not yet been verified.
+**Status:** research and repository preparation. The integrated system is not built yet. Earlier local tests demonstrated Kiro/Codex delegation and partial usage records; they do not prove the complete workflow.
 
-## Intended result
+## The intended experience
 
-1. Give Crew an issue and a target repository.
-2. Crew reads the relevant code and prepares a practical implementation plan.
-3. A person reviews and approves that plan.
-4. Crew selects an appropriate available worker, implements the approved scope, and runs the relevant checks.
-5. A separate reviewer examines the actual changes and test evidence. The result is a pull request or a report with remaining blockers.
-6. The repository's CI and human merge decision complete the process.
+Discuss your ideas in **ChatGPT**, agree the goal, and create the strategic issue through the **GitHub plugin**. Give that issue and the target project to **Kiro Crew**. Crew then coordinates:
 
-The aim is to use Crew's existing capabilities and proven external practices, with as little custom code and operational overhead as the evidence permits. The first version supports a single bounded task and one active worker at a time; it should be adaptable to different projects without imposing KovacsTrader-specific rules on them.
+`technical plan → your review/approval → detailed implementation plan with proposed code changes → your approval → implementation → tests/CI → independent review → PR/report → your merge decision`
 
-## Start here
+During both planning and implementation, Crew selects suitable agents, skills, Kiro/Codex backends, models, supported reasoning effort, native tools, and context. It knows the tools' verified capabilities and uses available credit/usage information to guide decisions. You should not have to dispatch each worker or choose every model yourself.
 
-- [System and implementation plan](WORK_PLAN.md) — system components, execution procedure, and concrete build steps. This is the guide for future work in this repository.
-- [Historical research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [cost findings](docs/history/RESEARCH_COST_NOTES.md) — what was investigated and what remains uncertain.
-- [External research](docs/research/EXTERNAL_RESEARCH.md) — supplied research, preserved as a historical input; its embedded citation identifiers are not portable links and its package descriptions require verification.
-- [KovacsTrader workflow](docs/history/KOVACS_WORKFLOW.md) — a project-specific reference, not a universal contract.
-- [Previous local setup](docs/history/SETUP_AND_DELEGATION.md), [test guide](docs/history/TEST_GUIDE.md), and [results](docs/history/RESULTS.md) — historical environment and delegation evidence, not a current installation guarantee.
+The reusable agent/skill library, smart delegation, credit monitoring, and smart context handling are core capabilities. We build them incrementally by importing or adapting proven components and filling demonstrated integration gaps with small amounts of code.
 
-## Start Kiro Crew
+## Plan and research
 
-Open this repository in VS Code, then choose **Tasks: Run Task → Kiro Crew: Start** from the Command Palette. This is the single normal startup entry point for the workflow. The task runs `scripts/start-kirocrew.sh`; follow its terminal output to open the dashboard or complete any necessary setup or login. Stop it with `Ctrl+C` in that terminal.
+- [System and build plan](WORK_PLAN.md) — the complete workflow, core capabilities, implementation order, deliverables, and progress.
+- [Research alignment](docs/RESEARCH_ALIGNMENT.md) — how the existing findings and candidate components support each requirement, including known gaps.
+- [Earlier Crew research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [usage/routing findings](docs/history/RESEARCH_COST_NOTES.md) — dated evidence and limitations.
+- [Supplied component research](docs/research/EXTERNAL_RESEARCH.md) — the existing-system shortlist; embedded citation IDs need resolving before adoption.
+- [KovacsTrader workflow reference](docs/history/KOVACS_WORKFLOW.md) — project-specific origin of the workflow, rather than universal project rules.
+- [Earlier local setup](docs/history/SETUP_AND_DELEGATION.md), [test guide](docs/history/TEST_GUIDE.md), and [results](docs/history/RESULTS.md) — historical setup and delegation evidence.
 
-Future workflow changes must remain compatible with this task and include any necessary supporting startup in the same entry point. First-time setup and authentication may still require user action. The existing task and launcher are in place; their behavior with the future workflow still needs end-to-end verification.
+## One start button
 
-## Repository layout
+Open this repository in VS Code and choose **Tasks: Run Task → Kiro Crew: Start**. It runs `scripts/start-kirocrew.sh`; follow the terminal output for the dashboard and any necessary first-time setup or login. Stop it with `Ctrl+C` in that terminal.
 
-```text
-WORK_PLAN.md        System design, build steps, and progress
-AGENTS.md           Instructions for contributors and AI agents
-scripts/            Existing local Crew launcher and artifact check
-demo/              Small fixture from the delegation investigation
-docs/history/      Previous research, setup, results, and project reference
-docs/research/     Research supplied for this project
-```
+Every addition must fit behind this normal startup entry point. The future shared library and configuration must be available when selecting other target projects too. The task/launcher exist; the final integrated startup behavior still requires verification.
 
-The local `.runtime/` installation and generated agent data are ignored by Git. They are specific to this machine and are not needed to read or contribute to the project. Existing scripts are experimental local tools; their documented Kiro Crew 0.12.2 setup must be checked against the current environment before use.
+## How we build it
 
-## Working on the project
+1. Establish the capability catalogue and exact reusable component choices.
+2. Connect existing usage monitoring and controlled context handoffs to Crew.
+3. Assemble the reusable agent/skill library and smart model/effort delegation.
+4. Connect GitHub issue intake, technical planning/review, and implementation planning/approval.
+5. Connect implementation, checks, independent review, and reporting.
+6. Use a real issue and confirm the workflow works with another project; improve from measured results.
 
-Follow the build steps in [WORK_PLAN.md](WORK_PLAN.md): connect the workflow to startup; add project-based planning and approval; connect worker selection and execution; add checks, independent review, and reporting; then use it on a real issue and a second project. Develop directly in this repository, verify each step, and commit completed work. The next step is to make the shared workflow available through the existing start task.
+Develop directly here and commit completed, checked steps. No Git worktree is needed for developing this repository. Each target project retains its own instructions, Git conventions, permissions, and CI.
 
-This repository is the development home for the reusable workflow. Each target project keeps its own instructions, access rules, issue tracking, and CI; the workflow must respect them.
+## Repository contents
+
+| Path | Purpose |
+| --- | --- |
+| `WORK_PLAN.md` | Agreed system scope and incremental build plan |
+| `AGENTS.md` | Instructions for future contributors and AI agents |
+| `docs/RESEARCH_ALIGNMENT.md` | Requirements mapped to research and integration choices |
+| `docs/history/`, `docs/research/` | Preserved research and prior evidence |
+| `scripts/`, `.vscode/` | Existing local launcher, startup task, and artifact check |
+| `demo/` | Small fixture from the delegation investigation |
+
+Local `.runtime/` installations, session data, and generated worker artifacts stay outside Git. Version-specific setup details are historical until rechecked for the environment being used.

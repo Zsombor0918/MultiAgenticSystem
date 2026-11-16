@@ -1,133 +1,156 @@
-# System and implementation plan: Crew Development Workflow
+# System and build plan: intelligent Crew development workflow
 
-Status: repository prepared; system assembly has not started. Updated: 2026-11-16.
+Updated: 2026-11-16. Status: research and repository preparation complete; component integration has not started.
 
-## 1. The system we are building
+This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means assembling existing working components with the least necessary adaptation while preserving those requirements.
 
-A reusable AI development assistant, coordinated by Kiro Crew, that works on whichever software project the user selects. The user explains a feature or bug, or supplies a GitHub issue. Crew investigates the actual repository, plans the work, waits for approval, selects suitable workers and skills, implements the change, runs checks, arranges an independent review, and reports the result.
+## 1. The intended workflow
 
-The intended experience is a small development team behind the existing Crew dashboard. The user handles goals, important choices, plan approval, and merging. Crew handles routine technical coordination and selection of agents, backend, model, supported reasoning effort, skills, tools, and relevant context.
+```text
+User + ChatGPT discussion
+  → agreed strategic GitHub issue through the GitHub plugin
+  → issue handed to Kiro Crew for the selected repository
+  → repository-based technical/solution plan
+  → user review and approval
+  → detailed implementation plan with proposed code changes
+  → user review and approval to implement
+  → intelligently delegated implementation
+  → shell tests / CI + independent code review
+  → PR and evidence / resource-use report
+  → human merge decision
+```
 
-KovacsTrader is one potential target project. Its particular rules do not become requirements for other projects.
+ChatGPT is where the user explores ideas, weighs options, and agrees what should be built and why. ChatGPT uses the GitHub plugin to create the approved issue using the target project's templates and conventions. The issue describes the goal, scope, risks, dependencies, and acceptance criteria; Crew determines the code-level solution from the actual repository. The normal handoff is an issue URL and target project, not the whole ChatGPT conversation. This repository does not need to build a replacement ChatGPT interface or GitHub plugin.
 
-## 2. How the user will use it
+Crew prepares the technical plan and can delegate repository research, architecture, and plan checking to appropriate specialists. After review of that direction, it produces the implementation plan: affected files and interfaces, proposed code changes or sketches, task order/dependencies, verification commands, agent/skill assignments, and assumptions. Planning does not apply the proposed changes. The latest user clarification makes both planning stages part of the target flow; combining them for trivial work would be an explicit later simplification, not a silent omission.
 
-1. Open this repository in VS Code and run **Kiro Crew: Start**.
-2. In the Crew dashboard, select the target project and give it a request: for example, “Plan this issue” or “Investigate and fix this bug.” An issue URL is optional for local work.
-3. Crew inspects the project and presents a plan: intended changes, acceptance criteria, checks, risks, and proposed work assignments. If the task is too large, it proposes smaller tasks. A second planning stage is reserved for work that needs it.
-4. The user approves or revises that specific plan. Crew then runs implementation and verification within the approved scope.
-5. Crew returns the change, test results, independent review, run information, available resource usage, and a PR or a clear explanation of what is still blocked. The user decides whether to merge.
+The user decides goals, approvals, scope changes, and merge. Crew handles routine selection and coordination of agents, backends, models, supported effort levels, skills, tools, and context in both planning and implementation. TARS is the inspiration for the reusable specialist/skill system. Kiro and Codex are the initial coding tools. The product must work across projects, with KovacsTrader as one possible user.
 
-These phrases describe the intended interaction, not already implemented slash commands. Routine use must not require the user to select a model or coordinate every worker manually.
+## 2. The system we assemble
 
-## 3. What the system consists of
-
-| Piece | Implementation choice | What we add here |
+| Layer | Existing foundation | Integration we need |
 | --- | --- | --- |
-| Startup and dashboard | Existing VS Code task, launcher, and Crew dashboard | Keep configuration and any required supporting startup behind the same task |
-| Coordinator | Crew's existing chat, delegation, and run records | One reusable development workflow skill with focused planning, implementation, and review instructions |
-| Project context | Crew's selected project, its instructions, and relevant repository files | A short handoff containing the request, project root, scope, acceptance criteria, and approved plan |
-| Workers and specialists | Native Kiro/Codex workers through supported Crew delegation | A small catalogue of verified execution profiles and approved skills, expanded only as tasks require |
-| Worker selection | Coordinator chooses from the catalogue and passes supported spawn parameters | A clear policy for task type, risk, complexity, capability, and available resources |
-| Verification | The target project's shell commands and CI | Capture actual command exit status and connect evidence to the changed revision |
-| Independent review | A separate Crew worker/context | Give the reviewer the requirements, final diff, and test evidence; return actionable findings |
-| Progress and recovery | Existing Crew run records and project/GitHub records | Link request, plan version, approval, runs, changed revision, checks, and review; add a small local record only if needed |
-| Usage report | Crew's existing usage records | Summarize the whole task; add a read-only reporter only if native views are insufficient |
+| Startup | VS Code task and current Crew launcher/dashboard | Keep all normal startup behind **Kiro Crew: Start**, including shared skills/configuration |
+| Orchestration | Crew delegation, run/completion records, Task Runner / Dynamic Workflows where appropriate | Connect the approved lifecycle using supported native mechanisms and adapted workflow procedures |
+| Capability catalogue | Actual Kiro/Codex models, tools, session settings, permissions, and telemetry | Give Crew an evidence-backed description of what each tool can actually do |
+| Agent and skill library | Crew skill search/loading, existing profiles, researched engineering skills | Curate, pin, adapt, and test compatible specialists and skills; let Crew select and apply them |
+| Smart delegation | Supported spawn parameters, Crew decision mechanisms, researched routing policies | Choose backend + agent + model + effort + skills + context per task using capabilities, risk, usage, and prior results |
+| Context management | Crew memory/project inheritance, lazy loading, compaction, checkpoints | Define and verify role-specific context packs, context budgets, and restart/handoff behavior |
+| Credit and usage monitoring | Crew usage ledger and available account-usage views | Expose per-phase/per-run usage and available remaining allowance to both user and coordinator |
+| Quality and delivery | Target project's tests, GitHub/CI, separate review worker | Connect final code revision to acceptance criteria, checks, review, and PR/report |
 
-The initial coordinator works with one active worker at a time. Planning, implementation, and review are responsibilities; they do not require three permanently running agents. Tests run through shell/CI, without an extra model call merely to execute a command.
+Crew remains the runtime. The repo contains reusable configuration, selected upstream skills/profiles, workflow instructions, and the small adapters proven necessary. Prefer native capability, then configuration, then a compatible existing component, then a thin adapter. Reuse actual files/code when they fit; do not rewrite working components merely to give them local names. Inspect dependencies, permissions, and licenses and pin adopted revisions. Do not install several complete orchestrators together.
 
-The first workflow can be a short skill with reference procedures rather than a custom runtime. Use a saved Crew dynamic workflow only if it makes the demonstrated process easier to repeat. Check its actual supported approval and restart behavior before adopting it.
+Use Crew's existing records and target-project conventions for durable state. Add a small linking record only when needed to associate the issue, plan versions/approval, parent/worker runs, revision, verification, and resource use. Credentials and raw local sessions stay out of Git.
 
-## 4. The execution procedure
+## 3. What makes delegation smart
 
-| Phase | Crew does | Result and next action |
-| --- | --- | --- |
-| Intake | Reads the request, project instructions, repository state, and acceptance criteria | A bounded task; missing decisions are raised with the user |
-| Plan | Inspects relevant code, chooses an approach, names checks and required capabilities | A versioned technical plan; stops for owner approval |
-| Approve | Associates the owner's decision with the plan, scope, and starting code state | Execution may start for that approved work; material changes require a new decision |
-| Implement | Selects an allowed profile and skills, starts a worker, and supplies a focused handoff | Scoped code changes and a worker result |
-| Check | Runs relevant project checks against the actual changes | Command results; failure can trigger one correction round |
-| Review | Starts a separate reviewer to examine the diff, requirements, and check evidence | Findings or a passing review; fixes require relevant checks and review again |
-| Deliver | Checks evidence, prepares the permitted PR/report, and summarizes usage and open items | Reviewable result; human merge decision |
+### Capability knowledge
 
-For the first version, the planning run ends and the owner initiates execution of the approved plan unless a tested native Crew approval gate can enforce that boundary. This still uses the same dashboard and startup task. Scope expansion, unavailable permissions, repeated failure, or exhausted run limits stop the task for a decision. Failed or missing verification/review must not become “done.”
+Before relying on a backend, record its verified version and route, available model IDs, supported/applied effort controls, native tools, permission behavior, context limits where exposed, usage metrics, quota visibility, and important limitations. Distinguish observed, documented, untested, and unsupported behavior. Refresh capabilities when versions, account access, or configuration change.
 
-For recovery, use existing run IDs and checkpoint behavior. Before resuming, confirm the project, approved plan, current code state, and whether work is already running. Never replay cached results that the changed inputs invalidate.
+An agent role such as researcher, architect, planner, implementer, debugger, reviewer, or documentation specialist is separate from the backend running it. A skill supplies a procedure; the worker supplies tools and model capabilities. Build a curated library from the research and grow its coverage incrementally. The first pilot may run specialists sequentially, but that does not limit the target to three fixed agents or three permanently hardcoded skills.
 
-## 5. Selection of agents, skills, models, and effort
+### Model, effort, tool, and skill selection
 
-Start with a few profiles whose backend, actual model, supported effort, tools, and permission behavior have been checked locally. Planner, implementer, and reviewer are workflow roles, not invented Crew configuration keys. Use supported per-run parameters to apply the chosen profile.
+For every delegated planning or implementation task, the coordinator evaluates task type, complexity, risk, required tools, context size, available allowance, and known results. It selects a supported combination and records a short reason. The user should not assign each model or effort manually.
 
-- Small, clear tasks use a capable economical profile that has passed the relevant checks.
-- Ambiguous or risky work uses a stronger suitable profile; explain the choice in the run report.
-- The reviewer always has a separate context; another provider is useful when justified but is not required for independence.
-- Confirm requested versus applied model/effort where the backend exposes it. Unsupported settings are reported rather than assumed to have worked.
-- Diagnose environment and permission failures before escalating the model. Keep at most one correction round in the first pilot. Resource pressure does not silently lower the capability required for risky work.
+Start with understandable rules over verified profiles, adapting the researched Workgraph/ADW policies. Use Crew's own routing where it covers the need. If it cannot choose the required worker combination, adapt a small policy before the existing spawn operation; do not build another scheduler. Role names in this plan are not invented Crew configuration keys.
 
-Keep the initial approved skill set small: planning, scoped implementation, and independent review. Use Crew's existing discovery/loading mechanism; verify that the shared workflow is actually available when a different target project is selected. Add specialist skills in response to real work rather than importing an entire catalogue at once.
+Prefer an economical capable option for clear work; use stronger reasoning where ambiguity/risk requires it. Separate environment/permission failures from reasoning failures before escalating. A low remaining allowance can lead to a suitable alternative profile/backend, smaller work units, or a pause. Preserve the required capability and review quality. Never treat missing price/quota data as free or unlimited usage. Log requested and actual backend/model/effort where exposed, including unsupported or unapplied settings.
 
-## 6. Existing concepts we will reuse
+Begin with one active worker and at most one correction round per task. Later parallelism and automatic policy tuning are improvements to a working system. Feedback from success, review findings, retries, time, context, and resource use should inform profile changes from the first pilot; a trained/self-learning router needs more evidence.
 
-Research is already available in [the local findings](docs/history/RESEARCH_KIRO_WORKFLOW.md), [cost notes](docs/history/RESEARCH_COST_NOTES.md), and [the supplied research](docs/research/EXTERNAL_RESEARCH.md). The next work is assembly and focused compatibility checks.
+## 4. Smart context handling is part of the core
 
-| Source | Practice to reuse | Integration decision |
-| --- | --- | --- |
-| Kiro Crew | Dashboard, project context, skill loading, spawn/completion, permissions, and existing logs | Primary runtime; use native features before writing replacements |
-| Workgraph | Small acceptance-based tasks, bounded handoffs, and review tied to a specific revision | Adapt selected procedures; its current Linear-based package is not selected as a runtime dependency |
-| agent-pipeline | Code-grounded planning, plan checking, and bounded correction | Adapt useful instructions; final checks/review must follow the last code modification |
-| ADW | Explicit approval, fresh review context, and understandable escalation rules | Start with the rules; reuse router code only if a concrete need and compatible data justify it |
+- Keep shared project rules, issue scope, approved decisions, and acceptance criteria available to every relevant role. Load role/path-specific material only when needed; do not copy KovacsTrader's particular context limit into all projects.
+- Give each worker a compact handoff: issue reference, absolute project root, current revision, phase, approved plan/task, relevant files, constraints, skills, and verification expectations. Inspect actual prompt/session evidence to check what was inherited.
+- Keep the coordinator's working context focused on decisions and progress. Workers return findings and evidence summaries rather than entire file dumps or chat histories. Use Crew's native memory/project/lessons controls and lazy skill loading deliberately.
+- Keep the implementer's session for a bounded fix when useful; give reviewers a fresh context with the requirements, diff, and test evidence. Do not pass the implementer's reasoning as proof.
+- Use checkpoints and measured context pressure to decide when to split work or start a fresh session. Preserve approvals and scope across compaction/restart, and invalidate stale plans/results when inputs change.
+- Record available context/token metrics alongside handoff size. Document bytes, model tokens, and cache reads are different measurements. Verify backend-specific compaction rather than assuming the same control works everywhere.
 
-Before adopting external files or code, inspect their dependencies, license, current version, and actual behavior in Crew. Preserve attribution and pin the adopted revision. A small adapted workflow is acceptable; a second orchestrator is unnecessary.
+Start with native Crew context facilities. Evaluate the researched Repomix or Aider repo-map approach only if relevance or context volume remains a demonstrated gap; adapt an existing solution before writing an indexer.
 
-## 7. Steps to build it
+## 5. Credit monitoring and usage-aware decisions are part of the core
 
-Work directly in this repository. Complete a small step, check its result, and commit it so progress can be inspected or returned to. No Git worktree is needed for developing this repository. Follow each target project's Git conventions when operating there.
+Our local research already records Kiro credits and partial Codex token/cache data in Crew logs, plus code for a Kiro account-usage view. Build on those first. Per-task metering and remaining account allowance are different inputs, and account usage can include other sessions.
 
-### Step 1 — Connect the reusable workflow to the existing start task
+From the first integrated planning run, collect the coordinator, planning/research, implementation, review, failed attempts, and corrections. Link usage to issue, phase, parent/worker run, requested/applied profile, time, result, and retries. Join backend identity from run records when the usage row says only `acp`. Avoid summing cumulative and incremental records twice. If some phases cannot be measured, label the coverage as partial.
 
-Confirm the installed Crew/Kiro/Codex versions and supported configuration. Add the initial development workflow skill and arrange for Crew to load it through a supported mechanism when the task starts, including when another target project is selected. Keep installation/update behavior explicit and repeatable; ordinary starts should not reinstall dependencies.
+Before a new phase or delegation, consult available recent usage/allowance and the configured resource policy. Show source, unit, freshness, and missing data. At phase boundaries, report consumed resources and decide whether to continue, change to a suitable supported option, split work, or ask the user. This makes monitoring an input to routing, not just a final dashboard number.
 
-**Deliverable:** one startup path and a workflow that Crew can find and read. Verify the existing task launches it, stops cleanly, and restarts. Use the current dashboard rather than building another UI.
+Keep Kiro credits, Codex input/output/cache tokens, available quotas, measured currency costs, and estimates distinct. Unknown financial costs stay unknown. Use native views when sufficient; adapt an existing parser/data model or add a small read-only summary when needed. The monitoring requirement is mandatory; a separate reporting service or new UI is not.
 
-### Step 2 — Make request → project investigation → plan → approval work
+Start with visible thresholds, bounded runs, and phase decisions. Our research does not prove a shared cross-provider financial hard cap, complete subscription pricing, or a ready learning optimizer. Do not promise those guarantees or copy ADW's budget behavior without compatible metering and enforcement.
 
-Add the intake and planning procedure, a short plan format, and the execution handoff. Use a small local task with designated harmless test files. Establish the owner's approval boundary using Crew's existing facilities; only add a minimal guard if native behavior cannot provide it.
+## 6. Reuse decisions from the research
 
-**Deliverable:** a real code-based plan produced in Crew, with implementation stopped until approved. Check actual write denial during planning and refusal to execute an unapproved or materially changed plan. Keep permitted plan output separate from protected project code.
+The detailed [research alignment](docs/RESEARCH_ALIGNMENT.md) connects each requirement to prior findings and candidate components. It is the component integration shortlist, not a claim that everything is installed or Crew-compatible.
 
-### Step 3 — Connect approved plans to selected workers
+- **Lifecycle and planning:** inspect reusable parts of agent-pipeline, Superpowers/GSD, and Workgraph/Lousy issue decomposition. Start with the smallest compatible set that supports the two plans and review boundaries.
+- **Agents and engineering skills:** use Crew profiles/discovery and researched sources such as agent-crew, Sentry, and the focused planning/testing/debugging libraries. Build a curated library and verify selection and actual use.
+- **Routing:** Crew decisions plus Workgraph task/risk/model/effort policy and ADW's usage/failure model ladder. The researched ADW router is within a backend; Crew-wide selection needs adaptation where native behavior falls short.
+- **Monitoring:** Crew ledger/account views first; inspect agentic-coding-harness parsing/normalization if native reporting leaves a real gap. Keep Crew in charge of workers.
+- **Context:** Crew inheritance/lazy loading/checkpoints first; Repomix/Aider are researched fallback candidates for repo mapping.
 
-Add the initial verified Kiro/Codex profile catalogue and selection rules. Delegate approved work through Crew, pass the correct absolute project path and focused context, and collect completion IDs and actual changes. Keep one active worker and prevent repeated starts from duplicating it.
+Workgraph's current package differs from the five-skill version in the attachment and carries Linear/other host dependencies. Inspect or pin a suitable version/component rather than blindly importing its current runtime. External research citation identifiers are not portable evidence. Resolve exact source/revision, file, dependencies, license, and compatibility before adopting a component; mark unresolved candidates as such. TARS is an architectural reference, not an assumed available installation.
 
-**Deliverable:** Crew chooses and runs a suitable worker for an approved small task; the user does not manually coordinate it. Confirm native tools and permissions work through the actual worker path. Report unavailable capabilities honestly.
+## 7. Incremental implementation order
 
-### Step 4 — Connect checks, independent review, and delivery
+Develop directly here. For each step: assemble one useful capability, check it in the real Crew path, update the evidence/status, and commit. No Git worktree is needed for this repository. Every step preserves the single VS Code startup task. First-time setup, login, and genuine approval decisions may require user action.
 
-Run the project's actual verification commands after implementation. Add the independent review procedure and one bounded correction round. Assemble a short report linking plan, approval, worker runs, changed revision, test output, review, and available resource usage. Use native records first. Prepare a PR when permitted by the target project's process; preserve human merge control.
+### Step 1 — Establish the capability and component foundation
 
-**Deliverable:** a complete small local task passes through plan, approval, implementation, tests, review, and a report. Exercise a failing check, review rejection, cancellation, and restart as part of this integration, so incomplete work cannot be reported as success.
+Confirm installed versions and what Crew can already expose for Kiro/Codex, skill discovery, context, and usage. Turn the research shortlist into exact adopt/adapt/native/defer choices for the first integrated path, with pinned sources and licenses for imports. Create the initial capability catalogue, including unknowns, without another broad research project. Keep shared configuration and library loading behind the existing startup task, including when another target project is selected.
 
-### Step 5 — Use it on one real issue, then another project
+**Deliverable:** Crew can access its known tool capabilities and chosen component library through the one start path. Remaining adaptation work is specific and recorded. Check actual loading and task start/stop/restart.
 
-Select a small real issue and follow the target project's instructions and CI. Run the whole workflow, correct only demonstrated gaps, and record the result. Then configure another repository and confirm the workflow does not depend on KovacsTrader-specific paths, labels, or state files.
+### Step 2 — Connect usage and context to the coordinator
 
-**Deliverable:** a real PR or documented blocker report, plus short instructions for applying the same workflow to another project. Evidence and CI must refer to the final changed revision. Report the operator effort and known limitations.
+Expose native per-run usage and available allowance with their provenance and coverage. Add only necessary reporting glue. Establish the role-specific handoff/context policy, inheritance settings, and context measurement. Record usage for the first trial runs and demonstrate a resource threshold or unavailable-telemetry decision before further delegation.
 
-### Step 6 — Improve only the parts that need it
+**Deliverable:** the coordinator can inspect resource/capability information and prepare focused context before choosing workers. The user can see measured usage and missing data. This precedes the full planning/implementation pipeline so its decisions can use these inputs.
 
-Use completed runs to decide whether more skills, specialist profiles, parallelism, a saved dynamic workflow, a usage reporter, or more advanced routing would save work. Compare the whole task, including planning, review, and retries. Keep unknown subscription costs unknown, and Kiro credits and token metrics in their own units.
+### Step 3 — Assemble the agent/skill library and smart delegation
 
-**Deliverable:** measured improvements to the working core. Automatic learning and cross-provider financial hard limits remain optional future work requiring their own evidence.
+Install/adapt the selected existing profiles and skills for the first issue's research, planning, plan checking, coding, testing/debugging, and review needs. Connect Crew discovery and selection. Adapt routing policy for backend, agent, model, supported effort, skills, tools, and context. Test distinct representative assignments, including a usage-pressure or unavailable-capability case, without a large benchmark.
 
-## 8. Progress and completion
+**Deliverable:** Crew selects and actually applies suitable components and model/effort settings for planning and execution tasks; the user does not manually dispatch every worker. Decisions, context, usage, and completion IDs are traceable. Verify native tools and permissions through the worker path.
 
-- [x] Research collected and organized; Git initialized; README and contributor instructions present.
-- [x] Single VS Code startup task and direct Git development recorded as requirements.
-- [ ] Step 1: reusable workflow available through the existing start task.
-- [ ] Step 2: project-based planning and actual approval boundary.
-- [ ] Step 3: automatic selection and execution of verified workers.
-- [ ] Step 4: checks, independent review, bounded correction, and delivery report.
-- [ ] Step 5: real issue completed and workflow exercised on another project.
-- [ ] Step 6: improvements selected from actual results.
+### Step 4 — Connect the two planning stages and GitHub handoff
 
-The first useful version is complete after step 4; real-project usability is demonstrated in step 5. Every step must preserve **VS Code → Kiro Crew: Start** as the single normal startup path. First-time setup, authentication, and genuine approval decisions can require user action. Normal use must not require extra startup tasks or commands.
+Document the ChatGPT → approved strategic GitHub issue → Crew handoff. Assemble code-grounded technical planning, plan review/owner approval, then detailed implementation planning with proposed code changes and approval to execute. Reuse the selected planning/audit skills and native gates. If gates need glue, add only the missing enforcement.
+
+**Deliverable:** an issue produces the two distinct, reviewable plans with appropriate specialist/skill/model choices and resource records. Check that unapproved or materially changed plans cannot start implementation and that planning cannot apply project code changes. Keep tests on designated harmless files here.
+
+### Step 5 — Connect implementation, checks, independent review, and delivery
+
+Execute approved tasks using smart routing and focused handoffs, run actual project verification commands, and obtain a separate review of the final diff. Support one bounded correction round with renewed relevant checks/review. Keep the issue, plans, approvals, worker runs, changed revision, CI, review, and whole-task usage linked. Respect target-project Git conventions and human merge control.
+
+**Deliverable:** one small task completes the integrated workflow with all core capabilities active. Exercise failed checks, review rejection, cancellation, and restart to prevent duplicate work, stale evidence, and false success.
+
+### Step 6 — Use one real issue, then verify project portability
+
+Take an approved issue created through the intended ChatGPT/GitHub process and run the full Crew workflow against its project. Record missing capabilities and actual integration gaps, fix those, and check another project's configuration. Preserve each project's rules, templates, and CI rather than imposing KovacsTrader conventions.
+
+**Deliverable:** a real reviewable PR or explicit blocker report, both planning stages, usage/context/routing evidence, and repeatable instructions for another project. Compare operator effort, quality, resource use, and retries to decide the next improvements.
+
+### Step 7 — Improve from measured work
+
+Grow the curated specialist/skill library, tune routing and context, and add parallelism or another backend when useful and proven. Reuse better components as needed. Automatic learned routing and financial hard caps are later capabilities to evaluate; smart rules and usage-aware decisions already belong to the integrated core.
+
+## 8. Progress and acceptance
+
+- [x] Earlier research and supplied research preserved; local Git repository prepared.
+- [x] Clarified target: ChatGPT/GitHub intake, two planning stages, smart multi-tool delegation, reusable agents/skills, monitoring, and context handling.
+- [x] Single VS Code startup and direct Git commits established as project requirements.
+- [ ] Step 1: capability catalogue, exact component choices, and shared library availability.
+- [ ] Step 2: coordinator-visible usage/allowance and controlled context handoffs.
+- [ ] Step 3: skill/agent selection and capability/usage-aware model/effort routing.
+- [ ] Step 4: GitHub issue handoff, technical plan/review, implementation plan/approval.
+- [ ] Step 5: implementation, checks, independent review, delivery, and recovery.
+- [ ] Step 6: real issue and portability evidence.
+- [ ] Step 7: improvements from measured results.
+
+The first integrated version is complete after step 5 only if it includes agent/skill selection, model/effort decisions, context handling, and credit/usage monitoring during planning and implementation. Those requirements cannot be moved out of scope merely to simplify a demo. Step 6 demonstrates real-project usability. Missing backend telemetry/settings must be disclosed and handled explicitly rather than presented as supported.
