@@ -14,6 +14,8 @@ During both planning and implementation, Crew selects suitable agents, skills, K
 
 The reusable agent/skill library, smart delegation, credit monitoring, and smart context handling are core capabilities. We build them incrementally by importing or adapting proven components and filling demonstrated integration gaps with small amounts of code.
 
+The research guides the initial choices, but we can try alternatives or write a focused component when that is simpler and more reliable. Meaningful changes in approach will be explained. We aim for a usable first integrated version in about one week; the tentative daily goals and early checkpoint are in the work plan.
+
 ## Plan and research
 
 - [System and build plan](WORK_PLAN.md) — the complete workflow, core capabilities, implementation order, deliverables, and progress.

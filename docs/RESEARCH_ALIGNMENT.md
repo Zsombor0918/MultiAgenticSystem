@@ -28,6 +28,8 @@ Updated: 2026-11-16. This is a synthesis of the supplied and local research rere
 
 These are candidates from the research, not a request to install all of them. Step 1 selects the smallest compatible set and records exact source/revision, files, license, dependencies, and remaining gaps. Step 3 integrates that set. An unresolved source or version stays a candidate rather than becoming an assumed dependency.
 
+This shortlist is open to revision. Try a better candidate, compare a few focused alternatives, or implement a small local component if that reduces total effort and improves reliability. Record the reason and evidence, explain meaningful changes to the user, and timebox exploration against the work plan's one-week target.
+
 | Area | Candidate/foundation | Concrete reuse target | Known adaptation or verification need |
 | --- | --- | --- | --- |
 | Runtime | Kiro Crew | Dashboard, project context, spawn/completion, skill discovery, native permissions and records | Decide whether Task Runner or a saved workflow actually helps the required gates; verify real behavior |

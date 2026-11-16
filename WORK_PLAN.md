@@ -2,7 +2,25 @@
 
 Updated: 2026-11-16. Status: research and repository preparation complete; component integration has not started.
 
-This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means assembling existing working components with the least necessary adaptation while preserving those requirements.
+This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means choosing the lowest practical total implementation and maintenance effort while preserving those requirements. Existing components are preferred; a small custom implementation is acceptable when it is the better fit.
+
+## Approach flexibility and one-week target
+
+The research is a starting point, not a fixed dependency list. If a finding or candidate does not work well, try a better alternative or compare a few focused options. Timebox experiments rather than spending days forcing an unsuitable component to fit. Native configuration, an adapted component, and a focused local implementation are all valid choices. Explain meaningful changes of approach, what was tried, the tradeoff, and the evidence to the user; discuss changes to core scope, architecture, or schedule before committing to them. Routine reversible implementation choices can proceed within the agreed plan.
+
+Target approximately one week of implementation for a usable first integrated version with all core capabilities. The allocation below is tentative and can overlap; it is not a guarantee or an automatic calendar schedule.
+
+| Target day | Intended result |
+| --- | --- |
+| 1 | Capability catalogue, practical component choices, and shared loading through the existing VS Code task |
+| 2 | Usable credit/usage visibility and focused context handoffs; assess whether the week's target remains achievable |
+| 3 | Initial agent/skill library and capability/usage-aware model/effort delegation |
+| 4 | Issue handoff, technical plan/review, and detailed implementation plan/approval |
+| 5 | Implementation, checks, independent review, and delivery report connected |
+| 6 | One real issue exercised through the integrated workflow and demonstrated gaps corrected |
+| 7 | Stabilization, restart/startup checks, documentation, and a second-project portability check |
+
+At the day-2 checkpoint, report working pieces, blockers, and any necessary change to this target. If a component threatens the schedule, explain the simpler alternative or the remaining gap early. Keep real telemetry limitations visible and agree any scope adjustment with the user; do not meet the date by silently omitting the core intelligence features.
 
 ## 1. The intended workflow
 
@@ -39,7 +57,7 @@ The user decides goals, approvals, scope changes, and merge. Crew handles routin
 | Credit and usage monitoring | Crew usage ledger and available account-usage views | Expose per-phase/per-run usage and available remaining allowance to both user and coordinator |
 | Quality and delivery | Target project's tests, GitHub/CI, separate review worker | Connect final code revision to acceptance criteria, checks, review, and PR/report |
 
-Crew remains the runtime. The repo contains reusable configuration, selected upstream skills/profiles, workflow instructions, and the small adapters proven necessary. Prefer native capability, then configuration, then a compatible existing component, then a thin adapter. Reuse actual files/code when they fit; do not rewrite working components merely to give them local names. Inspect dependencies, permissions, and licenses and pin adopted revisions. Do not install several complete orchestrators together.
+Crew remains the runtime. The repo contains reusable configuration, selected upstream skills/profiles, workflow instructions, and small local components where justified. Start by checking native capability, configuration, and compatible existing components, then choose the simplest reliable solution; do not force reuse when a focused implementation costs less. Reuse actual files/code when they fit; do not rewrite working components merely to give them local names. Inspect dependencies, permissions, and licenses and pin adopted revisions. Do not install several complete orchestrators together.
 
 Use Crew's existing records and target-project conventions for durable state. Add a small linking record only when needed to associate the issue, plan versions/approval, parent/worker runs, revision, verification, and resource use. Credentials and raw local sessions stay out of Git.
 
