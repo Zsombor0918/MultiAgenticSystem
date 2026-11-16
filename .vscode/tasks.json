@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Kiro Crew: Start",
+      "type": "shell",
+      "command": "bash",
+      "args": ["${workspaceFolder}/scripts/start-kirocrew.sh"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": [],
+      "presentation": {"reveal": "always", "panel": "dedicated"}
+    }
+  ]
+}

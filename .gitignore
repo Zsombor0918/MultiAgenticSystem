@@ -1,0 +1,21 @@
+# Local Crew installations, sessions, worker data, and transient run directories
+.runtime/
+subagent_*/
+_consolidate/
+
+# Local test artifacts and caches
+demo/*-result.txt
+demo/codex-native-test.txt
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Secrets and environment-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.Zone.Identifier
+*:Zone.Identifier
