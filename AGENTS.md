@@ -1,6 +1,6 @@
 # Contributor instructions
 
-Read `README.md` and `WORK_PLAN.md` before working in this repository. Follow the plan's milestones and acceptance criteria; update their status only when supported by evidence. Keep the product reusable across target repositories and preserve each target's own instructions, permissions, and CI.
+Read `README.md` and `WORK_PLAN.md` before working in this repository. The work plan defines the system, its execution procedure, and the concrete build steps. Follow those steps and their deliverables; update their status only when supported by evidence. Keep the product reusable across target repositories and preserve each target's own instructions, permissions, and CI.
 
 Keep **Kiro Crew: Start** in `.vscode/tasks.json` as the single normal startup entry point. Integrate any required startup configuration or supporting processes with its launcher; do not require the user to run additional startup commands or tasks for normal operation. Preserve necessary first-time setup, login, and approval prompts, and verify the task after startup-related changes.
 

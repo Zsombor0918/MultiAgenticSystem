@@ -17,7 +17,7 @@ The aim is to use Crew's existing capabilities and proven external practices, wi
 
 ## Start here
 
-- [Work plan](WORK_PLAN.md) — scope, decisions, milestones, and acceptance criteria. This is the guide for future work in this repository.
+- [System and implementation plan](WORK_PLAN.md) — system components, execution procedure, and concrete build steps. This is the guide for future work in this repository.
 - [Historical research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [cost findings](docs/history/RESEARCH_COST_NOTES.md) — what was investigated and what remains uncertain.
 - [External research](docs/research/EXTERNAL_RESEARCH.md) — supplied research, preserved as a historical input; its embedded citation identifiers are not portable links and its package descriptions require verification.
 - [KovacsTrader workflow](docs/history/KOVACS_WORKFLOW.md) — a project-specific reference, not a universal contract.
@@ -32,7 +32,7 @@ Future workflow changes must remain compatible with this task and include any ne
 ## Repository layout
 
 ```text
-WORK_PLAN.md        Product direction and staged implementation
+WORK_PLAN.md        System design, build steps, and progress
 AGENTS.md           Instructions for contributors and AI agents
 scripts/            Existing local Crew launcher and artifact check
 demo/              Small fixture from the delegation investigation
@@ -44,6 +44,6 @@ The local `.runtime/` installation and generated agent data are ignored by Git. 
 
 ## Working on the project
 
-Read [WORK_PLAN.md](WORK_PLAN.md), select the next unfinished milestone, and verify each capability before relying on it. Develop in this repository and use ordinary Git commits to record completed steps. Test approval, permissions, and restart behavior using designated harmless test files here. After those controls are demonstrated, exercise the workflow with one real, low-risk issue in a target repository.
+Follow the build steps in [WORK_PLAN.md](WORK_PLAN.md): connect the workflow to startup; add project-based planning and approval; connect worker selection and execution; add checks, independent review, and reporting; then use it on a real issue and a second project. Develop directly in this repository, verify each step, and commit completed work. The next step is to make the shared workflow available through the existing start task.
 
 This repository is the development home for the reusable workflow. Each target project keeps its own instructions, access rules, issue tracking, and CI; the workflow must respect them.
