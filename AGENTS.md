@@ -11,3 +11,5 @@ Aim for a usable first integrated version in about one week, following the tenta
 Keep **Kiro Crew: Start** in `.vscode/tasks.json` as the single normal startup entry point. Integrate shared library/configuration and any required supporting startup with its launcher; normal operation must not require additional startup tasks or commands. Preserve necessary first-time setup, login, and approvals, and verify startup-related changes.
 
 Develop directly in this repository with ordinary Git commits for completed, checked steps. Do not create a Git worktree for work here. Distinguish proposals, documented capability, and observed behavior. Preserve historical research and attribution. Do not commit credentials, runtime data, raw agent transcripts, or generated test artifacts.
+
+Original project work is licensed under `AGPL-3.0-only`; preserve `LICENSE` and the README's licensing notice. Check license compatibility and retain upstream notices when adopting third-party components. Do not imply that this repository's license relicenses separate dependencies or target projects.

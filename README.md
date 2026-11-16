@@ -54,3 +54,13 @@ Develop directly here and commit completed, checked steps. No Git worktree is ne
 | `demo/` | Small fixture from the delegation investigation |
 
 Local `.runtime/` installations, session data, and generated worker artifacts stay outside Git. Version-specific setup details are historical until rechecked for the environment being used.
+
+## License
+
+Copyright (C) 2026 Zsombor Kovács.
+
+This repository's original work is licensed under the **GNU Affero General Public License, version 3 only** (`AGPL-3.0-only`). See [LICENSE](LICENSE) for the full terms.
+
+The goal is to keep covered derivatives open source: distribution must comply with the license's corresponding-source requirements, and modified versions used over a network must offer their corresponding source to the users interacting with them. Purely private modifications do not have to be published. Commercial use is permitted under these terms. See the [GNU AGPLv3](https://www.gnu.org/licenses/agpl-3.0.html).
+
+Separately licensed dependencies and any adopted third-party components retain their applicable licenses and attribution. This license does not relicense Kiro Crew, the coding backends, or separate target projects merely because this workflow is used to develop them.

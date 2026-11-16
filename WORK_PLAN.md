@@ -10,6 +10,8 @@ The research is a starting point, not a fixed dependency list. If a finding or c
 
 Target approximately one week of implementation for a usable first integrated version with all core capabilities. The allocation below is tentative and can overlap; it is not a guarantee or an automatic calendar schedule.
 
+Initial estimate: **5–7 focused working days** for the first integrated version and initial real-project checks. Backend compatibility, approval enforcement, and incomplete telemetry are the main uncertainties; assess them at the day-2 checkpoint and report any revised estimate. Broader hardening and advanced optimization follow measured pilot results.
+
 | Target day | Intended result |
 | --- | --- |
 | 1 | Capability catalogue, practical component choices, and shared loading through the existing VS Code task |
