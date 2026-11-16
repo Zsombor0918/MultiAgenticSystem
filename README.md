@@ -23,6 +23,12 @@ The aim is to use Crew's existing capabilities and proven external practices, wi
 - [KovacsTrader workflow](docs/history/KOVACS_WORKFLOW.md) — a project-specific reference, not a universal contract.
 - [Previous local setup](docs/history/SETUP_AND_DELEGATION.md), [test guide](docs/history/TEST_GUIDE.md), and [results](docs/history/RESULTS.md) — historical environment and delegation evidence, not a current installation guarantee.
 
+## Start Kiro Crew
+
+Open this repository in VS Code, then choose **Tasks: Run Task → Kiro Crew: Start** from the Command Palette. This is the single normal startup entry point for the workflow. The task runs `scripts/start-kirocrew.sh`; follow its terminal output to open the dashboard or complete any necessary setup or login. Stop it with `Ctrl+C` in that terminal.
+
+Future workflow changes must remain compatible with this task and include any necessary supporting startup in the same entry point. First-time setup and authentication may still require user action. The existing task and launcher are in place; their behavior with the future workflow still needs end-to-end verification.
+
 ## Repository layout
 
 ```text
@@ -38,6 +44,6 @@ The local `.runtime/` installation and generated agent data are ignored by Git. 
 
 ## Working on the project
 
-Read [WORK_PLAN.md](WORK_PLAN.md), select the next unfinished milestone, and verify each capability before relying on it. The first implementation milestone uses a disposable Git repository to test approval, permissions, and restart behavior. After those controls are demonstrated, exercise the workflow with one real, low-risk issue in a target repository.
+Read [WORK_PLAN.md](WORK_PLAN.md), select the next unfinished milestone, and verify each capability before relying on it. Develop in this repository and use ordinary Git commits to record completed steps. Test approval, permissions, and restart behavior using designated harmless test files here. After those controls are demonstrated, exercise the workflow with one real, low-risk issue in a target repository.
 
 This repository is the development home for the reusable workflow. Each target project keeps its own instructions, access rules, issue tracking, and CI; the workflow must respect them.

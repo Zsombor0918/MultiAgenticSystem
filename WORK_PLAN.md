@@ -16,6 +16,8 @@ The work is complete when a real, small issue has passed the workflow with verif
 - Distinguish documented capability, observed local behavior, and verified end-to-end behavior. Record unknowns rather than treating them as success.
 - Never treat a skill, prompt, worktree, or an agent's claim as proof that permissions, approvals, tests, or review were enforced.
 - Prefer a small amount of maintainable configuration and code. Add a custom guard, router, report, or integration only when a specific gap is demonstrated.
+- **One start button:** use the VS Code task `Kiro Crew: Start` as the single normal startup entry point. Integrate necessary configuration and supporting processes with its launcher so normal use requires no separate startup tasks or commands. First-time setup, authentication, and genuine approvals may still require user action. Preserve this entry point as the workflow evolves.
+- Develop directly in this repository and commit completed, verified steps so progress is easy to inspect and return to. No Git worktree is required for this repository. Follow the target project's Git conventions when running the workflow elsewhere.
 
 ## Target flow
 
@@ -32,13 +34,14 @@ Routing starts with a small set of verified profiles and an understandable choic
 - [x] Organize historical research, setup notes, test evidence, and the external research document.
 - [x] Define the intended result, this work plan, and contributor guidance; initialize Git.
 - [ ] Confirm current Crew, Kiro and Codex versions and available capabilities for the environment used in the pilot. Do not assume historical versions or login state are current.
+- [ ] Verify that VS Code's `Kiro Crew: Start` task starts the required workflow and dashboard, reports missing prerequisites clearly, and can be stopped and restarted. Repeat this check when startup behavior changes.
 - [ ] Inspect the target project's instructions, repository state, test commands, and CI before selecting a pilot issue.
 
-### 2. Prove the control boundaries in a disposable Git fixture
+### 2. Prove the control boundaries with small local tests
 
-- [ ] Exercise a planning run that ends before implementation. Test actual write denial for each backend used, including a deliberate harmless prohibited write and unchanged file hash. Keep plan output in an allowed location.
+- [ ] Exercise a planning run that ends before implementation. Test actual write denial for each backend used against a designated harmless test file in this repository, checking that its hash is unchanged. Keep plan output in an allowed location.
 - [ ] Verify that execution requires an owner decision tied to the specific plan, scope, and base revision; changed inputs must stop for a new decision. The worker must not be able to forge that approval. Prefer an existing Crew mechanism, adding only the smallest necessary guard if it cannot enforce this.
-- [ ] Verify real Git worktree or branch behavior, absolute paths, and isolation. A worktree alone is not a security boundary.
+- [ ] Verify that the workflow uses the intended repository and absolute paths, and respects its Git and permission rules.
 - [ ] Exercise failure, cancellation, restart, and stale-input cases. Confirm no duplicate running work and no reuse of invalid prior results.
 - [ ] Record each result as passed, failed, blocked, or not tested with evidence. Investigate failures before treating the workflow as ready.
 
@@ -53,7 +56,7 @@ Routing starts with a small set of verified profiles and an understandable choic
 ### 4. Complete one real pilot
 
 - [ ] Choose one small, low-risk, independently verifiable issue in a Git repository, following its existing governance.
-- [ ] Produce a code-grounded plan, obtain owner approval, implement in an isolated branch/worktree, run checks, obtain independent review, and prepare a PR or explicit blocker report.
+- [ ] Produce a code-grounded plan, obtain owner approval, implement using the target project's Git conventions, run checks, obtain independent review, and prepare a PR or explicit blocker report.
 - [ ] Verify CI and review against the final commit and preserve issue-to-result evidence. The owner decides whether to merge.
 - [ ] Record what worked, what failed, operator effort, and resource use for the entire task. Do not claim the system is generally proven from a single pilot.
 
@@ -65,12 +68,12 @@ Routing starts with a small set of verified profiles and an understandable choic
 
 ## Success criteria
 
-A new user can understand the target and current state from the README; run the documented setup appropriate to their environment; supply a target repo and issue; review a code-grounded plan; explicitly approve it; and obtain a scoped change with reproducible tests, independent review, traceable run IDs, and a clear PR or blocker report. Approval, permissions, and resume behavior have negative tests. Required CI and the human merge decision remain effective.
+A new user can understand the target and current state from the README; run the documented setup appropriate to their environment; start the workflow using the single VS Code task; supply a target repo and issue; review a code-grounded plan; explicitly approve it; and obtain a scoped change with reproducible tests, independent review, traceable run IDs, and a clear PR or blocker report. Approval, permissions, and resume behavior have negative tests. Required CI and the human merge decision remain effective.
 
 ## Decisions and open questions
 
 - Crew remains the orchestration runtime. Current delegation evidence is in [historical results](docs/history/RESULTS.md); full issue-to-PR execution is not yet proven.
-- Native approval and backend sandbox enforcement, actual worktree behavior, and current provider/model/effort availability must be established in milestone 2.
+- Native approval and backend sandbox enforcement, correct repository paths, and current provider/model/effort availability must be established in milestone 2.
 - Crew's optional subagent model routing is limited and requires configuration; it is not a verified cross-provider optimizer. The pilot should begin with simple profiles.
 - The current Workgraph package has changed from the external research description and depends on Linear and other components. Agent-pipeline is Claude-oriented, and ADW routing is within a backend. Treat each as a donor to inspect, not a drop-in dependency.
 - The first real pilot issue and target repository have not been selected. KovacsTrader is one possible target, not the definition of the product.
