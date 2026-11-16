@@ -1,6 +1,6 @@
 # Requirements mapped to existing research
 
-Updated: 2026-11-16. Crew is the fixed, trusted foundation. The current [Crew extension research](research/CREW_EXTENSIONS_2026-11-16.md) selects native features and actual extensions before portable/adapted components and custom code. The [broader comparison](research/COMPLETE_SYSTEMS_2026-11-16.md) is supporting research. New extensions are not installed or exercised; the [work plan](../WORK_PLAN.md) defines scope and build order.
+Updated: 2026-11-16. Crew is the fixed, trusted foundation. The [extension research](research/CREW_EXTENSIONS_2026-11-16.md) selects native features and actual extensions before portable/adapted components and custom code. Studio is now installed/recorded enabled and focused offline checks pass; live integration is pending. See [results](STEP_1_RESULTS.md). The [work plan](../WORK_PLAN.md) defines scope and build order.
 
 ## What each input contributes
 

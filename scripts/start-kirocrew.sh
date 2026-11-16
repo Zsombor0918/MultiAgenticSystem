@@ -8,7 +8,8 @@ export KIROCREW_PORT="${KIROCREW_PORT:-5476}"
 # kihagyja az alap embeddingmodell letöltését; csak kulcsszavas keresés lesz.
 export KIROCREW_EMBED_MODEL_PATH="${KIROCREW_EMBED_MODEL_PATH:-$root/.runtime/no-embedding-model.gguf}"
 export CODEX_PATH="$(command -v codex || true)"
-export PATH="$root/.runtime/node-v24.22.3-linux-x64/bin:$root/.runtime/kirocrew-venv/bin:$root/.runtime/codex-adapter/node_modules/.bin:$PATH"
+# Keep the Studio pilot's pinned Bun local and available through the same start task.
+export PATH="$root/.runtime/pilots/aidlc-studio-2.0.1/bun/bin:$root/.runtime/node-v24.22.3-linux-x64/bin:$root/.runtime/kirocrew-venv/bin:$root/.runtime/codex-adapter/node_modules/.bin:$PATH"
 
 if ! command -v kirocrew >/dev/null; then
   cat <<'MSG'
@@ -75,7 +76,7 @@ MSG
   touch "$KIROCREW_HOME/.demo-setup-confirmed"
 fi
 printf '\nKiro Crew diagnosztika (a KAS route és Codex sorokat ellenőrizd):\n'
-kirocrew doctor || printf 'A doctor hibát jelzett; ellenőrizd a fenti kimenetet.\n'
+kirocrew doctor
 printf '\nDashboard: http://localhost:%s\nLeállítás: Ctrl+C ebben a terminálban.\n' "$KIROCREW_PORT"
 printf 'Kizárólag akkor kezdj Kiro-próbát, ha a doctor V3 CLI relay útvonalat jelez.\n'
 printf 'Ha a dashboard bejelentkezést kér, másik terminálban: KIROCREW_HOME="%s" kirocrew token\n' "$KIROCREW_HOME"

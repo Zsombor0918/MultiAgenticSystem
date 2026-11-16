@@ -1,6 +1,6 @@
 # System and build plan: intelligent Crew development workflow
 
-Updated: 2026-11-16. Status: research and repository preparation complete; component integration has not started.
+Updated: 2026-11-16. Status: extension preparation and focused offline checks complete; live planning/review integration remains pending. See [step 1 results](docs/STEP_1_RESULTS.md).
 
 This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means choosing the lowest practical total implementation and maintenance effort while preserving those requirements. Existing components are preferred; a small custom implementation is acceptable when it is the better fit.
 
@@ -108,7 +108,7 @@ Start with visible thresholds, bounded runs, and phase decisions. Our research d
 
 ## 6. Reuse decisions from the research
 
-The current [Crew extension research](docs/research/CREW_EXTENSIONS_2026-11-16.md) and [extension source inventory](docs/research/CREW_EXTENSION_SOURCES_2026-11-16.json) supersede the earlier BMAD-first trial recommendation. They inspect native installed apps, the official registry and actual Crew extensions. The [broader comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) screened 33 version/candidate entries across 32 repositories as supporting library/adapter research. No new extension has been installed, enabled or run. [Research alignment](docs/RESEARCH_ALIGNMENT.md) maps the findings to the requirements.
+The current [Crew extension research](docs/research/CREW_EXTENSIONS_2026-11-16.md) and [extension source inventory](docs/research/CREW_EXTENSION_SOURCES_2026-11-16.json) inspect native apps, the registry and actual Crew extensions. The [broader comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) supplies library/adapter research. Studio has now been installed and recorded enabled, with focused offline checks passing; live integration is still untested. [Research alignment](docs/RESEARCH_ALIGNMENT.md) maps requirements, and [component decisions](docs/COMPONENT_DECISIONS.md) records the exact adoption.
 
 - **Native Crew reuse:** Spec Builder provides requirements/design/tasks and approval-hash handling; Code Review Sage provides separate PR review. Reuse native capability cards, live models/effort, Decisions/optional model derivation, context controls, usage/account data and work/session records before adding equivalent services.
 - **First existing Crew-extension trial:** **AI-DLC Studio 2.0.1**, pinned to `8b3881d4737399c3394d8d187f102a5c95d6e528`, bundles AI-DLC **2.11.3 plus four documented Crew compatibility patches**. It supplies a specialist lifecycle and approval/evidence UI. The catalog currently lists older Studio 1.0.1; distinguish versions. Verify the extension's route-specific hooks, required plan gates and Crew-worker mapping, not the Crew runtime choice.
@@ -172,7 +172,8 @@ Grow the curated specialist/skill library, tune routing and context, and add par
 - [x] Earlier research and supplied research preserved; local Git repository prepared.
 - [x] Clarified target: ChatGPT/GitHub intake, two planning stages, smart multi-tool delegation, reusable agents/skills, monitoring, and context handling.
 - [x] Single VS Code startup and direct Git commits established as project requirements.
-- [x] Broad complete-system comparison and pinned first-candidate trial plan documented; runtime compatibility remains untested.
+- [x] Broad complete-system comparison and pinned first-candidate trial plan documented; live workflow compatibility remains untested.
+- [x] Studio 2.0.1 installed/recorded enabled, local Bun prepared, 373 payload hashes verified, 89 focused upstream checks and three launcher checks passed; live extension trial remains pending.
 - [ ] Step 1: capability catalogue, exact component choices, and shared library availability.
 - [ ] Step 2: coordinator-visible usage/allowance and controlled context handoffs.
 - [ ] Step 3: skill/agent selection and capability/usage-aware model/effort routing.

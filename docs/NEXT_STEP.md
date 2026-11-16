@@ -1,12 +1,14 @@
 # Next run: integrate the existing AI-DLC Studio Crew extension
 
-Prepared: 2026-11-16. Status: **execution plan only; no extension installed, enabled or run**.
+Prepared: 2026-11-16. Status: **sections A/B are partially completed; live section C is NOT RUN**. Studio is installed/recorded enabled, Bun is local, payload checks and selected offline tests pass. Read [STEP_1_RESULTS](STEP_1_RESULTS.md) before resuming; do not reinstall or repeat passed checks without a changed input or concern.
 
 **Kiro Crew is fixed and trusted.** This run checks a ready-made extension against our workflow; it does not reconsider or benchmark Crew. Read the [current extension research](research/CREW_EXTENSIONS_2026-11-16.md), [extension source inventory](research/CREW_EXTENSION_SOURCES_2026-11-16.json), and [system plan](../WORK_PLAN.md). This supersedes the earlier diagnostic-skill and BMAD-first experiments.
 
 Reuse order: native Crew → existing Crew extension → portable/adapted component → implement only the remaining gap. The proposed first extension is **AI-DLC Studio 2.0.1**, commit `8b3881d4737399c3394d8d187f102a5c95d6e528`. It bundles **AI-DLC 2.11.3 plus four documented patches**; it is not upstream 2.11.4. The official store currently lists older Studio 1.0.1, so do not accidentally test that while reporting 2.0.1.
 
 ## The bounded outcome
+
+**Resume point:** the user's actual VS Code task start, then extension backend/Bun health and section C. Component/capability records already exist. The fixture is prepared but its AI-DLC harness is not installed yet. Keep the source/payload pins; no alternative candidate has been installed.
 
 Use the actual extension to produce a code-grounded technical plan and separate specialist review for a tiny fixture issue. Verify a real human approval checkpoint, then stop **awaiting the user's technical-plan approval**. Record precisely what remains to connect Crew's backend/model/effort choices, context and usage to the extension.
 
@@ -78,10 +80,11 @@ Report expected/actual behavior and exit code, redacted evidence, changed state,
 ## Copyable prompt for the next Codex session
 
 ```text
-Work in /home/zsom/MultiAgenticSystem. Execute only docs/NEXT_STEP.md,
-sections A–D: the existing AI-DLC Studio 2.0.1 Crew-extension trial at its
-recorded commit. Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and
-docs/research/CREW_EXTENSIONS_2026-11-16.md first.
+Work in /home/zsom/MultiAgenticSystem. Read docs/STEP_1_RESULTS.md and resume
+only the remaining work in docs/NEXT_STEP.md: actual VS Code startup and
+section C, then results/commit. Reuse the prepared Studio 2.0.1 installation,
+local Bun and fixture; do not reinstall or rerun passed checks without cause.
+Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and the extension research.
 
 Crew is our fixed, trusted foundation. Reuse native features and the supplied
 extension/bridge first, adapt existing components for real gaps, then implement

@@ -2,9 +2,9 @@
 
 A reusable, TARS-inspired AI development system built by assembling existing Kiro Crew capabilities and compatible skills, agent profiles, routing policies, and monitoring components. It should work across software projects, including KovacsTrader.
 
-**Status:** research and repository preparation. The integrated system is not built yet. Earlier local tests demonstrated Kiro/Codex delegation and partial usage records; they do not prove the complete workflow.
+**Status:** Studio 2.0.1 is installed locally and recorded enabled for the next normal task start. Its 373 payload files verify; 89 selected upstream tests and three launcher tests pass. The live planning/review/approval trial is still pending. See [step 1 results](docs/STEP_1_RESULTS.md).
 
-**Kiro Crew is our chosen foundation.** Reuse native features first, then existing Crew apps/extensions, then compatible external components, and add custom code only for uncovered gaps. AI-DLC Studio is the first proposed Crew-extension trial; native Spec Builder/Code Review Sage and portable specialist libraries are also evaluated. Nothing new has been installed or enabled.
+**Kiro Crew is our chosen foundation.** Reuse native features first, then existing Crew apps/extensions, then compatible external components, and add custom code only for uncovered gaps. AI-DLC Studio is the first extension being trialled; native Spec Builder/Code Review Sage and portable specialist libraries remain alternatives for demonstrated gaps.
 
 ## The intended experience
 
@@ -23,6 +23,7 @@ The research guides the initial choices, but we can try alternatives or write a 
 - [Crew extension research and reuse plan](docs/research/CREW_EXTENSIONS_2026-11-16.md) — current recommendation: native features, actual Crew apps, adaptable libraries, and remaining custom gaps.
 - [Broader system/library comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) — BMAD, AI-DLC, metaswarm, AgentSys, GSD, and others as possible sources for Crew extensions.
 - [Next step and copyable execution prompt](docs/NEXT_STEP.md) — bounded AI-DLC Studio integration trial, with stop-on-first-failure instructions.
+- [Component decisions](docs/COMPONENT_DECISIONS.md), [capability evidence](docs/CAPABILITIES.md), and [step 1 results](docs/STEP_1_RESULTS.md) — exact pins, observed checks and remaining live evidence.
 - [System and build plan](WORK_PLAN.md) — the complete workflow, core capabilities, implementation order, deliverables, and progress.
 - [Research alignment](docs/RESEARCH_ALIGNMENT.md) — how the existing findings and candidate components support each requirement, including known gaps.
 - [Earlier Crew research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [usage/routing findings](docs/history/RESEARCH_COST_NOTES.md) — dated evidence and limitations.
