@@ -2,7 +2,7 @@
 
 A reusable, TARS-inspired AI development system built by assembling existing Kiro Crew capabilities and compatible skills, agent profiles, routing policies, and monitoring components. It should work across software projects, including KovacsTrader.
 
-**Status:** Studio 2.0.1 is installed locally and recorded enabled for the next normal task start. Its 373 payload files verify; 89 selected upstream tests and three launcher tests pass. The live planning/review/approval trial is still pending. See [step 1 results](docs/STEP_1_RESULTS.md).
+**Status:** Studio 2.0.1 is installed locally; 373 payload files verify, and 89 selected upstream tests and three launcher tests passed. The first actual VS Code task failed before gateway startup because the launcher sets a nonexistent embedding model path. The trial is stopped pending agreement on the documented correction; live planning/review/approval remains unrun. See [step 1 results](docs/STEP_1_RESULTS.md).
 
 **Kiro Crew is our chosen foundation.** Reuse native features first, then existing Crew apps/extensions, then compatible external components, and add custom code only for uncovered gaps. AI-DLC Studio is the first extension being trialled; native Spec Builder/Code Review Sage and portable specialist libraries remain alternatives for demonstrated gaps.
 

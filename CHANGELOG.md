@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-16 — Actual startup failure recorded
+
+- Recorded the user's real VS Code task failure: the missing embedding-model placeholder makes Crew doctor and the launcher exit 1 before the gateway starts. The earlier stub tests did not cover the real doctor's model configuration check.
+- Updated status and resume instructions to stop dependent work and propose removing the fake custom-model path in favor of Crew's default local model. This correction is awaiting user agreement under the trial's stop-on-failure rule; it has not been applied or retried.
+
 ## 2026-11-16 — AI-DLC Studio pilot preparation
 
 ### Added

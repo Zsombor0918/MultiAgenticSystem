@@ -75,6 +75,11 @@ helyi fájlra állítja. A Crew ilyenkor nem tölti le az alapértelmezett kb. 6
 modellt; figyelmeztetést jelez, és a memória kulcsszavas keresésre áll át. Valódi
 helyi GGUF megadható ugyanezzel a változóval. A delegáláshoz embedding nem szükséges.
 
+**2026-11-16 correction:** this historical download-avoidance configuration makes
+Crew 0.12.2's doctor fail with exit 1. The current launcher stops on that failure,
+so this paragraph is not a working startup recommendation. See the
+[actual failure and proposed correction](../STEP_1_RESULTS.md).
+
 A telepítés után a doctor sikeresen igazolta a KAS `kiro-cli` V3 relay és a CLI
 saját bejelentkezésének útvonalát; a 2.37-es CLI újabb a Crew által ellenőrzött
 verzióknál. A gateway indítása és a dashboard HTTP 200 válasza külön ellenőrizve.
