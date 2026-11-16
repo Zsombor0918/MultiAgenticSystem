@@ -1,0 +1,128 @@
+{
+  "research_date": "2026-11-16",
+  "scope": "User fixed Kiro Crew as foundation; research remaining native features, Crew apps, portable/adaptable components, then custom gaps.",
+  "method": "Read-only source/registry/version inspection. No extension installation, enabling, gateway/model sessions, builds, or test suites ran.",
+  "repositories": [
+    {
+      "repository": "kirodotdev/KiroCrewApps",
+      "url": "https://github.com/kirodotdev/KiroCrewApps",
+      "inspected_ref": "main",
+      "resolved_commit": "50d8fd36e64a878e6aec853530c5e7f4c3ec279a",
+      "reported_license": "Apache-2.0",
+      "inspection_depth": "catalog,README"
+    },
+    {
+      "repository": "warren830/kirocrew-app-aidlc",
+      "url": "https://github.com/warren830/kirocrew-app-aidlc",
+      "inspected_ref": "main",
+      "resolved_commit": "8b3881d4737399c3394d8d187f102a5c95d6e528",
+      "reported_license": "Apache-2.0",
+      "inspection_depth": "manifest,payload,bridge,guide,notices,versioned files"
+    },
+    {
+      "repository": "brunokktro/agent-dashboard",
+      "url": "https://github.com/brunokktro/agent-dashboard",
+      "inspected_ref": "main",
+      "resolved_commit": "a1e1ea5ae28eb50188910481a1e98f43ffc1c3aa",
+      "reported_license": "MIT",
+      "inspection_depth": "README,catalog-pinned manifest"
+    },
+    {
+      "repository": "Fei2-Labs/skill-genie",
+      "url": "https://github.com/Fei2-Labs/skill-genie",
+      "inspected_ref": "main",
+      "resolved_commit": "34126526cb69e9becc7ca38b2ce5d0f38f9b5a4a",
+      "reported_license": "MIT",
+      "inspection_depth": "README"
+    },
+    {
+      "repository": "nicholas-c/kirometer",
+      "url": "https://github.com/nicholas-c/kirometer",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "reported_license": null,
+      "inspection_depth": "README,tree",
+      "notes": "README explicitly states no project license; not selected for code reuse."
+    },
+    {
+      "repository": "iamaanahmad/everything-kiro",
+      "url": "https://github.com/iamaanahmad/everything-kiro",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "reported_license": null,
+      "inspection_depth": "README,metadata",
+      "notes": "IDE configuration collection; no proven Crew integration."
+    },
+    {
+      "repository": "xuejinT/crew-manager-app",
+      "url": "https://github.com/xuejinT/crew-manager-app",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "reported_license": null,
+      "inspection_depth": "README,catalog entry",
+      "notes": "README beta/provisional completion warning; optional only."
+    }
+  ],
+  "crew_native": {
+    "repository": "kirodotdev/KiroCrew",
+    "ref": "v0.12.2",
+    "resolved_commit": "b6599234221cfc492c0dd95fdd53643e710c9f28",
+    "local_installed_version": "0.12.2",
+    "files": [
+      "src/kiro_crew/docs/apps.md",
+      "src/kiro_crew/apps/builtins/spec_builder/app.json",
+      "src/kiro_crew/apps/builtins/spec_builder/skills/spec-workflow/SKILL.md",
+      "src/kiro_crew/apps/builtins/spec_builder/backend/parsers.py",
+      "src/kiro_crew/apps/builtins/code_review_sage/app.json",
+      "src/kiro_crew/apps/builtins/dev_fleet/app.json",
+      "src/kiro_crew/agent_sdk/backend_cards.py",
+      "src/kiro_crew/agent_sdk/spec_hooks.py",
+      "src/kiro_crew/decisions/points/model_route.py",
+      "src/kiro_crew/config/sections_decisions.py",
+      "src/kiro_crew/dashboard/routes/system.py",
+      "src/kiro_crew/docs/work-ledger.md",
+      "src/kiro_crew/docs/workflows.md"
+    ]
+  },
+  "studio_variants": [
+    {
+      "ref": "v1.0.1",
+      "resolved_commit": "26b36c4a4ab0a73088a09c5a0e93a60260699e30",
+      "catalog_listed": true,
+      "app_version": "1.0.1",
+      "min_crew_version": "0.3.0",
+      "bundled_aidlc": "2.7.1"
+    },
+    {
+      "ref": "v2.0.1",
+      "resolved_commit": "8b3881d4737399c3394d8d187f102a5c95d6e528",
+      "catalog_listed": false,
+      "app_version": "2.0.1",
+      "min_crew_version": "0.11.0",
+      "bundled_aidlc": "2.11.3 + four Studio patches",
+      "upstream_base_commit": "a8721be3631e6a254cf524ea57e5932aa56b4149",
+      "payload_digest": "4c344a98e1ae1804d010a0b8739ce6b031b765bd60ff47f129a8b676ee69b266",
+      "files": [
+        "app.json",
+        "backend/hooks.py",
+        "backend/studio/sessions.py",
+        "backend/studio/handlers/intents.py",
+        "payload/manifest.json",
+        "payload/aidlc-kiro/.kiro/agents/aidlc.json",
+        "payload/aidlc-kiro/.kiro/tools/aidlc-usage.ts",
+        "THIRD_PARTY_NOTICES.md",
+        "docs/user-guide.md",
+        "docs/verification/2026-09-17-docker-install/README.md"
+      ]
+    }
+  ],
+  "search": {
+    "queries": [
+      "KiroCrew in:name,description,readme -repo:kirodotdev/KiroCrew -fork:true",
+      "\"kiro crew\" skills in:readme -repo:kirodotdev/KiroCrew -fork:true",
+      "kirocrew (routing OR model OR credits OR context OR skills) in:readme -repo:kirodotdev/KiroCrew -fork:true"
+    ],
+    "catalog_authored_entries": 35,
+    "caveat": "Search result presence and catalog listings are not local runtime verification. No exhaustive absence claim."
+  }
+}

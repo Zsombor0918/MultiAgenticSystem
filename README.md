@@ -4,6 +4,8 @@ A reusable, TARS-inspired AI development system built by assembling existing Kir
 
 **Status:** research and repository preparation. The integrated system is not built yet. Earlier local tests demonstrated Kiro/Codex delegation and partial usage records; they do not prove the complete workflow.
 
+**Kiro Crew is our chosen foundation.** Reuse native features first, then existing Crew apps/extensions, then compatible external components, and add custom code only for uncovered gaps. AI-DLC Studio is the first proposed Crew-extension trial; native Spec Builder/Code Review Sage and portable specialist libraries are also evaluated. Nothing new has been installed or enabled.
+
 ## The intended experience
 
 Discuss your ideas in **ChatGPT**, agree the goal, and create the strategic issue through the **GitHub plugin**. Give that issue and the target project to **Kiro Crew**. Crew then coordinates:
@@ -18,8 +20,9 @@ The research guides the initial choices, but we can try alternatives or write a 
 
 ## Plan and research
 
-- [Next step and copyable execution prompt](docs/NEXT_STEP.md) — verified baseline facts, one bounded integration trial, and stop-on-failure instructions.
-
+- [Crew extension research and reuse plan](docs/research/CREW_EXTENSIONS_2026-11-16.md) — current recommendation: native features, actual Crew apps, adaptable libraries, and remaining custom gaps.
+- [Broader system/library comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) — BMAD, AI-DLC, metaswarm, AgentSys, GSD, and others as possible sources for Crew extensions.
+- [Next step and copyable execution prompt](docs/NEXT_STEP.md) — bounded AI-DLC Studio integration trial, with stop-on-first-failure instructions.
 - [System and build plan](WORK_PLAN.md) — the complete workflow, core capabilities, implementation order, deliverables, and progress.
 - [Research alignment](docs/RESEARCH_ALIGNMENT.md) — how the existing findings and candidate components support each requirement, including known gaps.
 - [Earlier Crew research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [usage/routing findings](docs/history/RESEARCH_COST_NOTES.md) — dated evidence and limitations.
@@ -35,7 +38,7 @@ Every addition must fit behind this normal startup entry point. The future share
 
 ## How we build it
 
-1. Establish the capability catalogue and exact reusable component choices.
+1. Reuse native Crew features and trial the selected ready-made extension's planning/review gates; record exact remaining adaptations.
 2. Connect existing usage monitoring and controlled context handoffs to Crew.
 3. Assemble the reusable agent/skill library and smart model/effort delegation.
 4. Connect GitHub issue intake, technical planning/review, and implementation planning/approval.

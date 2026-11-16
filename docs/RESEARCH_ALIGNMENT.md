@@ -1,6 +1,6 @@
 # Requirements mapped to existing research
 
-Updated: 2026-11-16. This is a synthesis of the supplied and local research reread for the user's clarified workflow. It does not claim new runtime tests, fresh upstream verification, or completed imports. The current [work plan](../WORK_PLAN.md) is authoritative for scope and build order.
+Updated: 2026-11-16. Crew is the fixed, trusted foundation. The current [Crew extension research](research/CREW_EXTENSIONS_2026-11-16.md) selects native features and actual extensions before portable/adapted components and custom code. The [broader comparison](research/COMPLETE_SYSTEMS_2026-11-16.md) is supporting research. New extensions are not installed or exercised; the [work plan](../WORK_PLAN.md) defines scope and build order.
 
 ## What each input contributes
 
@@ -8,6 +8,8 @@ Updated: 2026-11-16. This is a synthesis of the supplied and local research rere
 - [Earlier Crew investigation](history/RESEARCH_KIRO_WORKFLOW.md): native building blocks, observed delegation, context inheritance and compaction limitations, permission gaps, focused handoffs, and a minimal integration approach.
 - [Cost and routing investigation](history/RESEARCH_COST_NOTES.md): actual Kiro credit/Codex token examples, available account-usage code, supported spawn settings, Jev routing limits, and the difference between measured usage, estimated cost, and remaining allowance.
 - [Supplied component research](research/EXTERNAL_RESEARCH.md): existing lifecycle skills, agent libraries, model/effort routing policies, context tooling, and metering implementations to import/adapt rather than rebuild.
+- [Complete-system comparison](research/COMPLETE_SYSTEMS_2026-11-16.md) and [source inventory](research/COMPLETE_SYSTEMS_SOURCES_2026-11-16.json): 33 version/candidate entries across 32 distinct repositories, including BMAD, AI-DLC, metaswarm, old/current AgentSys, and GSD. Concrete host/usage gaps replace assumptions of drop-in compatibility.
+- [Crew extension research](research/CREW_EXTENSIONS_2026-11-16.md) and [extension source inventory](research/CREW_EXTENSION_SOURCES_2026-11-16.json): native Spec Builder, Code Review Sage, capability cards/routing/usage; real AI-DLC Studio app and other Crew packages. This supersedes the earlier BMAD-first experiment and does not reopen runtime choice.
 - Latest user clarification: explicitly restores the complete ChatGPT/GitHub → technical plan/review → detailed implementation plan → execution workflow. Smart agents/skills, multi-tool/model/effort selection, credit-aware decisions, and context handling are core. Prior advice to combine planning or postpone usage does not override this.
 
 ## Requirement coverage
@@ -15,33 +17,39 @@ Updated: 2026-11-16. This is a synthesis of the supplied and local research rere
 | Requirement | Research finding | Planned reuse/integration | Build step |
 | --- | --- | --- | --- |
 | Ideas → strategic issue | Original workflow separates ChatGPT strategy from repository-specific Crew planning | Existing ChatGPT GitHub plugin and target issue templates; issue URL handoff | 4 |
-| Technical plan, review, then implementation plan with concrete changes | Original workflow and agent-pipeline/Superpowers/GSD provide planning/checking patterns | Adapt selected planning and plan-checking skills to Crew, with owner approvals | 3–4 |
-| Robust reusable skill/agent system | Crew discovery/loading and external engineering libraries are identified | Curated, pinned existing skills/profiles, with verified discovery, selection, and actual application | 1, 3 |
-| Know which AI tools can do what | Local tests show Kiro/Codex behavior differs, including native subagent and effort support | Evidence-backed capability catalogue; refresh on relevant version/account changes | 1 |
-| Smart delegation and model/effort choice during planning and implementation | Crew spawn supports explicit choices; Workgraph/ADW supply decision policies | Native mechanisms where sufficient; adapt policy only for uncovered worker selection | 3, used in 4–5 |
+| Technical plan, review, then implementation plan with concrete changes | Native Spec Builder and real AI-DLC Studio app; external libraries supply further procedures | Trial the existing Crew extension first; map both required user gates and independent review without reimplementing their lifecycle | 1, 3–4 |
+| Robust reusable skill/agent system | AI-DLC Studio bundles a specialist lifecycle; BMAD/Superpowers/metaswarm provide further libraries | Choose one primary lifecycle/library with required assets; add procedures only for actual gaps | 1, 3 |
+| Know which AI tools can do what | Crew already has backend capability cards and live model/effort surfaces | Expose a compact coordinator view; add account/version observations instead of duplicating the catalogue | 1 |
+| Smart delegation and model/effort choice during planning and implementation | Crew spawn controls and optional model derivation cover useful selection already; ADW supplies within-backend policy | Reuse native behavior, adapt only missing backend/role/effort/context/remaining-allowance policy | 3, used in 4–5 |
 | Monitor credits/resources and use them in decisions | Crew logs have Kiro credits and partial Codex tokens; native Kiro account-usage code exists | Expose run usage and allowance to coordinator; native views or minimal normalization/report glue | 2, used in 3–6 |
 | Smart context | Crew inheritance/lazy loading/checkpoints; Repomix/Aider candidates; local cache/context observations | Role-specific handoffs, measured context, controlled inheritance and recovery; existing repo mapping if needed | 2, used in 3–6 |
 | Reliable execution and evidence | Native coding tools, shell/CI, independent review, bounded retry patterns | Adapt implementation/review skills and connect actual final revision to checks, review, and usage | 5–6 |
 | Minimal work, portability, one start button | Existing runtime and VS Code launcher already present | Configure/import/adapt before writing code; same startup path across project selection; direct Git commits here | Every step |
 
-## Component integration shortlist
+## Component choices after the complete-system comparison
 
-These are candidates from the research, not a request to install all of them. Step 1 selects the smallest compatible set and records exact source/revision, files, license, dependencies, and remaining gaps. Step 3 integrates that set. An unresolved source or version stays a candidate rather than becoming an assumed dependency.
+Crew is already selected. The final shortlist follows **native → existing Crew extension → portable/adapted component → custom gap**. The existing **AI-DLC Studio 2.0.1** app merits the first extension trial; **Spec Builder** is the lighter native planning option. BMAD and the broader suites remain reusable libraries rather than replacement runtimes. No component is adopted merely by appearing here.
 
 This shortlist is open to revision. Try a better candidate, compare a few focused alternatives, or implement a small local component if that reduces total effort and improves reliability. Record the reason and evidence, explain meaningful changes to the user, and timebox exploration against the work plan's one-week target.
 
 | Area | Candidate/foundation | Concrete reuse target | Known adaptation or verification need |
 | --- | --- | --- | --- |
 | Runtime | Kiro Crew | Dashboard, project context, spawn/completion, skill discovery, native permissions and records | Decide whether Task Runner or a saved workflow actually helps the required gates; verify real behavior |
-| Planning and plan audit | [agent-pipeline](https://github.com/roycehoe/agent-pipeline), [Superpowers](https://github.com/obra/superpowers), GSD | Planning procedures, code grounding, plan checking, handoffs | Agent-pipeline has host-specific tools and interdependent skills; final verification must follow any cleanup changes |
+| Native planning and review | Crew Spec Builder / Code Review Sage | Existing reviewable planning artifacts and separate PR reviewer | Map design/tasks to both required plans, add code-change detail and dynamic specialist/worker handoffs |
+| First existing Crew-extension trial | [AI-DLC Studio 2.0.1](https://github.com/warren830/kirocrew-app-aidlc/tree/v2.0.1) | Specialist lifecycle, approval/evidence queue, transactional per-project installer, Crew-specific host-turn patches | Distinguish the older 1.0.1 catalog entry; bundled AI-DLC is patched 2.11.3. Verify actual hooks, both plan gates, usage attribution and Crew Kiro/Codex worker mapping |
+| Portable library for uncovered gaps | [BMAD 6.12.4](https://github.com/bmad-code-org/BMAD-METHOD/tree/v6.12.4) | Existing architecture/spec/build/review procedures, specialist skills, rendered/JIT artifacts | Preserve renderer and per-project assets; adapt Crew dispatch/waiting and approval defaults. Don't add a competing full lifecycle |
+| Engineered lifecycle alternative | [AI-DLC 2.11.4](https://github.com/awslabs/aidlc-workflows/tree/v2.11.4) | Stage/state engine, specialist fleet, approval guard, native Kiro/Codex distributions | ACP hook ownership differs from Crew; verify live gates. Released metering has no Kiro/Codex producer; Kiro tier defaults inherit session model |
+| Full-team alternative | [metaswarm](https://github.com/dsifry/metaswarm) | Coherent research/plan/review/execution system, role model maps and external tools | BEADS/native team assumptions, Kiro adapter, fan-out/retry/merge defaults, and real Kiro accounting need adaptation |
+| Earlier full workflow | [AgentSys 5.14.0](https://github.com/agent-sh/agentsys/tree/v5.14.0) | Full next-task pipeline and Kiro-converted profiles | Required pinned external plugin returned 404; reproducible install unresolved. Current Foreman is different and permits self-review/landing defaults to change |
+| Leaner alternatives | [Superpowers](https://github.com/obra/superpowers), [GSD Core](https://github.com/open-gsd/gsd-core), [agent-pipeline](https://github.com/roycehoe/agent-pipeline) | Existing complete or linked planning/implementation/review procedures and focused contexts | Host-specific dispatch must map to Crew; GSD core explicitly excludes new first-party Kiro runtime support while allowing external integration |
 | Task decomposition | [Workgraph](https://github.com/shiro-el/workgraph-skills), Lousy Agents Skills | Acceptance-based issue slicing, dependencies, bounded assignments | Workgraph's current source differs from the attachment's five-skill description and uses Linear/host-specific dependencies; choose exact reusable files/version |
 | Agent profiles and specialist skills | Crew profiles; agent-crew, Sentry, Matt Pocock and other focused libraries in the supplied research | Existing research/planning/debugging/testing/review/documentation procedures | Map relevant profiles to Crew-supported formats; inspect included scripts, dependencies, and permissions; prove actual selection/use |
-| Routing | Crew Jev plus [ADW](https://github.com/pdoronila/adw) and Workgraph policies | Difficulty/risk → model/effort; usage-pressure and failure response | ADW's inspected router works within a backend; its usage probes do not establish Kiro support. Cross-tool routing needs capability-aware adaptation |
+| Routing | Crew Decisions/optional model derivation first; [ADW](https://github.com/pdoronila/adw) and Workgraph for missing policy | Native offered-model/credit-multiplier choices; add role/effort/usage-pressure response | Credit multiplier differs from remaining allowance; ADW is within-backend without a verified Kiro probe. Map any uncovered cross-tool choices to Crew spawn |
 | Context | Crew native controls; Repomix/Aider repo-map candidates | Focused handoffs, lazy relevant context, checkpoint/resume; optional repo mapping | Verify actual inherited content and backend compaction; adopt an external map only if native tools leave a gap |
-| Metering | Crew ledger/account views; agentic-coding-harness candidate | Per-run resource data, credit/token distinctions, parser/data-model reuse | Inspect exact candidate source and compatible telemetry; preserve Crew runtime and distinguish partial data from zero usage |
+| Metering | Crew ledger/account views; [agentic-coding-harness](https://github.com/sblattj/agentic-coding-harness) conditional donor | Per-run resource data, credit/token distinctions, parser/data-model reuse | Candidate's own Kiro calibration warns proxy credit estimates can diverge substantially from session data. Preserve native Crew sources; partial data is not zero |
 | Skill intake | Reviewed source and licensed revisions; Sentry/Cisco scanner candidates | Existing skill inspection/scanning procedures | A scanner is useful evidence, not proof of compatibility or complete safety; add only the needed intake tooling |
 
-Larger lifecycle suites, external observability platforms, and additional backends remain available options from the research. Installing them all is not required to preserve the user's intended system.
+Choose one primary lifecycle/library, retaining Crew's native services. A lifecycle engine and Crew's session runtime can coexist with explicit ownership of state, approval, dispatch, and recovery. The [next trial](NEXT_STEP.md) checks the actual existing Crew extension, without benchmarking or replacing Crew.
 
 ## Findings the integration must respect
 
@@ -53,6 +61,7 @@ Larger lifecycle suites, external observability platforms, and additional backen
 6. **Context features are backend-specific.** KAS compaction does not obey Crew's generic autocompact control in the same way. Large cache-read counts are an investigation signal, not proof of removable waste or an exact subscription charge.
 7. **Monitoring is not a proven hard financial cap.** The inspected workflow budget did not establish automatic usage charging or a shared cross-provider monetary limit. Start with truthful metering, thresholds, bounded runs, and informed phase decisions.
 8. **Approval and tool permission are distinct.** A reviewed plan is not a grant for every tool call. The historical Codex `tools: []` gap means a prompt/allowlist alone cannot demonstrate read-only planning. Validate the actual execution route with designated harmless files.
+9. **Crew already carries more of the extension contract.** Native capability cards, supported spec-hook execution and optional subagent model derivation should be reused. The missing ACP hooks advertisement alone does not disqualify an extension whose spec hooks Crew can execute. Test the extension's actual route and outcome rather than implementing a speculative bridge.
 
 ## Adoption record to fill during implementation
 

@@ -1,142 +1,110 @@
-# Next run: verify the Crew foundation and shared skill loading
+# Next run: integrate the existing AI-DLC Studio Crew extension
 
-Prepared: 2026-11-16. Status: **plan ready; implementation and runtime trial not executed**.
+Prepared: 2026-11-16. Status: **execution plan only; no extension installed, enabled or run**.
 
-This is the first bounded part of step 1 in the [system plan](../WORK_PLAN.md). The user will run the execution prompt below. Its purpose is to establish the tool capability record and prove that this repository can supply shared skills through the existing VS Code startup task. It does not attempt the whole development lifecycle at once.
+**Kiro Crew is fixed and trusted.** This run checks a ready-made extension against our workflow; it does not reconsider or benchmark Crew. Read the [current extension research](research/CREW_EXTENSIONS_2026-11-16.md), [extension source inventory](research/CREW_EXTENSION_SOURCES_2026-11-16.json), and [system plan](../WORK_PLAN.md). This supersedes the earlier diagnostic-skill and BMAD-first experiments.
 
-## Why this comes first
+Reuse order: native Crew → existing Crew extension → portable/adapted component → implement only the remaining gap. The proposed first extension is **AI-DLC Studio 2.0.1**, commit `8b3881d4737399c3394d8d187f102a5c95d6e528`. It bundles **AI-DLC 2.11.3 plus four documented patches**; it is not upstream 2.11.4. The official store currently lists older Studio 1.0.1, so do not accidentally test that while reporting 2.0.1.
 
-The final coordinator must know what Kiro/Codex can do, and it must be able to find and load shared skills when working on different projects. Crew already documents a native shared-library mechanism. Proving that mechanism is less work than building an installer, plugin framework, or second orchestrator. Actual model/effort routing, context inheritance, and credit visibility will then be connected on top of an observed foundation.
+## The bounded outcome
 
-The first recommended experiment is a repository-owned `skills/` directory registered with Crew's **`skills.extra_paths`**. This is a proposed integration choice, not a proven local success. Do not assume `<active-project>/.kiro/skills/` follows the coordinator into another selected project.
+Use the actual extension to produce a code-grounded technical plan and separate specialist review for a tiny fixture issue. Verify a real human approval checkpoint, then stop **awaiting the user's technical-plan approval**. Record precisely what remains to connect Crew's backend/model/effort choices, context and usage to the extension.
 
-## Facts checked while preparing this plan
+The detailed implementation plan, second approval, code changes, CI, independent code review, delivery and portability remain required later steps. No mock plan, mere installation, or discovery response counts as a successful planning/review integration.
 
-Only version queries, file/source reads, and public-source lookups were performed. No gateway, model session, worker, installation, account-usage query, or runtime configuration change was executed for this document.
+## Facts and unknowns
 
-| Fact | Evidence and limits |
-| --- | --- |
-| Crew distribution is `kirocrew 0.12.2` | Read installed Python distribution metadata under the local `.runtime/kirocrew-venv`; this confirms installation, not session behavior |
-| Kiro CLI is `2.37.0`; Codex CLI is `0.166.0` | Executed the respective `--version` commands; login/session validity was not tested |
-| Codex ACP adapter is `1.11.0` | Read its installed package metadata; no authenticated adapter session was started |
-| Local Node is `24.22.3`; Python is `3.12.3`; Git is `2.43.0` | Queried executable versions; the launcher prepends its local Node/venv/adapter paths |
-| The VS Code task calls `scripts/start-kirocrew.sh` | Read `.vscode/tasks.json`; it uses the workspace root as its working directory |
-| The local setup marker exists | Checked `.runtime/kirocrew/.demo-setup-confirmed`; its existence is not proof that current configuration or login is valid |
-| Shared skill paths are a native documented feature | Installed docs and the [v0.12.2 skills guide](https://github.com/kirodotdev/KiroCrew/blob/v0.12.2/src/kiro_crew/docs/skills.md) list `skills.extra_paths`; invalid/nonexistent paths can be skipped and global duplicate names take precedence |
-| Per-project skills require exact-project trust | Same skills guide; this does not establish shared-library availability across target projects |
-| Spawn exposes model, effort, backend, context switches, and absolute working directory | [v0.12.2 subagents guide](https://github.com/kirodotdev/KiroCrew/blob/v0.12.2/src/kiro_crew/docs/subagents.md); support in the API does not prove a setting was applied by a particular backend |
-| Arbitrary role-model keys are not supported | Installed and [v0.12.2 role settings source](https://github.com/kirodotdev/KiroCrew/blob/v0.12.2/src/kiro_crew/config/sections_agent_fields.py) define `background` and `subagent`; do not invent `planner` or `reviewer` configuration keys |
-| Launcher currently continues after a nonzero doctor result | Its `kirocrew doctor || printf ...` line warns and then reaches gateway startup. This trial needs a small change to stop before startup if doctor fails; the reason for a failure must be reviewed rather than suppressed |
+- Installed Crew 0.12.2 meets Studio 2.0.1's declared minimum 0.11.0. Existing Kiro/Codex delegation is trusted; do not repeat its old benchmark. Check only changed or extension-specific prerequisites.
+- Studio is Apache-2.0; bundled AI-DLC is MIT-0. Its manifest records the upstream base, payload hashes and compatibility patches. Retain these notices and receipts.
+- Studio requires Bun reachable by the gateway and AI-DLC sessions; its guide recommends 1.4.4 or newer. Bun was not on the research shell's PATH; configured paths were not exhaustively checked. Node/npm may be needed for a one-time UI build; inspect the pinned package/installer before choosing commands or assuming prebuilt files exist.
+- It already has gateway startup/shutdown hooks, a Crew session bridge, approval evidence and transactional per-project installation. Reuse these; do not write an alternative app loader, approval UI or lifecycle engine.
+- Crew already has backend capability cards, live model/effort data, optional model derivation, usage sources and spec-hook handling. Use those. The missing native ACP hook advertisement alone does not prove incompatibility or require changing Crew.
+- Studio's model/effort pickers do not establish dynamic worker routing. Its AI-DLC usage module lacks a Kiro/Codex producer. Current extension phase/child attribution and cross-backend worker mapping remain unknown.
+- Older upstream Docker installation checks explicitly excluded model calls; they do not prove this combined version works locally.
 
-Earlier usage and capability observations remain in [cost notes](history/RESEARCH_COST_NOTES.md) and [delegation results](history/RESULTS.md). They are historical evidence, not fresh PASS results.
+## A. Record the exact extension decision
 
-## Focused upstream recheck
+Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and the extension research. Preserve unrelated changes; use ordinary Git here, no worktrees. Keep credentials, account identifiers, raw sessions and runtime data out of commits.
 
-These files were reread from their primary repositories for this plan. The identifiers below are **Git file-blob IDs**, not adopted dependency pins or tested Crew integrations.
+Create `docs/COMPONENT_DECISIONS.md`: selected app/source/pin, actual payload version/patches, licenses/notices, necessary dependencies/assets, verified installation method and changed paths. Note native Spec Builder plus a minimal portable specialist set as the fallback to consider if this trial fails, without installing it now.
 
-| Source | Observed fact | Consequence |
-| --- | --- | --- |
-| [agent-pipeline procedure](https://github.com/roycehoe/agent-pipeline/blob/main/skills/feat-pipeline/SKILL.md), blob `30a9fd2370cd1aa32f08cc53271a46f08176a819` | Uses host-specific agent/skill tools and linked stages; describes explicit model selection, compact context packs, and independent audits | Useful donor for our two-stage planning and context procedures; not a drop-in Crew runtime |
-| [ADW model router](https://github.com/pdoronila/adw/blob/main/src/adw/model_router.py), blob `ebefb662e1a5ac417237802e76223d97be62d03c` | Explicitly within-backend; usage probes map Claude/Codex, not Kiro; probe failures retain the configured target | Candidate for adapted usage/failure policy, not evidence of Crew-wide routing or a hard cap |
-| [Workgraph README](https://github.com/shiro-el/workgraph-skills/blob/main/README.md), blob `a5afa48d55dce6a8d5db0f011a3e19b940ec7d7b` | Current system uses Linear, pinned submodules, host CLIs, and automatic intermediate merges | Consider focused procedures or another candidate; do not install the whole package as our foundation |
+Create a compact `docs/CAPABILITIES.md` referencing Crew's native cards/model/effort/usage surfaces. Add only relevant local account/version observations and unknowns; do not hand-copy its whole capability matrix. Distinguish role/persona, backend, model, effort and skill.
 
-No donor has been selected for installation by this document. Exact upstream commit, license, retained notices, dependencies, and necessary adaptation must be recorded before an import. A better alternative or focused local implementation remains acceptable after explaining the choice.
+Inspect the pinned installer/manifest and supplied bridge before choosing commands. Do not invent flags, silently use `latest`, replace Studio's payload with a newer upstream release, or apply a second framework's global setup. Missing required source/license/assets is a mandatory blocker.
 
-## Uncertainties and expected handling
+## B. Prepare the existing app and harmless fixture
 
-| Uncertainty | How to investigate | If the required result fails |
-| --- | --- | --- |
-| Will the active Crew configuration accept our repository's extra skill path? | Inspect supported configuration and path checks; preserve existing entries and verify the exact effective path | Stop; report the rejected/skipped path and source evidence. Do not silently copy into a global home directory |
-| Can the dashboard actually discover and read that exact skill? | Observe a `skill_search` result and exact-key read in the real Crew session | Stop; a matching response or a file on disk alone is not PASS |
-| Does shared discovery survive project switching and restart? | Use a second harmless local project selection and restart via the same VS Code task | Stop; report which scope/start lost the skill |
-| Are login, adapter, and doctor checks healthy now? | Diagnose using the same environment as the launcher, with secret output redacted | Stop on failure; do not reinstall, upgrade, switch backend, or bypass checks automatically |
-| Are model IDs, effort, permissions, context, and telemetry currently verified? | Populate a capability record using current source plus attributed historical evidence | Mark untested fields UNKNOWN. Runtime verification is later work; do not fabricate it or treat unknown as supported |
+Use ignored `.runtime/pilots/aidlc-studio-2.0.1/` for the pinned checkout and a small separate fixture project. This is not a worktree. Record a sanitized fixture/asset manifest so the experiment can be reproduced. Keep raw generated outputs ignored.
 
-UNKNOWN is allowed for catalogue fields outside this trial. It is not allowed to turn a failed mandatory startup/discovery check into success. A version differing from this snapshot is not automatically broken: revalidate version-specific assumptions first, and stop if the selected mechanism can no longer be established.
+Running the execution prompt below authorizes the bounded app/dependency installation, per-app enablement/trust, fixture harness installation and planning/reviewer sessions described here. **The research turn does not perform them.** Prefer project-local dependency placement where supported; inspect the exact changes before invoking installation. No blanket third-party trust, unrelated upgrade, sandbox weakening, global agent replacement, or patching installed Crew/adapter code.
 
-## Execution sequence and scope
+Use the installed Crew app contract and exact selected version. Preserve existing configuration and back up local changes. Verify the declared UI entry/build, backend health, bundled payload hashes and Bun reachability from the actual extension sessions. Use Studio's supplied transaction/receipt flow to install into the fixture; inspect the affected `.kiro` paths, settings and optional MCP dependencies. Do not silently enable unrelated integrations just because the payload lists them.
 
-### A. Record the foundation before changing runtime behavior
+Keep normal startup behind **VS Code → Tasks: Run Task → Kiro Crew: Start**. Integrate only necessary repeatable environment/configuration preparation into its existing launcher. One-time installation/authentication is setup, not another normal start command. Do not start a second gateway or separate daemon. If the executor cannot operate the VS Code UI, identify that user action and wait for evidence; do not substitute a shell-launched gateway or claim the task was clicked.
 
-Read the current instructions, system plan, alignment, and relevant historical evidence. Check Git status and preserve unrelated changes. Recheck versions and only the necessary source/configuration fields. Do not dump credential-bearing configuration or transcripts.
+## C. Exercise only planning, review and its user gate
 
-Create `docs/CAPABILITIES.md` with Kiro/Codex model/effort/tool/context/permission/usage fields, status, date, source, and limits. Clearly separate documented support, old observations, new observations, and unknowns. Create `docs/COMPONENT_DECISIONS.md` for the native extra-path choice and initial donor decisions/dependencies; leave unselected donors as candidates.
+1. Register the harmless fixture through Studio's supported flow. Use a tiny issue with actual source, acceptance criteria and one design decision, such as proposing validation for a small command-line parser. It is an input fixture, not permission to implement. The final product's intake remains an approved GitHub issue; no dummy remote issue is required here.
+2. Select the smallest supported lifecycle scope that retains technical planning, independent specialist review and a human gate. Preview actual stages/artifacts. Do not force all 33 stages onto a tiny issue, skip a required gate, or let a Quick/Express path bypass the two-plan target. Record the future mapping to detailed implementation planning and its separate approval.
+3. Verify the extension's actual hook owner, project-agent resolution and human-turn recording on the selected route. Use existing Crew spec-hook handling and Studio's compatibility patches. At a checkpoint, a harmless attempted premature transition must be refused and leave the fixture unchanged. Never fabricate approval, auto-send a human answer, flip handshake flags or bypass the guard. Stop if the required behavior fails.
+4. Run its real code-grounded technical planning and obtain a different specialist worker/session's plan review, with scoped context and observed completion. Use one active worker at a time where the supported configuration allows it. If a smaller review configuration needs a patch, document it before the trial; do not quietly replace independent review with planner self-review. A rejected plan ends this run without automatic correction.
+5. Record the chosen model/effort and why, what was actually applied/exposed, context/artifact handoffs, parent/child identities and native usage with source/units/freshness/coverage. Native Kiro children may be accepted for this first extension slice if their identity and review independence are evidenced; explicitly record that this does not establish Crew-wide Kiro/Codex dispatch or per-child accounting. Parent-only accounting is partial coverage, not full worker metering. A missing native parent usage record or unidentifiable reviewer is a mandatory blocker; missing price/quota or unavailable per-child fields remain named gaps for step 2.
+6. Compare fixture code before/after. Only designated planning/state artifacts may change. Stop **awaiting technical-plan approval**; do not send that approval yourself, generate the detailed implementation plan or start construction. Confirm no host notice or automated continuation was mistaken for the user's approval.
+7. Stop/restart using the same VS Code task. Confirm extension/library/artifact availability and the pending checkpoint without rerunning paid planning. This is an extension persistence check; it does not establish whole-system recovery or another-project portability.
 
-### B. Prepare one small, reversible loading trial
+This trial does not certify complete hostile-agent write isolation, full smart routing, both planning gates or cross-project support. The production system still requires those relevant acceptance checks. Record a native-review/dispatch/telemetry limitation explicitly rather than calling it solved because the app opened.
 
-Add `skills/crew-foundation-check/SKILL.md`, a tiny diagnostic that only reports its identity, reads the capability document when available, and identifies unknowns. It must not spawn workers, change code, call external services, or claim full workflow readiness. This diagnostic verifies library plumbing; it is not a replacement for the researched production skills.
+## D. Record results, commit the checked slice and stop
 
-Configure the repository's absolute `skills/` directory through the installed supported `skills.extra_paths` mechanism in this project's `.runtime/kirocrew` configuration. Back up the touched local configuration, preserve unrelated entries, and make registration idempotent. Use the existing launcher for any repeatable startup preparation; do not require another normal startup command or a full reinstall. Avoid overwriting a global skill of the same name. Keep local paths/state out of tracked user-specific configuration.
+Write `docs/STEP_1_RESULTS.md`: baseline commit, pins/dependencies/licenses, exact changed paths, startup/app health, payload checks, fixture issue, actual plan/review identities, hook/approval evidence, settings/context/usage, persistence, failures/unrun checks and remaining adapter work. Keep a concise sanitized plan/review summary, not raw transcripts.
 
-Make the minimal launcher change that stops gateway launch when doctor returns nonzero. Inspect diagnostic behavior before invoking commands that can change configuration. Do not bypass a failure because it might concern an optional backend: report it so the next plan can classify it properly.
-
-Run local syntax/configuration checks before the live trial. Do not patch installed Crew/adapter packages, change sandbox/approval defaults, edit unrelated home configuration, or install donor runtimes in this step. If the native mechanism requires one of those changes, stop with the concrete evidence and proposed alternative.
-
-### C. User-run startup and discovery trial
-
-The user starts Crew with **VS Code → Tasks: Run Task → Kiro Crew: Start**. If the agent cannot operate that UI, give the user the exact action and wait for the evidence; do not substitute a shell-started gateway or claim to have clicked the task.
-
-The user can submit this bounded request in the Crew dashboard:
-
-```text
-This is a shared-skill loading check. Use skill_search to find
-crew-foundation-check, then read its exact returned key and follow its
-read-only diagnostic procedure. Report the skill's identity, what capability
-information was available, and what remains unknown. Do not spawn workers,
-modify files, or execute an implementation task. If lookup or reading fails,
-report the exact failure and stop; do not repeat my request as if it succeeded.
-```
-
-Use an available account model without claiming it is already an optimized choice. These parent-session checks can consume usage; do not start a benchmark or workers. Record session identifiers and visible tool evidence, with any reported usage and coverage. Confirm the active project path, then repeat the discovery check after selecting a second harmless local project, and after stopping/restarting through the same VS Code task. Do not use KovacsTrader or modify another real project for this plumbing check. Do not create Git worktrees.
-
-### D. Record results, then end the run
-
-Write `docs/STEP_1_RESULTS.md` with the baseline commit, versions, exact changes, mandatory-check outcomes, evidence, remaining unknowns, and next recommendation. Keep secrets and raw sessions out of Git. Mark only this bounded part of step 1 complete when all mandatory checks pass; the full step remains incomplete if component selection or other deliverables remain. Commit the checked changes locally on success. Report the commit, but do not automatically start step 2 or push this future execution unless the user requests it.
+Decide **continue extension / integration blocked / trial incomplete** from evidence. Mark only this slice complete if all mandatory checks pass; not all of step 1 or the whole system. Commit checked changes locally on success and report the commit. Do not advance automatically or install a fallback in this run. Push only if requested for that implementation run.
 
 ## Mandatory success checks
 
-- Startup uses the existing VS Code task; no extra startup commands are needed.
-- A failing doctor result prevents gateway startup in the updated launcher.
-- The effective extra skill path points to the repository's real directory and survives a second start without duplicate registration.
-- The actual Crew session discovers and reads the exact diagnostic skill from the shared library.
-- Discovery/read still works after project selection changes and restart.
-- Capability/decision/result records clearly distinguish tested facts from unknowns; no unverified model/effort/monitoring claim is promoted to PASS.
+- Exact Studio 2.0.1 pin, payload/patches/notices and supported installation established; UI/backend/payload and extension-session Bun checks pass.
+- Real fixture planning and independent specialist review occur through the app/Crew integration.
+- Hook ownership and genuine human checkpoint evidence are established; a premature transition is refused without code changes.
+- Settings/context/identities and actual native parent usage are recorded; partial child attribution is disclosed as remaining work.
+- Planning stops awaiting the user's technical-plan approval; no construction, merge or impersonated approval runs.
+- Extension/pending-artifact availability survives normal VS Code task restart; no second startup command is required.
 
 ## Stop and rethink rule
 
-**On the first mandatory failure or missing evidence: stop dependent work.** This rule is stricter than the general permission to try alternatives and applies to this execution run. Do not auto-retry, silently switch approach/provider, weaken permissions, reinstall, hide errors, or implement a workaround in the same run. Independent collection of the failing check's evidence and writing the result report are allowed.
+**At the first mandatory failure or missing required evidence, stop dependent work.** No automatic retry, candidate/provider switch, suppression, permission weakening, upgrade or workaround in the same run. Independent inspection of the failing check and writing its result report are allowed.
 
-Report: failing check, expected result, actual result/exit code, relevant redacted evidence, files/state changed, anything still running, and which later checks were not run. Label hypotheses as hypotheses. Preserve work for inspection; do not hard-reset or discard unrelated changes. Offer the simplest next experiment or replacement approach and end the run. The user and agent then revise this plan before retrying the failed path. If a required user action has not happened, mark NOT RUN / waiting for user evidence, not FAIL or PASS.
+Report expected/actual behavior and exit code, redacted evidence, changed state, anything running, and later checks not run. Preserve unrelated work. Label hypotheses and propose the simplest next experiment. A needed user action not performed is **NOT RUN / awaiting evidence**, not FAIL or PASS. Revise the plan with the user before a replacement trial.
 
 ## Copyable prompt for the next Codex session
 
 ```text
-Work in /home/zsom/MultiAgenticSystem. Execute only the bounded foundation
-and shared-skill-loading plan in docs/NEXT_STEP.md, sections A through D.
-Read AGENTS.md, README.md, WORK_PLAN.md, and docs/RESEARCH_ALIGNMENT.md first.
+Work in /home/zsom/MultiAgenticSystem. Execute only docs/NEXT_STEP.md,
+sections A–D: the existing AI-DLC Studio 2.0.1 Crew-extension trial at its
+recorded commit. Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and
+docs/research/CREW_EXTENSIONS_2026-11-16.md first.
 
-Keep our complete goal intact: ChatGPT/GitHub issue → Crew technical plan
-and review → detailed implementation plan and approval → smart multi-tool
-implementation → tests/independent review/PR. Agent/skill selection,
-model/effort routing, context handling, and credit-aware decisions are core.
-This run establishes their foundation; it does not build the whole system.
+Crew is our fixed, trusted foundation. Reuse native features and the supplied
+extension/bridge first, adapt existing components for real gaps, then implement
+only what is missing. Do not benchmark or replace Crew or install several
+lifecycle systems. Preserve both planning approvals, smart multi-tool worker
+selection, context handling, credit-aware decisions and independent review.
 
-Recheck the documented facts, record unknowns, use supported native Crew
-mechanisms, and keep changes minimal and reversible. Develop directly in
-this repository with ordinary Git; no worktrees. Preserve AGPL licensing.
-All normal startup must use the existing VS Code task Kiro Crew: Start.
+Inspect the pinned manifest/installer first. This prompt authorizes bounded
+app/dependency setup, per-app trust/enablement, fixture harness installation
+and planning/reviewer sessions in the plan. Preserve payload versions/notices;
+no blanket trust, unrelated upgrade, global agent replacement or Crew patches.
+Use ordinary Git here, no worktrees. All normal startup/restart uses the
+existing VS Code task Kiro Crew: Start. If UI/auth action is needed, identify
+it and wait for evidence; do not launch a substitute gateway.
 
-Prepare the capability and component-decision records, the one harmless
-shared diagnostic skill, and the smallest necessary startup integration.
-Use the user-run VS Code/dashboard actions in the plan for live evidence.
-Do not launch a substitute gateway, paid worker tests, installations, or
-backend upgrades. If user action is needed, identify it and wait for the
-result instead of pretending it happened.
+Use a harmless fixture, actual planning and a separate review. Verify the
+extension's hook/human-gate behavior, native usage, settings and context.
+Stop awaiting technical-plan approval; do not approve for me, implement,
+advance stages or pretend partial attribution proves complete metering.
 
-At the first failed mandatory check, stop dependent work, document the
-expected/actual behavior and changed state in docs/STEP_1_RESULTS.md,
-explain the best next experiment, and end the run. Do not automatically
-retry or work around it. If all checks pass, document and commit this
-bounded result locally, report the remaining unknowns, and stop before
-step 2. Do not mark the full system or full step 1 finished prematurely.
+At the first mandatory failure, stop dependent work, write expected/actual
+behavior and changed state in docs/STEP_1_RESULTS.md, propose the next
+experiment and end the run. Do not auto-retry or switch candidates. If all
+checks pass, commit the bounded result locally, report remaining gaps and
+stop. Do not declare the whole step/system complete or push unless requested.
 ```

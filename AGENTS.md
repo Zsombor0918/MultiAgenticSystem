@@ -14,4 +14,6 @@ Develop directly in this repository with ordinary Git commits for completed, che
 
 Original project work is licensed under `AGPL-3.0-only`; preserve `LICENSE` and the README's licensing notice. Check license compatibility and retain upstream notices when adopting third-party components. Do not imply that this repository's license relicenses separate dependencies or target projects.
 
-For the next bounded implementation run, follow `docs/NEXT_STEP.md`. Its stop-on-first-mandatory-failure rule overrides the general flexibility to try alternatives within that run: preserve evidence, report the failure, and revise the approach with the user before retrying.
+Kiro Crew is selected and trusted; do not reopen the runtime choice or re-benchmark its foundation. Read `docs/research/CREW_EXTENSIONS_2026-11-16.md` for the current extension plan. Reuse native features first, then ready-made Crew extensions, then portable/adapted components, and write only the remaining gaps. The broader complete-system comparison is supporting research. Preserve required upstream assets and distinguish persona skills from registered Crew agents. Acceptance checks should target the extension integration.
+
+For the next bounded implementation run, follow `docs/NEXT_STEP.md`: the existing AI-DLC Studio Crew extension, with real planning/review and user-gate evidence. Its stop-on-first-mandatory-failure rule overrides the general flexibility to try alternatives within that run: preserve evidence, report the failure, and revise the approach with the user before retrying.

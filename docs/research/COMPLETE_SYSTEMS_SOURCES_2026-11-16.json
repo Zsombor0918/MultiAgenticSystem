@@ -1,0 +1,489 @@
+{
+  "research_date": "2026-11-16",
+  "purpose": "Complete-system reuse comparison for the user's Kiro Crew workflow",
+  "method": "Primary repository metadata, release records, directory trees, selected implementation/configuration files, installed Crew 0.12.2 source. No dependency installs, worker/model runs, gateway starts, or third-party test suites executed.",
+  "interpretation": "Source presence is not local runtime validation. null means unresolved/not checked, not absence. References and repository ownership can change. Depth distinguishes readme screening from implementation inspection.",
+  "repositories": [
+    {
+      "repository": "kirodotdev/KiroCrew",
+      "url": "https://github.com/kirodotdev/KiroCrew",
+      "inspected_ref": "v0.12.2",
+      "resolved_commit": "b6599234221cfc492c0dd95fdd53643e710c9f28",
+      "role": "native-runtime",
+      "inspection_depth": "source",
+      "reported_license": null,
+      "archived": null,
+      "latest_release_checked": {
+        "tag": "v0.12.2",
+        "published_at": "2026-11-12T06:52:52Z",
+        "url": "https://github.com/kirodotdev/KiroCrew/releases/tag/v0.12.2"
+      },
+      "notes": null
+    },
+    {
+      "repository": "bmad-code-org/BMAD-METHOD",
+      "url": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "inspected_ref": "v6.12.4",
+      "resolved_commit": "bab9082c3e884e0d72c759bcd1a6d90bcc01be84",
+      "role": "portable-library-alternative-after-Crew-extension-search",
+      "inspection_depth": "source",
+      "reported_license": "NOASSERTION",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v6.12.4",
+        "published_at": "2026-10-14T21:19:19Z",
+        "url": "https://github.com/bmad-code-org/BMAD-METHOD/releases/tag/v6.12.4"
+      },
+      "notes": "LICENSE file and package.json explicitly say MIT despite GitHub license classifier NOASSERTION."
+    },
+    {
+      "repository": "awslabs/aidlc-workflows",
+      "url": "https://github.com/awslabs/aidlc-workflows",
+      "inspected_ref": "v2.11.4",
+      "resolved_commit": "61fdb122428d86b56b7e8d598787095f2c97d3e1",
+      "role": "engineered-lifecycle-alternative",
+      "inspection_depth": "source",
+      "reported_license": "MIT-0",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v2.11.4",
+        "published_at": "2026-11-13T05:48:13Z",
+        "url": "https://github.com/awslabs/aidlc-workflows/releases/tag/v2.11.4"
+      },
+      "notes": null
+    },
+    {
+      "repository": "agent-sh/agentsys",
+      "url": "https://github.com/agent-sh/agentsys",
+      "inspected_ref": "main",
+      "resolved_commit": "ce58913304d88a1d1a0513e1837ae43c33f5f6f5",
+      "role": "current-library",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v6.1.1",
+        "published_at": "2026-10-06T02:15:38Z",
+        "url": "https://github.com/agent-sh/agentsys/releases/tag/v6.1.1"
+      },
+      "notes": null
+    },
+    {
+      "repository": "agent-sh/agentsys",
+      "url": "https://github.com/agent-sh/agentsys",
+      "inspected_ref": "v5.14.0",
+      "resolved_commit": "59da41f0e1d5096d4e0bf87adb879caf62e88dc5",
+      "role": "legacy-complete-pipeline",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v6.1.1",
+        "published_at": "2026-10-06T02:15:38Z",
+        "url": "https://github.com/agent-sh/agentsys/releases/tag/v6.1.1"
+      },
+      "notes": null
+    },
+    {
+      "repository": "agent-sh/foreman",
+      "url": "https://github.com/agent-sh/foreman",
+      "inspected_ref": "main",
+      "resolved_commit": "cf6de999d02e6ce9885149523f0c004db331086f",
+      "role": "current-queue-workflow",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "dsifry/metaswarm",
+      "url": "https://github.com/dsifry/metaswarm",
+      "inspected_ref": "main",
+      "resolved_commit": "4bbb10abd301b9ec9d63371e296049cbc6043baa",
+      "role": "closest-team-architecture",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v0.16.0",
+        "published_at": "2026-11-12T02:04:29Z",
+        "url": "https://github.com/dsifry/metaswarm/releases/tag/v0.16.0"
+      },
+      "notes": null
+    },
+    {
+      "repository": "open-gsd/gsd-core",
+      "url": "https://github.com/open-gsd/gsd-core",
+      "inspected_ref": "next",
+      "resolved_commit": "99bbbacb58685acb20e1cbc21ba2b45bb46a48ed",
+      "role": "context-routing-alternative",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v1.21.0",
+        "published_at": "2026-11-13T04:05:43Z",
+        "url": "https://github.com/open-gsd/gsd-core/releases/tag/v1.21.0"
+      },
+      "notes": null
+    },
+    {
+      "repository": "shiro-el/workgraph-skills",
+      "url": "https://github.com/shiro-el/workgraph-skills",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "linear-host-specific-workflow",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers",
+      "inspected_ref": "main",
+      "resolved_commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "role": "lean-lifecycle-alternative",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "pdoronila/adw",
+      "url": "https://github.com/pdoronila/adw",
+      "inspected_ref": "main",
+      "resolved_commit": "5af29f7661a4f294b3ac83dfeea9e22e27ebdb29",
+      "role": "routing-and-gates-donor",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "microsoft/conductor",
+      "url": "https://github.com/microsoft/conductor",
+      "inspected_ref": "main",
+      "resolved_commit": "c161d69bb1461f4037addea1be838e40e4a5bbef",
+      "role": "separate-workflow-runtime",
+      "inspection_depth": "readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "requix/kiro-team",
+      "url": "https://github.com/requix/kiro-team",
+      "inspected_ref": "main",
+      "resolved_commit": "c2f7ea33ec13babad92803b9d6f6aacef470e524",
+      "role": "native-kiro-team",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "TeiNam/kiro-with-harness",
+      "url": "https://github.com/TeiNam/kiro-with-harness",
+      "inspected_ref": "main",
+      "resolved_commit": "32e2476d7e65195afc9f18a1188398bccb2a61ca",
+      "role": "native-kiro-library-license-unresolved",
+      "inspection_depth": "source",
+      "reported_license": null,
+      "archived": null,
+      "notes": "No root LICENSE found; one nested skill has its own LICENSE. Do not assume permission for the whole tree."
+    },
+    {
+      "repository": "Yeachan-Heo/oh-my-codex",
+      "url": "https://github.com/Yeachan-Heo/oh-my-codex",
+      "inspected_ref": "main",
+      "resolved_commit": "08d569cd6b0b4031e2ce978af14a7f9ccd4e00bc",
+      "role": "codex-host-team",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "latest_release_checked": {
+        "tag": "v0.22.7",
+        "published_at": "2026-11-15T06:50:18Z",
+        "url": "https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.22.7"
+      },
+      "notes": null
+    },
+    {
+      "repository": "Yeachan-Heo/oh-my-claudecode",
+      "url": "https://github.com/Yeachan-Heo/oh-my-claudecode",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "claude-host-team",
+      "inspection_depth": "tree/readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "code-yeongyu/oh-my-openagent",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent",
+      "inspected_ref": "dev",
+      "resolved_commit": null,
+      "role": "opencode-pi-host",
+      "inspection_depth": "readme",
+      "reported_license": null,
+      "archived": null,
+      "notes": null
+    },
+    {
+      "repository": "OrchestratorInc/agent-orchestrator",
+      "url": "https://github.com/OrchestratorInc/agent-orchestrator",
+      "inspected_ref": "main",
+      "resolved_commit": "cb4e9bf16694ec3f530793961728761be6bafe92",
+      "role": "separate-control-plane",
+      "inspection_depth": "readme",
+      "reported_license": "Apache-2.0",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "gastownhall/gastown",
+      "url": "https://github.com/gastownhall/gastown",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "separate-control-plane",
+      "inspection_depth": "readme",
+      "reported_license": null,
+      "archived": null,
+      "notes": null
+    },
+    {
+      "repository": "ruvnet/ruflo",
+      "url": "https://github.com/ruvnet/ruflo",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "meta-harness",
+      "inspection_depth": "readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "jayminwest/overstory",
+      "url": "https://github.com/jayminwest/overstory",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "archived-runtime",
+      "inspection_depth": "metadata/readme",
+      "reported_license": "MIT",
+      "archived": true,
+      "notes": null
+    },
+    {
+      "repository": "snarktank/antfarm",
+      "url": "https://github.com/snarktank/antfarm",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "openclaw-workflow",
+      "inspection_depth": "readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "github/spec-kit",
+      "url": "https://github.com/github/spec-kit",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "specification-toolkit",
+      "inspection_depth": "readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "Fission-AI/OpenSpec",
+      "url": "https://github.com/Fission-AI/OpenSpec",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "specification-toolkit",
+      "inspection_depth": "readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "gotalab/cc-sdd",
+      "url": "https://github.com/gotalab/cc-sdd",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "specification-workflow",
+      "inspection_depth": "tree/readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "affaan-m/ECC",
+      "url": "https://github.com/affaan-m/ECC",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "library-candidate",
+      "inspection_depth": "readme",
+      "reported_license": null,
+      "archived": null,
+      "notes": null
+    },
+    {
+      "repository": "exaltedo2/agent-crew",
+      "url": "https://github.com/exaltedo2/agent-crew",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "claude-team-and-cost-donor",
+      "inspection_depth": "readme",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "wilbur-labs/kiro-workspace",
+      "url": "https://github.com/wilbur-labs/kiro-workspace",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "workspace-template",
+      "inspection_depth": "readme",
+      "reported_license": null,
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "HJang/multi-agent-orchestrator",
+      "url": "https://github.com/HJang/multi-agent-orchestrator",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "protocol-adapters-unimplemented",
+      "inspection_depth": "readme",
+      "reported_license": "GPL-3.0",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "sblattj/agentic-coding-harness",
+      "url": "https://github.com/sblattj/agentic-coding-harness",
+      "inspected_ref": "main",
+      "resolved_commit": "aea85f722aa1b0d9a96c88681bb95902b5915116",
+      "role": "metering-donor",
+      "inspection_depth": "source",
+      "reported_license": "MIT",
+      "archived": false,
+      "notes": null
+    },
+    {
+      "repository": "Moifek/kiro-ensemble",
+      "url": "https://github.com/Moifek/kiro-ensemble",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "unavailable",
+      "inspection_depth": "404",
+      "reported_license": null,
+      "archived": null,
+      "notes": null
+    },
+    {
+      "repository": "iYoungblood/agentforge",
+      "url": "https://github.com/iYoungblood/agentforge",
+      "inspected_ref": "main",
+      "resolved_commit": null,
+      "role": "unavailable",
+      "inspection_depth": "404",
+      "reported_license": null,
+      "archived": null,
+      "notes": null
+    },
+    {
+      "repository": "agent-sh/next-task",
+      "url": "https://github.com/agent-sh/next-task",
+      "inspected_ref": "v1.1.2",
+      "resolved_commit": null,
+      "role": "legacy-plugin-source-unavailable",
+      "inspection_depth": "404",
+      "reported_license": null,
+      "archived": null,
+      "notes": null
+    }
+  ],
+  "critical_evidence": [
+    {
+      "repo": "bmad-code-org/BMAD-METHOD",
+      "ref": "v6.12.4",
+      "files": [
+        "src/bmm-skills/ship/bmad-build/SKILL.md",
+        "src/bmm-skills/ship/bmad-build/step-02-plan.md",
+        "src/bmm-skills/ship/bmad-build/step-03-implement.md",
+        "src/bmm-skills/ship/bmad-build/step-04-review.md",
+        "src/scripts/render_skill.py",
+        "tools/installer/ide/platform-codes.yaml"
+      ]
+    },
+    {
+      "repo": "awslabs/aidlc-workflows",
+      "ref": "v2.11.4",
+      "files": [
+        "core/tools/aidlc-usage.ts",
+        "core/tools/aidlc-tiers.ts"
+      ],
+      "additional_main_files": [
+        "docs/guide/harnesses/kiro.md",
+        "docs/guide/harnesses/codex-cli.md",
+        "core/hooks/aidlc-plan-approval-guard.ts",
+        "docs/reference/05-agent-system.md"
+      ]
+    },
+    {
+      "repo": "kirodotdev/KiroCrew",
+      "ref": "v0.12.2",
+      "files": [
+        "src/kiro_crew/acp/types.py",
+        "src/kiro_crew/acp/kas_wire.py",
+        "src/kiro_crew/docs/agent-spec-fields.md",
+        "src/kiro_crew/docs/subagents.md",
+        "src/kiro_crew/docs/skills.md"
+      ],
+      "local_source": "Installed .runtime/kirocrew-venv/lib/python3.12/site-packages/kiro_crew"
+    },
+    {
+      "repo": "agent-sh/agentsys",
+      "ref": "v5.14.0",
+      "files": [
+        "docs/workflows/NEXT-TASK.md",
+        ".claude-plugin/marketplace.json",
+        ".kiro/agents/planning-agent.json"
+      ]
+    },
+    {
+      "repo": "agent-sh/foreman",
+      "ref": "main",
+      "files": [
+        "README.md",
+        "skills/foreman/SKILL.md"
+      ]
+    },
+    {
+      "repo": "dsifry/metaswarm",
+      "ref": "main (same resolved commit as v0.16.0 at research time)",
+      "resolved_commit": "4bbb10abd301b9ec9d63371e296049cbc6043baa",
+      "files": [
+        "skills/start/SKILL.md",
+        "skills/external-tools/SKILL.md",
+        "templates/models.yaml",
+        "skills/setup/templates/external-tools.yaml",
+        "bin/estimate-cost.sh",
+        "docs/README.codex.md"
+      ]
+    },
+    {
+      "repo": "sblattj/agentic-coding-harness",
+      "ref": "main",
+      "files": [
+        "docs/KIRO.md",
+        "docs/USAGE-WINDOWS.md"
+      ]
+    }
+  ]
+}

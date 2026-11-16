@@ -4,6 +4,8 @@ Updated: 2026-11-16. Status: research and repository preparation complete; compo
 
 This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means choosing the lowest practical total implementation and maintenance effort while preserving those requirements. Existing components are preferred; a small custom implementation is acceptable when it is the better fit.
 
+**Crew is already selected and trusted.** Research/integration targets its remaining extensions: native Crew feature first, existing Crew extension second, compatible external component/adaptation third, custom implementation only for the remaining gap. Do not reopen runtime selection or spend the first step benchmarking Crew again. Current choices are in [Crew extension research](docs/research/CREW_EXTENSIONS_2026-11-16.md).
+
 ## Approach flexibility and one-week target
 
 The research is a starting point, not a fixed dependency list. If a finding or candidate does not work well, try a better alternative or compare a few focused options. Timebox experiments rather than spending days forcing an unsuitable component to fit. Native configuration, an adapted component, and a focused local implementation are all valid choices. Explain meaningful changes of approach, what was tried, the tradeoff, and the evidence to the user; discuss changes to core scope, architecture, or schedule before committing to them. Routine reversible implementation choices can proceed within the agreed plan.
@@ -14,7 +16,7 @@ Initial estimate: **5–7 focused working days** for the first integrated versio
 
 | Target day | Intended result |
 | --- | --- |
-| 1 | Capability catalogue, practical component choices, and shared loading through the existing VS Code task |
+| 1 | Reuse native capability data; bounded AI-DLC Studio extension trial and exact adaptation record through the existing VS Code task |
 | 2 | Usable credit/usage visibility and focused context handoffs; assess whether the week's target remains achievable |
 | 3 | Initial agent/skill library and capability/usage-aware model/effort delegation |
 | 4 | Issue handoff, technical plan/review, and detailed implementation plan/approval |
@@ -52,8 +54,8 @@ The user decides goals, approvals, scope changes, and merge. Crew handles routin
 | --- | --- | --- |
 | Startup | VS Code task and current Crew launcher/dashboard | Keep all normal startup behind **Kiro Crew: Start**, including shared skills/configuration |
 | Orchestration | Crew delegation, run/completion records, Task Runner / Dynamic Workflows where appropriate | Connect the approved lifecycle using supported native mechanisms and adapted workflow procedures |
-| Capability catalogue | Actual Kiro/Codex models, tools, session settings, permissions, and telemetry | Give Crew an evidence-backed description of what each tool can actually do |
-| Agent and skill library | Crew skill search/loading, existing profiles, researched engineering skills | Curate, pin, adapt, and test compatible specialists and skills; let Crew select and apply them |
+| Capability catalogue | Crew's existing backend capability cards and live model/effort data | Expose a compact task-relevant view with version/account observations and unknowns instead of duplicating the native catalogue |
+| Agent and skill library | Native Crew apps and AI-DLC Studio specialist lifecycle; BMAD/Superpowers/metaswarm procedures for actual gaps | Choose one primary lifecycle; preserve assets and map specialist dispatch/gates to supported Crew controls |
 | Smart delegation | Supported spawn parameters, Crew decision mechanisms, researched routing policies | Choose backend + agent + model + effort + skills + context per task using capabilities, risk, usage, and prior results |
 | Context management | Crew memory/project inheritance, lazy loading, compaction, checkpoints | Define and verify role-specific context packs, context budgets, and restart/handoff behavior |
 | Credit and usage monitoring | Crew usage ledger and available account-usage views | Expose per-phase/per-run usage and available remaining allowance to both user and coordinator |
@@ -106,25 +108,28 @@ Start with visible thresholds, bounded runs, and phase decisions. Our research d
 
 ## 6. Reuse decisions from the research
 
-The detailed [research alignment](docs/RESEARCH_ALIGNMENT.md) connects each requirement to prior findings and candidate components. It is the component integration shortlist, not a claim that everything is installed or Crew-compatible.
+The current [Crew extension research](docs/research/CREW_EXTENSIONS_2026-11-16.md) and [extension source inventory](docs/research/CREW_EXTENSION_SOURCES_2026-11-16.json) supersede the earlier BMAD-first trial recommendation. They inspect native installed apps, the official registry and actual Crew extensions. The [broader comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) screened 33 version/candidate entries across 32 repositories as supporting library/adapter research. No new extension has been installed, enabled or run. [Research alignment](docs/RESEARCH_ALIGNMENT.md) maps the findings to the requirements.
 
-- **Lifecycle and planning:** inspect reusable parts of agent-pipeline, Superpowers/GSD, and Workgraph/Lousy issue decomposition. Start with the smallest compatible set that supports the two plans and review boundaries.
-- **Agents and engineering skills:** use Crew profiles/discovery and researched sources such as agent-crew, Sentry, and the focused planning/testing/debugging libraries. Build a curated library and verify selection and actual use.
-- **Routing:** Crew decisions plus Workgraph task/risk/model/effort policy and ADW's usage/failure model ladder. The researched ADW router is within a backend; Crew-wide selection needs adaptation where native behavior falls short.
-- **Monitoring:** Crew ledger/account views first; inspect agentic-coding-harness parsing/normalization if native reporting leaves a real gap. Keep Crew in charge of workers.
-- **Context:** Crew inheritance/lazy loading/checkpoints first; Repomix/Aider are researched fallback candidates for repo mapping.
+- **Native Crew reuse:** Spec Builder provides requirements/design/tasks and approval-hash handling; Code Review Sage provides separate PR review. Reuse native capability cards, live models/effort, Decisions/optional model derivation, context controls, usage/account data and work/session records before adding equivalent services.
+- **First existing Crew-extension trial:** **AI-DLC Studio 2.0.1**, pinned to `8b3881d4737399c3394d8d187f102a5c95d6e528`, bundles AI-DLC **2.11.3 plus four documented Crew compatibility patches**. It supplies a specialist lifecycle and approval/evidence UI. The catalog currently lists older Studio 1.0.1; distinguish versions. Verify the extension's route-specific hooks, required plan gates and Crew-worker mapping, not the Crew runtime choice.
+- **Portable library if needed:** BMAD **6.12.4 stable**, preserving renderer/configuration and per-project assets. Use it for specialist/procedure gaps, or with native Spec Builder if Studio proves unsuitable. Force both user gates, exclude oneshot shortcuts, and map dispatch to Crew. Do not add a second whole lifecycle if the selected extension already covers the need.
+- **Upstream lifecycle source:** AWS **AI-DLC 2.11.4** is distinct from Studio's patched bundle. Prefer Studio's existing bridge first; Crew already runs supported spec hooks where needed, so an omitted native hook advertisement alone is not a blocker. Its usage producer still does not cover Kiro/Codex.
+- **Closest full-team alternative:** **metaswarm 0.16.0**, with specialist roles, planning/review gates, role model maps, and external tools. BEADS, native team behavior, fan-out, and Kiro mapping make it a larger adaptation. Its cost estimates are not Kiro credit monitoring.
+- **Earlier findings retained:** AgentSys 5.14.0 really had a full workflow, but a pinned external plugin source returned 404. Current AgentSys/Foreman is a different workflow with review/merge defaults to adapt. GSD, Superpowers, Workgraph, and ADW remain evaluated alternatives/donors rather than assumed dependencies.
+- **Smart delegation:** Crew's optional `model_route_derive` already uses live credit multipliers and can route eligible unpinned subagent starts. Reuse it and supported spawn/profile controls. Add/adapt only missing backend/role/effort/context/remaining-allowance decisions; ADW's router is within a backend. None of the inspected extensions establishes the whole requested policy by itself.
+- **Monitoring and context:** retain native Crew usage/account sources, context inheritance, and selected library's compact/JIT artifacts. The agentic-coding-harness parser/data model is a conditional donor; its own Kiro calibration warns against assuming proxy estimates are actual credits. Repomix/Aider remain optional if native repo reading proves insufficient.
 
-Workgraph's current package differs from the five-skill version in the attachment and carries Linear/other host dependencies. Inspect or pin a suitable version/component rather than blindly importing its current runtime. External research citation identifiers are not portable evidence. Resolve exact source/revision, file, dependencies, license, and compatibility before adopting a component; mark unresolved candidates as such. TARS is an architectural reference, not an assumed available installation.
+Choose one lifecycle/library and give stage state, approval, dispatch, and recovery clear owners. A lifecycle engine can coexist with Crew's session runtime; avoid competing autonomous dispatchers. Resolve exact files, dependencies, license, and compatibility before importing. TARS remains the architectural inspiration; no public TARS installer was established. A failed trial triggers the explicit rethink rule, not an automatic install of the next suite.
 
 ## 7. Incremental implementation order
 
-The next executable slice is [the foundation and shared-skill-loading plan](docs/NEXT_STEP.md). It includes a copyable prompt, verified facts, explicit unknowns, required outcomes, and the user's rule to stop on the first mandatory failure and rethink before retrying. It does not authorize starting the rest of the implementation in the same run.
+The next executable slice is [the AI-DLC Studio extension trial](docs/NEXT_STEP.md). It uses an existing Crew app, preserves the VS Code start path, and stops at technical-plan approval. It includes a copyable prompt, exact versions, unknowns, extension acceptance checks and the user's stop-on-first-mandatory-failure rule. It does not authorize the rest of implementation in the same run.
 
 Develop directly here. For each step: assemble one useful capability, check it in the real Crew path, update the evidence/status, and commit. No Git worktree is needed for this repository. Every step preserves the single VS Code startup task. First-time setup, login, and genuine approval decisions may require user action.
 
 ### Step 1 — Establish the capability and component foundation
 
-Confirm installed versions and what Crew can already expose for Kiro/Codex, skill discovery, context, and usage. Turn the research shortlist into exact adopt/adapt/native/defer choices for the first integrated path, with pinned sources and licenses for imports. Create the initial capability catalogue, including unknowns, without another broad research project. Keep shared configuration and library loading behind the existing startup task, including when another target project is selected.
+Retain Crew and read its native capability/model/usage surfaces rather than recreating or benchmarking them. Trial pinned AI-DLC Studio's planning, review and human gate in a harmless fixture with its supplied bridge and assets. Use evidence to confirm the extension choice and identify missing adaptations. Create compact capability/component records with licenses and unknowns. Keep activation/shared configuration behind the existing startup task. One-fixture success does not establish cross-project support or complete this step.
 
 **Deliverable:** Crew can access its known tool capabilities and chosen component library through the one start path. Remaining adaptation work is specific and recorded. Check actual loading and task start/stop/restart.
 
@@ -167,6 +172,7 @@ Grow the curated specialist/skill library, tune routing and context, and add par
 - [x] Earlier research and supplied research preserved; local Git repository prepared.
 - [x] Clarified target: ChatGPT/GitHub intake, two planning stages, smart multi-tool delegation, reusable agents/skills, monitoring, and context handling.
 - [x] Single VS Code startup and direct Git commits established as project requirements.
+- [x] Broad complete-system comparison and pinned first-candidate trial plan documented; runtime compatibility remains untested.
 - [ ] Step 1: capability catalogue, exact component choices, and shared library availability.
 - [ ] Step 2: coordinator-visible usage/allowance and controlled context handoffs.
 - [ ] Step 3: skill/agent selection and capability/usage-aware model/effort routing.
