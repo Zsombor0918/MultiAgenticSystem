@@ -10,9 +10,11 @@ A reusable, TARS-inspired AI development system built by assembling existing Kir
 
 Discuss your ideas in **ChatGPT**, agree the goal, and create the strategic issue through the **GitHub plugin**. Give that issue and the target project to **Kiro Crew**. Crew then coordinates:
 
-`technical plan → your review/approval → detailed implementation plan with proposed code changes → your approval → implementation → tests/CI → independent review → PR/report → your merge decision`
+`repository-grounded, actionable plan → your review/approval → implementation → tests/CI → independent review → PR/report → your merge decision`
 
-During both planning and implementation, Crew selects suitable agents, skills, Kiro/Codex backends, models, supported reasoning effort, native tools, and context. It knows the tools' verified capabilities and uses available credit/usage information to guide decisions. You should not have to dispatch each worker or choose every model yourself.
+For complex or high-risk work, Crew may first prepare a technical/solution plan for approval, followed by a separately reviewed detailed implementation plan and a second approval. **Two separate plans are an option, not a requirement.** A single plan must already contain enough concrete implementation and verification detail to approve safely.
+
+During planning and implementation, Crew selects suitable agents, skills, Kiro/Codex backends, models, supported reasoning effort, native tools, and context. It knows the tools' verified capabilities and uses available credit/usage information to guide decisions. You should not have to dispatch each worker or choose every model yourself.
 
 The reusable agent/skill library, smart delegation, credit monitoring, and smart context handling are core capabilities. We build them incrementally by importing or adapting proven components and filling demonstrated integration gaps with small amounts of code.
 
@@ -42,7 +44,7 @@ Every addition must fit behind this normal startup entry point. The future share
 1. Reuse native Crew features and trial the selected ready-made extension's planning/review gates; record exact remaining adaptations.
 2. Connect existing usage monitoring and controlled context handoffs to Crew.
 3. Assemble the reusable agent/skill library and smart model/effort delegation.
-4. Connect GitHub issue intake, technical planning/review, and implementation planning/approval.
+4. Connect GitHub issue intake, right-sized repository-grounded planning/review and owner approval; add a separate implementation plan only when justified.
 5. Connect implementation, checks, independent review, and reporting.
 6. Use a real issue and confirm the workflow works with another project; improve from measured results.
 

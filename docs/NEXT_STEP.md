@@ -12,7 +12,7 @@ Reuse order: native Crew → existing Crew extension → portable/adapted compon
 
 Use the actual extension to produce a code-grounded technical plan and separate specialist review for a tiny fixture issue. Verify a real human approval checkpoint, then stop **awaiting the user's technical-plan approval**. Record precisely what remains to connect Crew's backend/model/effort choices, context and usage to the extension.
 
-The detailed implementation plan, second approval, code changes, CI, independent code review, delivery and portability remain required later steps. No mock plan, mere installation, or discovery response counts as a successful planning/review integration.
+A separate detailed implementation plan and its second approval are **optional**, depending on task complexity; the later implementation, CI, independent code review, delivery and portability checks remain required. No mock plan, mere installation, or discovery response counts as a successful planning/review integration.
 
 ## Facts and unknowns
 
@@ -47,14 +47,14 @@ Keep normal startup behind **VS Code → Tasks: Run Task → Kiro Crew: Start**.
 ## C. Exercise only planning, review and its user gate
 
 1. Register the harmless fixture through Studio's supported flow. Use a tiny issue with actual source, acceptance criteria and one design decision, such as proposing validation for a small command-line parser. It is an input fixture, not permission to implement. The final product's intake remains an approved GitHub issue; no dummy remote issue is required here.
-2. Select the smallest supported lifecycle scope that retains technical planning, independent specialist review and a human gate. Preview actual stages/artifacts. Do not force all 33 stages onto a tiny issue, skip a required gate, or let a Quick/Express path bypass the two-plan target. Record the future mapping to detailed implementation planning and its separate approval.
+2. Select the smallest supported lifecycle scope that retains technical planning, independent specialist review and a human gate. Preview actual stages/artifacts. Do not force all 33 stages onto a tiny issue or let a Quick/Express path bypass owner approval, substantive plan review or the no-code-before-approval boundary. A second implementation plan and approval are optional; record how the selected scope would support them if justified, without requiring them for every task.
 3. Verify the extension's actual hook owner, project-agent resolution and human-turn recording on the selected route. Use existing Crew spec-hook handling and Studio's compatibility patches. At a checkpoint, a harmless attempted premature transition must be refused and leave the fixture unchanged. Never fabricate approval, auto-send a human answer, flip handshake flags or bypass the guard. Stop if the required behavior fails.
 4. Run its real code-grounded technical planning and obtain a different specialist worker/session's plan review, with scoped context and observed completion. Use one active worker at a time where the supported configuration allows it. If a smaller review configuration needs a patch, document it before the trial; do not quietly replace independent review with planner self-review. A rejected plan ends this run without automatic correction.
 5. Record the chosen model/effort and why, what was actually applied/exposed, context/artifact handoffs, parent/child identities and native usage with source/units/freshness/coverage. Native Kiro children may be accepted for this first extension slice if their identity and review independence are evidenced; explicitly record that this does not establish Crew-wide Kiro/Codex dispatch or per-child accounting. Parent-only accounting is partial coverage, not full worker metering. A missing native parent usage record or unidentifiable reviewer is a mandatory blocker; missing price/quota or unavailable per-child fields remain named gaps for step 2.
 6. Compare fixture code before/after. Only designated planning/state artifacts may change. Stop **awaiting technical-plan approval**; do not send that approval yourself, generate the detailed implementation plan or start construction. Confirm no host notice or automated continuation was mistaken for the user's approval.
 7. Stop/restart using the same VS Code task. Confirm extension/library/artifact availability and the pending checkpoint without rerunning paid planning. This is an extension persistence check; it does not establish whole-system recovery or another-project portability.
 
-This trial does not certify complete hostile-agent write isolation, full smart routing, both planning gates or cross-project support. The production system still requires those relevant acceptance checks. Record a native-review/dispatch/telemetry limitation explicitly rather than calling it solved because the app opened.
+This trial does not certify complete hostile-agent write isolation, full smart routing, optional second-plan handling or cross-project support. The production system still requires its relevant acceptance checks, including an actionable approved plan before coding. Record a native-review/dispatch/telemetry limitation explicitly rather than calling it solved because the app opened.
 
 ## D. Record results, commit the checked slice and stop
 
@@ -89,7 +89,8 @@ Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and the extension research.
 Crew is our fixed, trusted foundation. Reuse native features and the supplied
 extension/bridge first, adapt existing components for real gaps, then implement
 only what is missing. Do not benchmark or replace Crew or install several
-lifecycle systems. Preserve both planning approvals, smart multi-tool worker
+lifecycle systems. Preserve owner approval before implementation; treat a second
+planning stage/approval as optional. Preserve smart multi-tool worker
 selection, context handling, credit-aware decisions and independent review.
 
 Inspect the pinned manifest/installer first. This prompt authorizes bounded

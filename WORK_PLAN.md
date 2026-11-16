@@ -4,6 +4,8 @@ Updated: 2026-11-16. Status: extension preparation and focused offline checks co
 
 This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means choosing the lowest practical total implementation and maintenance effort while preserving those requirements. Existing components are preferred; a small custom implementation is acceptable when it is the better fit.
 
+**Planning clarification (2026-11-16):** Two separate planning documents and approvals were a proposed option, **not a hard requirement**. Default to one repository-grounded, actionable plan and explicit owner approval before code changes; use a distinct technical plan and a second detailed implementation plan/approval only when complexity or risk warrants it. Independent review, scope control, and human merge remain mandatory.
+
 **Crew is already selected and trusted.** Research/integration targets its remaining extensions: native Crew feature first, existing Crew extension second, compatible external component/adaptation third, custom implementation only for the remaining gap. Do not reopen runtime selection or spend the first step benchmarking Crew again. Current choices are in [Crew extension research](docs/research/CREW_EXTENSIONS_2026-11-16.md).
 
 ## Approach flexibility and one-week target
@@ -19,7 +21,7 @@ Initial estimate: **5–7 focused working days** for the first integrated versio
 | 1 | Reuse native capability data; bounded AI-DLC Studio extension trial and exact adaptation record through the existing VS Code task |
 | 2 | Usable credit/usage visibility and focused context handoffs; assess whether the week's target remains achievable |
 | 3 | Initial agent/skill library and capability/usage-aware model/effort delegation |
-| 4 | Issue handoff, technical plan/review, and detailed implementation plan/approval |
+| 4 | Issue handoff, actionable plan/review and owner approval; optional extra planning stage when justified |
 | 5 | Implementation, checks, independent review, and delivery report connected |
 | 6 | One real issue exercised through the integrated workflow and demonstrated gaps corrected |
 | 7 | Stabilization, restart/startup checks, documentation, and a second-project portability check |
@@ -32,10 +34,9 @@ At the day-2 checkpoint, report working pieces, blockers, and any necessary chan
 User + ChatGPT discussion
   → agreed strategic GitHub issue through the GitHub plugin
   → issue handed to Kiro Crew for the selected repository
-  → repository-based technical/solution plan
-  → user review and approval
-  → detailed implementation plan with proposed code changes
-  → user review and approval to implement
+  → repository-based, actionable plan (technical direction + implementation steps)
+  → user review and approval before implementation
+  → optional: detailed second plan and separate approval for complex/risky work
   → intelligently delegated implementation
   → shell tests / CI + independent code review
   → PR and evidence / resource-use report
@@ -44,7 +45,7 @@ User + ChatGPT discussion
 
 ChatGPT is where the user explores ideas, weighs options, and agrees what should be built and why. ChatGPT uses the GitHub plugin to create the approved issue using the target project's templates and conventions. The issue describes the goal, scope, risks, dependencies, and acceptance criteria; Crew determines the code-level solution from the actual repository. The normal handoff is an issue URL and target project, not the whole ChatGPT conversation. This repository does not need to build a replacement ChatGPT interface or GitHub plugin.
 
-Crew prepares the technical plan and can delegate repository research, architecture, and plan checking to appropriate specialists. After review of that direction, it produces the implementation plan: affected files and interfaces, proposed code changes or sketches, task order/dependencies, verification commands, agent/skill assignments, and assumptions. Planning does not apply the proposed changes. The latest user clarification makes both planning stages part of the target flow; combining them for trivial work would be an explicit later simplification, not a silent omission.
+Crew prepares a repository-grounded plan and can delegate research, architecture and plan checking to appropriate specialists. The plan must be actionable before coding: affected files/interfaces, proposed code changes or implementation steps, dependencies, verification commands, risks and relevant agent/skill assignments. **One sufficiently detailed plan and one owner approval are the default**, especially for small fixes and clear features. For complex, high-risk or uncertain work, Crew may propose an initial technical/solution design for approval, then a separate detailed implementation plan and second approval; it should explain why the additional step is useful. Planning does not apply project code changes. An unapproved or materially changed implementation plan never authorizes coding.
 
 The user decides goals, approvals, scope changes, and merge. Crew handles routine selection and coordination of agents, backends, models, supported effort levels, skills, tools, and context in both planning and implementation. TARS is the inspiration for the reusable specialist/skill system. Kiro and Codex are the initial coding tools. The product must work across projects, with KovacsTrader as one possible user.
 
@@ -112,7 +113,7 @@ The current [Crew extension research](docs/research/CREW_EXTENSIONS_2026-11-16.m
 
 - **Native Crew reuse:** Spec Builder provides requirements/design/tasks and approval-hash handling; Code Review Sage provides separate PR review. Reuse native capability cards, live models/effort, Decisions/optional model derivation, context controls, usage/account data and work/session records before adding equivalent services.
 - **First existing Crew-extension trial:** **AI-DLC Studio 2.0.1**, pinned to `8b3881d4737399c3394d8d187f102a5c95d6e528`, bundles AI-DLC **2.11.3 plus four documented Crew compatibility patches**. It supplies a specialist lifecycle and approval/evidence UI. The catalog currently lists older Studio 1.0.1; distinguish versions. Verify the extension's route-specific hooks, required plan gates and Crew-worker mapping, not the Crew runtime choice.
-- **Portable library if needed:** BMAD **6.12.4 stable**, preserving renderer/configuration and per-project assets. Use it for specialist/procedure gaps, or with native Spec Builder if Studio proves unsuitable. Force both user gates, exclude oneshot shortcuts, and map dispatch to Crew. Do not add a second whole lifecycle if the selected extension already covers the need.
+- **Portable library if needed:** BMAD **6.12.4 stable**, preserving renderer/configuration and per-project assets. Use it for specialist/procedure gaps, or with native Spec Builder if Studio proves unsuitable. Preserve owner approval before implementation; enable a second planning gate only when chosen for the task, exclude approval-bypassing oneshot shortcuts, and map dispatch to Crew. Do not add a second whole lifecycle if the selected extension already covers the need.
 - **Upstream lifecycle source:** AWS **AI-DLC 2.11.4** is distinct from Studio's patched bundle. Prefer Studio's existing bridge first; Crew already runs supported spec hooks where needed, so an omitted native hook advertisement alone is not a blocker. Its usage producer still does not cover Kiro/Codex.
 - **Closest full-team alternative:** **metaswarm 0.16.0**, with specialist roles, planning/review gates, role model maps, and external tools. BEADS, native team behavior, fan-out, and Kiro mapping make it a larger adaptation. Its cost estimates are not Kiro credit monitoring.
 - **Earlier findings retained:** AgentSys 5.14.0 really had a full workflow, but a pinned external plugin source returned 404. Current AgentSys/Foreman is a different workflow with review/merge defaults to adapt. GSD, Superpowers, Workgraph, and ADW remain evaluated alternatives/donors rather than assumed dependencies.
@@ -145,11 +146,11 @@ Install/adapt the selected existing profiles and skills for the first issue's re
 
 **Deliverable:** Crew selects and actually applies suitable components and model/effort settings for planning and execution tasks; the user does not manually dispatch every worker. Decisions, context, usage, and completion IDs are traceable. Verify native tools and permissions through the worker path.
 
-### Step 4 — Connect the two planning stages and GitHub handoff
+### Step 4 — Connect right-sized planning and GitHub handoff
 
-Document the ChatGPT → approved strategic GitHub issue → Crew handoff. Assemble code-grounded technical planning, plan review/owner approval, then detailed implementation planning with proposed code changes and approval to execute. Reuse the selected planning/audit skills and native gates. If gates need glue, add only the missing enforcement.
+Document the ChatGPT → approved strategic GitHub issue → Crew handoff. Assemble code-grounded, implementation-ready planning, appropriate plan review and owner approval before coding. For complex or risky work, optionally separate technical design and detailed implementation planning with their own approvals. Reuse selected planning/audit skills and native gates; add only missing enforcement. Do not run a second planning stage just to satisfy a fixed template.
 
-**Deliverable:** an issue produces the two distinct, reviewable plans with appropriate specialist/skill/model choices and resource records. Check that unapproved or materially changed plans cannot start implementation and that planning cannot apply project code changes. Keep tests on designated harmless files here.
+**Deliverable:** an issue produces at least one actionable, reviewable plan with appropriate specialist/skill/model choices and resource records; a second separately approved plan is optional and justified by task needs. Check that unapproved or materially changed plans cannot start implementation and that planning cannot apply project code changes. Keep tests on designated harmless files here.
 
 ### Step 5 — Connect implementation, checks, independent review, and delivery
 
@@ -161,7 +162,7 @@ Execute approved tasks using smart routing and focused handoffs, run actual proj
 
 Take an approved issue created through the intended ChatGPT/GitHub process and run the full Crew workflow against its project. Record missing capabilities and actual integration gaps, fix those, and check another project's configuration. Preserve each project's rules, templates, and CI rather than imposing KovacsTrader conventions.
 
-**Deliverable:** a real reviewable PR or explicit blocker report, both planning stages, usage/context/routing evidence, and repeatable instructions for another project. Compare operator effort, quality, resource use, and retries to decide the next improvements.
+**Deliverable:** a real reviewable PR or explicit blocker report, approved planning artifact(s), usage/context/routing evidence, and repeatable instructions for another project. Compare operator effort, quality, resource use, and retries to decide the next improvements.
 
 ### Step 7 — Improve from measured work
 
@@ -170,14 +171,14 @@ Grow the curated specialist/skill library, tune routing and context, and add par
 ## 8. Progress and acceptance
 
 - [x] Earlier research and supplied research preserved; local Git repository prepared.
-- [x] Clarified target: ChatGPT/GitHub intake, two planning stages, smart multi-tool delegation, reusable agents/skills, monitoring, and context handling.
+- [x] Clarified target: ChatGPT/GitHub intake, approved actionable planning (optional second stage), smart multi-tool delegation, reusable agents/skills, monitoring, and context handling.
 - [x] Single VS Code startup and direct Git commits established as project requirements.
 - [x] Broad complete-system comparison and pinned first-candidate trial plan documented; live workflow compatibility remains untested.
 - [x] Studio 2.0.1 installed/recorded enabled, local Bun prepared, 373 payload hashes verified, 89 focused upstream checks and three launcher checks passed; live extension trial remains pending.
 - [ ] Step 1: capability catalogue, exact component choices, and shared library availability.
 - [ ] Step 2: coordinator-visible usage/allowance and controlled context handoffs.
 - [ ] Step 3: skill/agent selection and capability/usage-aware model/effort routing.
-- [ ] Step 4: GitHub issue handoff, technical plan/review, implementation plan/approval.
+- [ ] Step 4: GitHub issue handoff, actionable plan/review and owner approval; optional second plan/approval.
 - [ ] Step 5: implementation, checks, independent review, delivery, and recovery.
 - [ ] Step 6: real issue and portability evidence.
 - [ ] Step 7: improvements from measured results.
