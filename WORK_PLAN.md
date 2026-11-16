@@ -1,6 +1,6 @@
 # System and build plan: intelligent Crew development workflow
 
-Updated: 2026-11-16. Status: extension preparation and focused offline checks complete; first actual VS Code startup failed on the launcher's nonexistent embedding model path. The trial is stopped pending agreement on the minimal correction; live planning/review remains unrun. See [step 1 results](docs/STEP_1_RESULTS.md).
+Updated: 2026-11-16. Status: extension preparation complete; the first VS Code startup failure has a user-approved launcher correction applied. Four startup tests and the real Crew doctor pass. Awaiting the actual task retry; live planning/review remains unrun. See [step 1 results](docs/STEP_1_RESULTS.md).
 
 This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means choosing the lowest practical total implementation and maintenance effort while preserving those requirements. Existing components are preferred; a small custom implementation is acceptable when it is the better fit.
 

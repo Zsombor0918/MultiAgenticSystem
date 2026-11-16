@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class StartupTest(unittest.TestCase):
-    def run_launcher(self, doctor_exit):
+    def run_launcher(self, doctor_exit, model_path=None):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "scripts").mkdir()
@@ -31,7 +31,9 @@ class StartupTest(unittest.TestCase):
                 "kiro-cli": 'case "$1" in whoami) exit 0;; acp) echo v3;; esac',
                 "codex": "exit 0",
                 "kirocrew": (
-                    'case "$1" in doctor) exit "$PILOT_DOCTOR_EXIT";; '
+                    'case "$1" in doctor) '
+                    '[ "${KIROCREW_EMBED_MODEL_PATH-}" = "$PILOT_MODEL_PATH" ] || exit 24; '
+                    'exit "$PILOT_DOCTOR_EXIT";; '
                     'gateway) printf "%s\\n" "$*" > "$PILOT_EVENTS"; '
                     'command -v bun >> "$PILOT_EVENTS";; *) exit 99;; esac'
                 ),
@@ -47,7 +49,10 @@ class StartupTest(unittest.TestCase):
                 port = sock.getsockname()[1]
             env = dict(os.environ, PATH=f"{binaries}:{os.environ['PATH']}",
                        PILOT_DOCTOR_EXIT=str(doctor_exit), PILOT_EVENTS=str(events),
-                       KIROCREW_PORT=str(port))
+                       PILOT_MODEL_PATH=model_path or "", KIROCREW_PORT=str(port))
+            env.pop("KIROCREW_EMBED_MODEL_PATH", None)
+            if model_path is not None:
+                env["KIROCREW_EMBED_MODEL_PATH"] = model_path
             result = subprocess.run(["bash", str(root / "scripts/start-kirocrew.sh")],
                                     env=env, capture_output=True, text=True, timeout=10)
             return result, events.read_text() if events.exists() else "", str(bun)
@@ -57,10 +62,15 @@ class StartupTest(unittest.TestCase):
         self.assertEqual(result.returncode, 23, result.stderr)
         self.assertEqual(events, "")
 
-    def test_success_uses_local_bun_and_existing_gateway_options(self):
+    def test_success_uses_default_model_local_bun_and_existing_gateway_options(self):
         result, events, bun = self.run_launcher(0)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(events.splitlines(), ["gateway --no-open --approval interactive", bun])
+
+    def test_explicit_custom_model_path_reaches_doctor(self):
+        result, events, _ = self.run_launcher(0, model_path="/tmp/pilot-custom-model.gguf")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(events)
 
     def test_vscode_task_keeps_the_single_launcher(self):
         tasks = json.loads((ROOT / ".vscode/tasks.json").read_text())["tasks"]

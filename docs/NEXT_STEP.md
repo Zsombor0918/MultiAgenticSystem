@@ -1,6 +1,6 @@
 # Next run: integrate the existing AI-DLC Studio Crew extension
 
-Prepared: 2026-11-16. Status: **STOPPED after the first actual VS Code task failed (exit 1)**. The launcher's nonexistent custom embedding path makes doctor fail. Studio remains installed/recorded enabled; offline checks passed, but live section C is NOT RUN. Read the failure and proposed minimal correction in [STEP_1_RESULTS](STEP_1_RESULTS.md). Agree that correction with the user before applying it or retrying; do not reinstall components or repeat passed checks without cause.
+Prepared: 2026-11-16. Status: **approved startup correction applied; awaiting the actual VS Code task retry**. The first task failed on a nonexistent custom embedding path; the user approved removing it. Four startup tests and the real Crew doctor now pass (exit 0). Studio remains installed/recorded enabled, but live section C is NOT RUN. Read [STEP_1_RESULTS](STEP_1_RESULTS.md); do not seek the same approval again, reinstall components, or repeat passed checks without cause.
 
 **Kiro Crew is fixed and trusted.** This run checks a ready-made extension against our workflow; it does not reconsider or benchmark Crew. Read the [current extension research](research/CREW_EXTENSIONS_2026-11-16.md), [extension source inventory](research/CREW_EXTENSION_SOURCES_2026-11-16.json), and [system plan](../WORK_PLAN.md). This supersedes the earlier diagnostic-skill and BMAD-first experiments.
 
@@ -8,7 +8,7 @@ Reuse order: native Crew → existing Crew extension → portable/adapted compon
 
 ## The bounded outcome
 
-**Resume point after agreement:** correct the launcher configuration as recorded in the results, verify that change, then obtain a new actual VS Code task result before extension backend/Bun health and section C. Component/capability records already exist. The fixture is prepared but its AI-DLC harness is not installed yet. Keep the source/payload pins; no alternative candidate has been installed.
+**Resume point:** obtain a new actual VS Code task result, then verify extension backend/Bun health before section C. The approved launcher correction and diagnostic check are complete; the default local embedding model should download in the background on gateway startup. Component/capability records already exist. The fixture is prepared but its AI-DLC harness is not installed yet. Keep the source/payload pins; no alternative candidate has been installed.
 
 Use the actual extension to produce a code-grounded technical plan and separate specialist review for a tiny fixture issue. Verify a real human approval checkpoint, then stop **awaiting the user's technical-plan approval**. Record precisely what remains to connect Crew's backend/model/effort choices, context and usage to the extension.
 
@@ -80,12 +80,12 @@ Report expected/actual behavior and exit code, redacted evidence, changed state,
 ## Copyable prompt for the next Codex session
 
 ```text
-Work in /home/zsom/MultiAgenticSystem. Read docs/STEP_1_RESULTS.md and resume
-only with the user's agreement on the proposed correction after the recorded
-startup failure. Without that agreement, report the failure and proposed change;
-do not apply it, retry startup or advance to section C. Once agreed, correct and
-verify startup, obtain actual VS Code task evidence, then resume section C and
-results/commit. Reuse the prepared Studio 2.0.1 installation,
+Work in /home/zsom/MultiAgenticSystem. Read docs/STEP_1_RESULTS.md. The user
+approved the startup correction; it is applied, four startup tests pass and the
+real Crew doctor exits 0. Do not request the same approval again or repeat these
+checks without cause. Obtain actual VS Code task retry evidence, verify live
+extension health, then resume section C and results/commit.
+Reuse the prepared Studio 2.0.1 installation,
 local Bun and fixture; do not reinstall or rerun passed checks without cause.
 Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and the extension research.
 

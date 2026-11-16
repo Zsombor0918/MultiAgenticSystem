@@ -4,9 +4,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 root="$PWD"
 export KIROCREW_HOME="$root/.runtime/kirocrew"
 export KIROCREW_PORT="${KIROCREW_PORT:-5476}"
-# A nem létező saját modell útvonal a dokumentált fail-closed viselkedéssel
-# kihagyja az alap embeddingmodell letöltését; csak kulcsszavas keresés lesz.
-export KIROCREW_EMBED_MODEL_PATH="${KIROCREW_EMBED_MODEL_PATH:-$root/.runtime/no-embedding-model.gguf}"
 export CODEX_PATH="$(command -v codex || true)"
 # Keep the Studio pilot's pinned Bun local and available through the same start task.
 export PATH="$root/.runtime/pilots/aidlc-studio-2.0.1/bun/bin:$root/.runtime/node-v24.22.3-linux-x64/bin:$root/.runtime/kirocrew-venv/bin:$root/.runtime/codex-adapter/node_modules/.bin:$PATH"

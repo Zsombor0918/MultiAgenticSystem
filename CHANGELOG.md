@@ -1,9 +1,15 @@
 # Changelog
 
+## 2026-11-16 — Approved embedding configuration correction
+
+- Removed the launcher's fake `KIROCREW_EMBED_MODEL_PATH` after user approval. Crew can now use its default local embedding model (about 610 MB), downloaded in the background on gateway startup. Explicit custom paths remain available. This resolves the reported configuration error while preserving fatal doctor checks and the same VS Code start task.
+- Strengthened the startup tests to check the model-path environment reaching doctor. All four tests and shell syntax pass. The real installed Crew doctor also exits **0**, reporting that Crew is ready and the model download is pending.
+- Updated the results and next-step instructions. The actual task retry, download and Studio health are still pending; no gateway or paid model sessions were started for this correction.
+
 ## 2026-11-16 — Actual startup failure recorded
 
 - Recorded the user's real VS Code task failure: the missing embedding-model placeholder makes Crew doctor and the launcher exit 1 before the gateway starts. The earlier stub tests did not cover the real doctor's model configuration check.
-- Updated status and resume instructions to stop dependent work and propose removing the fake custom-model path in favor of Crew's default local model. This correction is awaiting user agreement under the trial's stop-on-failure rule; it has not been applied or retried.
+- Updated status and resume instructions to stop dependent work and propose removing the fake custom-model path in favor of Crew's default local model. At that point the correction awaited user agreement under the trial's stop-on-failure rule.
 
 ## 2026-11-16 — AI-DLC Studio pilot preparation
 
