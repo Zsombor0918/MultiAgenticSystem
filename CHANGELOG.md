@@ -3,7 +3,7 @@
 ## 2026-11-21 — Conversation reset (partial)
 
 - Used Crew's native dashboard API to close 15 open slots and clear 17 closed sessions; the sessions API returned zero. Studio's live health reported healthy with the bundled payload and Bun available.
-- Complete workflow reset remains outstanding: Studio does not offer intent deletion, two prior action records remain, old artifact deletion was rejected by automatic command review, and task restart verification is pending.
+- The user restarted the VS Code task; zero sessions and slots persisted, and Studio health passed again. Complete workflow reset remains outstanding: Studio does not offer intent deletion, two prior action records remain, and old artifact deletion was rejected by automatic command review.
 
 ## 2026-11-21 — Native skill sync
 
