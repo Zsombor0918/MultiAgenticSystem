@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class StartupTest(unittest.TestCase):
-    def run_launcher(self, doctor_exit, model_path=None):
+    def run_launcher(self, doctor_exit, model_path=None, check_browser=False):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "scripts").mkdir()
@@ -35,7 +35,13 @@ class StartupTest(unittest.TestCase):
                     '[ "${KIROCREW_EMBED_MODEL_PATH-}" = "$PILOT_MODEL_PATH" ] || exit 24; '
                     'exit "$PILOT_DOCTOR_EXIT";; '
                     'gateway) printf "%s\\n" "$*" > "$PILOT_EVENTS"; '
-                    'command -v bun >> "$PILOT_EVENTS";; *) exit 99;; esac'
+                    'command -v bun >> "$PILOT_EVENTS"; '
+                    'if [ -n "$PILOT_FAKE_GATEWAY" ]; then exec python3 "$PILOT_FAKE_GATEWAY"; fi;; '
+                    '*) exit 99;; esac'
+                ),
+                "powershell.exe": (
+                    '[ -f "$PILOT_READY" ] || { echo "opened early" >> "$PILOT_EVENTS"; exit 1; }; '
+                    'printf "%s\n" "$*" >> "$PILOT_EVENTS"'
                 ),
             }
             for name, body in scripts.items():
@@ -49,10 +55,44 @@ class StartupTest(unittest.TestCase):
                 port = sock.getsockname()[1]
             env = dict(os.environ, PATH=f"{binaries}:{os.environ['PATH']}",
                        PILOT_DOCTOR_EXIT=str(doctor_exit), PILOT_EVENTS=str(events),
-                       PILOT_MODEL_PATH=model_path or "", KIROCREW_PORT=str(port))
+                       PILOT_MODEL_PATH=model_path or "", KIROCREW_PORT=str(port),
+                       PILOT_FAKE_GATEWAY="", WSL_DISTRO_NAME="startup-test")
             env.pop("KIROCREW_EMBED_MODEL_PATH", None)
             if model_path is not None:
                 env["KIROCREW_EMBED_MODEL_PATH"] = model_path
+            if check_browser:
+                env["PILOT_READY"] = str(root / "ready")
+                fake_gateway = root / "fake_gateway.py"
+                env["PILOT_FAKE_GATEWAY"] = str(fake_gateway)
+                fake_gateway.write_text("""
+import os
+import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
+
+
+class ReadyProbe(BaseHTTPRequestHandler):
+    probes = 0
+
+    def do_GET(self):
+        assert self.path == '/api/ready'
+        ReadyProbe.probes += 1
+        if self.probes == 3:
+            Path(os.environ['PILOT_READY']).touch()
+        self.send_response(503 if self.probes == 2 else 200)
+        self.end_headers()
+        self.wfile.write(b'{"ready": false}' if self.probes == 1 else b'{"ready": true}')
+
+
+with HTTPServer(('127.0.0.1', int(os.environ['KIROCREW_PORT'])), ReadyProbe) as server:
+    server.timeout = 4
+    for _ in range(3):
+        server.handle_request()
+    events = Path(os.environ['PILOT_EVENTS'])
+    deadline = time.monotonic() + 2
+    while len(events.read_text().splitlines()) == 2 and time.monotonic() < deadline:
+        time.sleep(0.02)
+""")
             result = subprocess.run(["bash", str(root / "scripts/start-kirocrew.sh")],
                                     env=env, capture_output=True, text=True, timeout=10)
             return result, events.read_text() if events.exists() else "", str(bun)
@@ -71,6 +111,13 @@ class StartupTest(unittest.TestCase):
         result, events, _ = self.run_launcher(0, model_path="/tmp/pilot-custom-model.gguf")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertTrue(events)
+
+    def test_browser_opens_once_after_http_success_and_ready_true(self):
+        result, events, _ = self.run_launcher(0, check_browser=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn("opened early", events)
+        self.assertEqual(events.count("Start-Process 'http://localhost:"), 1)
+        self.assertIn("Dashboard kész: http://localhost:", result.stdout)
 
     def test_vscode_task_keeps_the_single_launcher(self):
         tasks = json.loads((ROOT / ".vscode/tasks.json").read_text())["tasks"]

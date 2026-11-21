@@ -74,7 +74,52 @@ MSG
 fi
 printf '\nKiro Crew diagnosztika (a KAS route és Codex sorokat ellenőrizd):\n'
 kirocrew doctor
-printf '\nDashboard: http://localhost:%s\nLeállítás: Ctrl+C ebben a terminálban.\n' "$KIROCREW_PORT"
+printf '\nA gateway indul. A dashboard akkor nyílik meg, amikor a Crew készen áll.\n'
+printf 'Leállítás: Ctrl+C ebben a terminálban.\n'
 printf 'Kizárólag akkor kezdj Kiro-próbát, ha a doctor V3 CLI relay útvonalat jelez.\n'
 printf 'Ha a dashboard bejelentkezést kér, másik terminálban: KIROCREW_HOME="%s" kirocrew token\n' "$KIROCREW_HOME"
+
+# Keep the gateway in the foreground and only open the local dashboard after readiness.
+python3 - "$$" "$KIROCREW_PORT" <<'PY' &
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+import urllib.request
+import webbrowser
+
+launcher_pid, port = map(int, sys.argv[1:])
+dashboard = f"http://localhost:{port}"
+probe = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+deadline = time.monotonic() + 120
+while os.getppid() == launcher_pid and time.monotonic() < deadline:
+    try:
+        with probe.open(f"http://127.0.0.1:{port}/api/ready", timeout=2) as response:
+            state = json.load(response)
+            ready = isinstance(state, dict) and state.get("ready") is True
+    except (OSError, ValueError):
+        ready = False
+    if ready and os.getppid() == launcher_pid:
+        print(f"Dashboard kész: {dashboard}", flush=True)
+        powershell = shutil.which("powershell.exe") if os.environ.get("WSL_DISTRO_NAME") else None
+        try:
+            if powershell:
+                subprocess.run(
+                    [powershell, "-NoProfile", "-NonInteractive", "-Command",
+                     f"Start-Process '{dashboard}'"],
+                    check=True,
+                    timeout=10,
+                )
+            elif sys.platform == "darwin" or os.environ.get("DISPLAY") or os.environ.get("WAYLAND_DISPLAY"):
+                webbrowser.open(dashboard)
+        except (OSError, subprocess.SubprocessError):
+            print("Nyisd meg a fenti címet a böngészőben.", flush=True)
+        break
+    time.sleep(1)
+else:
+    if os.getppid() == launcher_pid:
+        print("A gateway 120 másodpercen belül nem jelzett kész állapotot. Nézd meg a terminál naplóját.", flush=True)
+PY
 exec kirocrew gateway --no-open --approval interactive > >(trap '' INT; cat)

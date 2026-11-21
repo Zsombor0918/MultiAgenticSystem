@@ -33,7 +33,7 @@ The research guides the initial choices, but we can try alternatives or write a 
 
 ## One start button
 
-Open this repository in VS Code and choose **Tasks: Run Task → Kiro Crew: Start**. It runs `scripts/start-kirocrew.sh`; follow the terminal output for the dashboard and any necessary first-time setup or login. Stop it with `Ctrl+C` in that terminal.
+Open this repository in VS Code and choose **Tasks: Run Task → Kiro Crew: Start**. The launcher waits for Crew's readiness check before printing the ready link and opening the dashboard on WSL or a desktop. Use the newly opened dashboard. An older browser tab can show connection errors during a restart. Stop Crew with `Ctrl+C` in the task terminal.
 
 Every addition must fit behind this normal startup entry point. The future shared library and configuration must be available when selecting other target projects too. The task/launcher exist; the final integrated startup behavior still requires verification.
 
