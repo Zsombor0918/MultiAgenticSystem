@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-21 — Conversation reset (partial)
+
+- Used Crew's native dashboard API to close 15 open slots and clear 17 closed sessions; the sessions API returned zero. Studio's live health reported healthy with the bundled payload and Bun available.
+- Complete workflow reset remains outstanding: Studio does not offer intent deletion, two prior action records remain, old artifact deletion was rejected by automatic command review, and task restart verification is pending.
+
 ## 2026-11-21 — Native skill sync
 
 - Ran Crew's native builtin skill synchronization; no user skill was set aside. Doctor now passes with all 43 builtins current, and the normal VS Code task starts the gateway with the V3 relay.

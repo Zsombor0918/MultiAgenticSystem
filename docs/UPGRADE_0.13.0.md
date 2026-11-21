@@ -2,6 +2,8 @@
 
 2026-11-21. **Installed and running; trial reset and owner actions incomplete.** The user requested stable 0.13.0 and preservation of configuration, credentials, Studio, CrewLab and workflow state. The prior trial remains paused.
 
+Later on 2026-11-21 the user requested a complete reset through supported mechanisms. Crew's authenticated native controls closed all 15 open slots and cleared 17 closed sessions in total; the sessions API returned zero and no model turn was started. Studio health reported healthy, Bun 1.4.4 available and 373 payload files matching. Studio still reported two action records linked to the previous intent. Studio's own documentation says it does not delete intents, only archive them; the prior CrewLab intent and actions remain. A complete reset is not established. The user was asked to restart the VS Code task; persistence remains unverified until that occurs. The earlier cleanup command was rejected by automatic command review, so old artifacts remain.
+
 Native `SkillsLoader.sync_builtins()` synchronized packaged skills without setting aside user skills. Doctor then exited 0, reported all 43 installed skills in step and confirmed the CLI V3 relay. The user started the normal VS Code task; gateway `/api/health` returned HTTP 200. Studio live health remains unverified.
 
 The user will turn on project hook consent for CrewLab and delete closed conversation history in the dashboard. Before that action, the native read showed consent off for CrewLab and this repository. An owner API request received HTTP 403; no security guard was bypassed. The failed CrewLab AI-DLC intent remains on disk and has not been reset. No paid session was started.
