@@ -2,6 +2,8 @@
 
 Date: 2026-11-16. Baseline: `112e0deb31f0b54e16553f2c356a03a02d26e63c`.
 
+**Historical snapshot:** The status and next action below describe the first startup failure and its correction at the time of this report. Subsequent startup, upgrade and reset evidence is in [UPGRADE_0.13.0.md](UPGRADE_0.13.0.md); the later live CrewLab trial and its **PARTIAL** result are in [CREWLAB_TRIAL_REPORT.md](CREWLAB_TRIAL_REPORT.md). The later trial does not establish that every mandatory check of [NEXT_STEP.md](NEXT_STEP.md) passed.
+
 **Result: first actual VS Code startup failed; the user-approved correction is applied and real doctor now passes (exit 0).** The original failure after `53a6752` was recorded in `96fc543`. The user explicitly chose “Apply the correction”; the fake model path has now been removed. A new actual VS Code task result and all downstream live checks are still pending. Crew was not replaced or benchmarked. No paid Crew/worker sessions, Advisor requests, or model benchmarks were started. This assistant session and its earlier short source-audit agent still consume their own usage; their exact credit cost is not exposed here.
 
 ## First actual startup: FAIL

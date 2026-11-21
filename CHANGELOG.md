@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-21 — Live CrewLab trial evidence
+
+- Recorded the completed Crew 0.13.0 / Studio 2.0.1 trial in `docs/CREWLAB_TRIAL_REPORT.md`: real approvals, distinct Kiro workers, independent review and eight passing tests, with an overall **PARTIAL** result because the original task's documentation was not completed and integration checks remain open.
+- Updated the README and dated evidence summaries to distinguish the earlier preparation and reset snapshots from the later trial. The existing workflow and bounded execution plans remain unchanged.
+
 ## 2026-11-21 — Local AI-DLC reset
 
 - Removed both CrewLab intent directories and their registry, cursor and session bindings while the gateway was stopped. Cleared Studio workflow and activity records while preserving the project registration, installation receipt and settings.

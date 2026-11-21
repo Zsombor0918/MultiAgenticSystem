@@ -1,6 +1,8 @@
 # Component decisions
 
-Updated: 2026-11-16. Crew remains the selected runtime. Local preparation and focused offline checks are complete; the live extension trial is pending.
+Historical preparation snapshot: 2026-11-16. Crew remains the selected runtime.
+
+**Later evidence, 2026-11-21:** Crew was upgraded to 0.13.0 and Studio 2.0.1 was exercised in a live CrewLab trial. The overall result was **PARTIAL**, with documented approvals and independent review but an incomplete original task and unresolved integration gaps. See the [trial audit](CREWLAB_TRIAL_REPORT.md) and [upgrade results](UPGRADE_0.13.0.md). The version and pending-status statements below describe the earlier preparation, not the current trial status; the component pins and provenance remain historical records.
 
 | Component | Decision and exact source | Evidence / remaining work |
 | --- | --- | --- |

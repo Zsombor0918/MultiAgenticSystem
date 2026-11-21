@@ -1,6 +1,8 @@
 # Capabilities relevant to the extension pilot
 
-Updated: 2026-11-16. Reuse Crew's native catalogue; this is a small evidence overlay, not a replacement capability database.
+Historical snapshot: 2026-11-16. Reuse Crew's native catalogue; this is a small evidence overlay, not a replacement capability database.
+
+**Later evidence, 2026-11-21:** Crew 0.13.0 and Studio 2.0.1 completed a live CrewLab trial with real human approvals, four identifiable native Kiro child invocations, an independent code review and recorded parent-turn credits. Project hooks ran on that route. Full specialist-profile projection failed; applied model/effort, child-level credit attribution, negative gate checks and cross-backend routing remain unverified. The original task's documentation update was missed. See the [trial audit](CREWLAB_TRIAL_REPORT.md) for the complete evidence and qualifications. The table below records the earlier preparation state, not current live status.
 
 | Area | Existing surface | Current evidence / limit |
 | --- | --- | --- |

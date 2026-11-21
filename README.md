@@ -2,7 +2,9 @@
 
 A reusable, TARS-inspired AI development system built by assembling existing Kiro Crew capabilities and compatible skills, agent profiles, routing policies, and monitoring components. It should work across software projects, including KovacsTrader.
 
-**Status:** Crew 0.13.0 and Studio 2.0.1 are installed. The local reset cleared the failed CrewLab intents, Studio action history and saved Crew conversations while preserving sign-ins and the harness. The fresh planning trial is pending. See [upgrade and reset results](docs/UPGRADE_0.13.0.md).
+**Status (2026-11-21):** Crew 0.13.0 and Studio 2.0.1 completed a live CrewLab bugfix trial. Its overall result is **PARTIAL**: real human approvals, separate Kiro workers, an independent review and eight passing tests were recorded, but the original task's documentation update was missed. Negative gate checks, full specialist permissions, cross-backend routing and per-worker usage remain unverified or incomplete. See the [trial audit](docs/CREWLAB_TRIAL_REPORT.md) for evidence and limits; the full integrated system is not yet complete.
+
+The dated status and resume statements in `WORK_PLAN.md` and `docs/NEXT_STEP.md` predate this audit. Their plans and instructions are preserved; do not interpret their older “pending” or “NOT RUN” statements as the latest evidence, or assume the later trial satisfied every mandatory check in the bounded plan. The stop-and-rethink rule remains in effect.
 
 **Kiro Crew is our chosen foundation.** Reuse native features first, then existing Crew apps/extensions, then compatible external components, and add custom code only for uncovered gaps. AI-DLC Studio is the first extension being trialled; native Spec Builder/Code Review Sage and portable specialist libraries remain alternatives for demonstrated gaps.
 
@@ -25,7 +27,7 @@ The research guides the initial choices, but we can try alternatives or write a 
 - [Crew extension research and reuse plan](docs/research/CREW_EXTENSIONS_2026-11-16.md) — current recommendation: native features, actual Crew apps, adaptable libraries, and remaining custom gaps.
 - [Broader system/library comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) — BMAD, AI-DLC, metaswarm, AgentSys, GSD, and others as possible sources for Crew extensions.
 - [Next step and copyable execution prompt](docs/NEXT_STEP.md) — bounded AI-DLC Studio integration trial, with stop-on-first-failure instructions.
-- [Component decisions](docs/COMPONENT_DECISIONS.md), [capability evidence](docs/CAPABILITIES.md), and [step 1 results](docs/STEP_1_RESULTS.md) — exact pins, observed checks and remaining live evidence.
+- [Component decisions](docs/COMPONENT_DECISIONS.md), [capability evidence](docs/CAPABILITIES.md), [step 1 results](docs/STEP_1_RESULTS.md), and [CrewLab trial audit](docs/CREWLAB_TRIAL_REPORT.md) — exact pins and dated evidence; the audit records the later live trial.
 - [System and build plan](WORK_PLAN.md) — the complete workflow, core capabilities, implementation order, deliverables, and progress.
 - [Research alignment](docs/RESEARCH_ALIGNMENT.md) — how the existing findings and candidate components support each requirement, including known gaps.
 - [Earlier Crew research](docs/history/RESEARCH_KIRO_WORKFLOW.md) and [usage/routing findings](docs/history/RESEARCH_COST_NOTES.md) — dated evidence and limitations.

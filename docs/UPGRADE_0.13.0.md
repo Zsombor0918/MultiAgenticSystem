@@ -23,4 +23,4 @@ At installation time the checked CrewLab, Studio, session, trust and usage files
 
 ## Remaining work
 
-Verify CrewLab's native hook consent before starting the next planning trial.
+At the time of this upgrade report, CrewLab's native hook consent still needed verification before a planning trial. The later [CrewLab trial audit](CREWLAB_TRIAL_REPORT.md) records project hook execution and human approvals on the exercised route, alongside the remaining untested denial and permission boundaries.
