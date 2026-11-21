@@ -1,5 +1,7 @@
 # Next run: integrate the existing AI-DLC Studio Crew extension
 
+**2026-11-21 update:** Crew was upgraded to 0.13.0 at the user's request. Post-upgrade doctor failed on stale builtin skills; the launcher stops before gateway startup. Follow the blocker and recovery decision in [UPGRADE_0.13.0](UPGRADE_0.13.0.md) before resuming this trial. The historical 0.12.2 observations below do not establish compatibility with 0.13.0.
+
 Prepared: 2026-11-16. Status: **approved startup correction applied; awaiting the actual VS Code task retry**. The first task failed on a nonexistent custom embedding path; the user approved removing it. Four startup tests and the real Crew doctor now pass (exit 0). Studio remains installed/recorded enabled, but live section C is NOT RUN. Read [STEP_1_RESULTS](STEP_1_RESULTS.md); do not seek the same approval again, reinstall components, or repeat passed checks without cause.
 
 **Kiro Crew is fixed and trusted.** This run checks a ready-made extension against our workflow; it does not reconsider or benchmark Crew. Read the [current extension research](research/CREW_EXTENSIONS_2026-11-16.md), [extension source inventory](research/CREW_EXTENSION_SOURCES_2026-11-16.json), and [system plan](../WORK_PLAN.md). This supersedes the earlier diagnostic-skill and BMAD-first experiments.

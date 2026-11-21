@@ -1,5 +1,7 @@
 # System and build plan: intelligent Crew development workflow
 
+**2026-11-21:** Crew 0.13.0 is installed, but the post-upgrade doctor reports stale builtin skills and blocks startup. See [upgrade results](docs/UPGRADE_0.13.0.md) before resuming the pilot.
+
 Updated: 2026-11-16. Status: extension preparation complete; the first VS Code startup failure has a user-approved launcher correction applied. Four startup tests and the real Crew doctor pass. Awaiting the actual task retry; live planning/review remains unrun. See [step 1 results](docs/STEP_1_RESULTS.md).
 
 This plan follows the user's clarified workflow. Smart delegation, model/effort selection, a reusable skill and agent system, credit monitoring, and context handling are core requirements. “Minimal work” means choosing the lowest practical total implementation and maintenance effort while preserving those requirements. Existing components are preferred; a small custom implementation is acceptable when it is the better fit.

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-21 — Crew 0.13.0 upgrade and blocker
+
+- Installed stable 0.13.0 with the official signed installer, preserving local state and retaining Kiro CLI V3 relay. Recorded backup and compatibility evidence in `docs/UPGRADE_0.13.0.md`.
+- Confirmed native per-project hook consent is present and currently off for the inspected projects. Live consent and hook execution remain untested.
+- Doctor reports stale builtin skills and exits 1; the launcher remains fail-closed and the trial is paused pending a safe synchronization plan.
+
 ## 2026-11-16 — Approved embedding configuration correction
 
 - Removed the launcher's fake `KIROCREW_EMBED_MODEL_PATH` after user approval. Crew can now use its default local embedding model (about 610 MB), downloaded in the background on gateway startup. Explicit custom paths remain available. This resolves the reported configuration error while preserving fatal doctor checks and the same VS Code start task.

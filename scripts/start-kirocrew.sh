@@ -11,7 +11,7 @@ export PATH="$root/.runtime/pilots/aidlc-studio-2.0.1/bun/bin:$root/.runtime/nod
 if ! command -v kirocrew >/dev/null; then
   cat <<'MSG'
 A Kiro Crew nincs telepítve. Telepítés csak külön jóváhagyás után.
-A docs/history/SETUP_AND_DELEGATION.md tartalmazza a korábbi, 0.12.2-re rögzített telepítést;
+A docs/UPGRADE_0.13.0.md tartalmazza a 0.13.0 telepítés és ellenőrzés eredményét;
 nem kell forráskódot vagy dashboardot fordítani.
 MSG
   exit 1
