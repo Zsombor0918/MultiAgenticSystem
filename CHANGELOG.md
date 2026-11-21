@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-21 — Local AI-DLC reset
+
+- Removed both CrewLab intent directories and their registry, cursor and session bindings while the gateway was stopped. Cleared Studio workflow and activity records while preserving the project registration, installation receipt and settings.
+- Removed saved Crew conversations, old backups, the duplicate installation and obsolete pilot fixtures. Kiro and Codex sign-in checks passed. Crew 0.13.0, Studio 2.0.1, Bun 1.4.4 and CrewLab's Git repository were retained.
+
 ## 2026-11-21 — Conversation reset (partial)
 
 - Studio refused the supported archive operation for the displayed intent because a delivery requires reconciliation. Reconcile-from-disk left it uncertain, so the intent and two action cards remain; no delivery evidence was fabricated.
