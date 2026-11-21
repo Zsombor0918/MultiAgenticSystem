@@ -1,6 +1,6 @@
 # Next run: integrate the existing AI-DLC Studio Crew extension
 
-**2026-11-21 update:** The local reset removed the failed CrewLab intents, Studio actions and saved Crew chats. CrewLab remains registered with its installed harness. The original parser fixture was removed. Confirm gateway and Studio health after startup and verify CrewLab hook consent before beginning a fresh trial with `.runtime/CrewLab/tasks/01-fix-oversell.md`. See [upgrade and reset results](UPGRADE_0.13.0.md) and [earlier offline checks](STEP_1_RESULTS.md).
+Prepared: 2026-11-16. Status: **sections A/B are partially completed; live section C is NOT RUN**. Studio is installed/recorded enabled, Bun is local, payload checks and selected offline tests pass. Read [STEP_1_RESULTS](STEP_1_RESULTS.md) before resuming; do not reinstall or repeat passed checks without a changed input or concern.
 
 **Kiro Crew is fixed and trusted.** This run checks a ready-made extension against our workflow; it does not reconsider or benchmark Crew. Read the [current extension research](research/CREW_EXTENSIONS_2026-11-16.md), [extension source inventory](research/CREW_EXTENSION_SOURCES_2026-11-16.json), and [system plan](../WORK_PLAN.md). This supersedes the earlier diagnostic-skill and BMAD-first experiments.
 
@@ -8,15 +8,15 @@ Reuse order: native Crew → existing Crew extension → portable/adapted compon
 
 ## The bounded outcome
 
-**Resume point:** verify Studio health and CrewLab's hook consent, then use the registered CrewLab project for section C. Keep the existing source and payload pins.
+**Resume point:** the user's actual VS Code task start, then extension backend/Bun health and section C. Component/capability records already exist. The fixture is prepared but its AI-DLC harness is not installed yet. Keep the source/payload pins; no alternative candidate has been installed.
 
 Use the actual extension to produce a code-grounded technical plan and separate specialist review for a tiny fixture issue. Verify a real human approval checkpoint, then stop **awaiting the user's technical-plan approval**. Record precisely what remains to connect Crew's backend/model/effort choices, context and usage to the extension.
 
-The detailed implementation plan, second approval, code changes, CI, independent code review, delivery and portability remain required later steps. No mock plan, mere installation, or discovery response counts as a successful planning/review integration.
+A separate detailed implementation plan and its second approval are **optional**, depending on task complexity; the later implementation, CI, independent code review, delivery and portability checks remain required. No mock plan, mere installation, or discovery response counts as a successful planning/review integration.
 
 ## Facts and unknowns
 
-- Installed Crew 0.13.0 meets Studio 2.0.1's declared minimum 0.11.0. Check only changed or extension-specific prerequisites.
+- Installed Crew 0.12.2 meets Studio 2.0.1's declared minimum 0.11.0. Existing Kiro/Codex delegation is trusted; do not repeat its old benchmark. Check only changed or extension-specific prerequisites.
 - Studio is Apache-2.0; bundled AI-DLC is MIT-0. Its manifest records the upstream base, payload hashes and compatibility patches. Retain these notices and receipts.
 - Studio requires Bun reachable by the gateway and AI-DLC sessions; its guide recommends 1.4.4 or newer. Bun was not on the research shell's PATH; configured paths were not exhaustively checked. Node/npm may be needed for a one-time UI build; inspect the pinned package/installer before choosing commands or assuming prebuilt files exist.
 - It already has gateway startup/shutdown hooks, a Crew session bridge, approval evidence and transactional per-project installation. Reuse these; do not write an alternative app loader, approval UI or lifecycle engine.
@@ -36,23 +36,25 @@ Inspect the pinned installer/manifest and supplied bridge before choosing comman
 
 ## B. Prepare the existing app and harmless fixture
 
-Use the pinned checkout in `.runtime/pilots/aidlc-studio-2.0.1/` and the registered `.runtime/CrewLab/` project with its existing harness. Record the starting revision and keep generated outputs ignored.
+Use ignored `.runtime/pilots/aidlc-studio-2.0.1/` for the pinned checkout and a small separate fixture project. This is not a worktree. Record a sanitized fixture/asset manifest so the experiment can be reproduced. Keep raw generated outputs ignored.
 
-Use the installed Crew app contract and exact selected version. Verify the UI is available, Studio reports healthy, and Bun is reachable from the actual extension sessions. Check CrewLab's existing harness receipt, `.kiro` paths and permissions. The user handles native project hook consent in Crew. Keep it limited to CrewLab and verify it before the trial.
+Running the execution prompt below authorizes the bounded app/dependency installation, per-app enablement/trust, fixture harness installation and planning/reviewer sessions described here. **The research turn does not perform them.** Prefer project-local dependency placement where supported; inspect the exact changes before invoking installation. No blanket third-party trust, unrelated upgrade, sandbox weakening, global agent replacement, or patching installed Crew/adapter code.
+
+Use the installed Crew app contract and exact selected version. Preserve existing configuration and back up local changes. Verify the declared UI entry/build, backend health, bundled payload hashes and Bun reachability from the actual extension sessions. Use Studio's supplied transaction/receipt flow to install into the fixture; inspect the affected `.kiro` paths, settings and optional MCP dependencies. Do not silently enable unrelated integrations just because the payload lists them.
 
 Keep normal startup behind **VS Code → Tasks: Run Task → Kiro Crew: Start**. Integrate only necessary repeatable environment/configuration preparation into its existing launcher. One-time installation/authentication is setup, not another normal start command. Do not start a second gateway or separate daemon. If the executor cannot operate the VS Code UI, identify that user action and wait for evidence; do not substitute a shell-launched gateway or claim the task was clicked.
 
 ## C. Exercise only planning, review and its user gate
 
-1. Use the registered CrewLab project and its `tasks/01-fix-oversell.md` exercise as input for a fresh planning intent. The task provides source and acceptance criteria. This trial ends at planning approval. The final product's intake remains an approved GitHub issue.
-2. Select the smallest supported lifecycle scope that retains technical planning, independent specialist review and a human gate. Preview actual stages/artifacts. Do not force all 33 stages onto a tiny issue, skip a required gate, or let a Quick/Express path bypass the two-plan target. Record the future mapping to detailed implementation planning and its separate approval.
+1. Register the harmless fixture through Studio's supported flow. Use a tiny issue with actual source, acceptance criteria and one design decision, such as proposing validation for a small command-line parser. It is an input fixture, not permission to implement. The final product's intake remains an approved GitHub issue; no dummy remote issue is required here.
+2. Select the smallest supported lifecycle scope that retains technical planning, independent specialist review and a human gate. Preview actual stages/artifacts. Do not force all 33 stages onto a tiny issue or let a Quick/Express path bypass owner approval, substantive plan review or the no-code-before-approval boundary. A second implementation plan and approval are optional; record how the selected scope would support them if justified, without requiring them for every task.
 3. Verify the extension's actual hook owner, project-agent resolution and human-turn recording on the selected route. Use existing Crew spec-hook handling and Studio's compatibility patches. At a checkpoint, a harmless attempted premature transition must be refused and leave the fixture unchanged. Never fabricate approval, auto-send a human answer, flip handshake flags or bypass the guard. Stop if the required behavior fails.
 4. Run its real code-grounded technical planning and obtain a different specialist worker/session's plan review, with scoped context and observed completion. Use one active worker at a time where the supported configuration allows it. If a smaller review configuration needs a patch, document it before the trial; do not quietly replace independent review with planner self-review. A rejected plan ends this run without automatic correction.
 5. Record the chosen model/effort and why, what was actually applied/exposed, context/artifact handoffs, parent/child identities and native usage with source/units/freshness/coverage. Native Kiro children may be accepted for this first extension slice if their identity and review independence are evidenced; explicitly record that this does not establish Crew-wide Kiro/Codex dispatch or per-child accounting. Parent-only accounting is partial coverage, not full worker metering. A missing native parent usage record or unidentifiable reviewer is a mandatory blocker; missing price/quota or unavailable per-child fields remain named gaps for step 2.
 6. Compare fixture code before/after. Only designated planning/state artifacts may change. Stop **awaiting technical-plan approval**; do not send that approval yourself, generate the detailed implementation plan or start construction. Confirm no host notice or automated continuation was mistaken for the user's approval.
 7. Stop/restart using the same VS Code task. Confirm extension/library/artifact availability and the pending checkpoint without rerunning paid planning. This is an extension persistence check; it does not establish whole-system recovery or another-project portability.
 
-This trial does not certify complete hostile-agent write isolation, full smart routing, both planning gates or cross-project support. The production system still requires those relevant acceptance checks. Record a native-review/dispatch/telemetry limitation explicitly rather than calling it solved because the app opened.
+This trial does not certify complete hostile-agent write isolation, full smart routing, optional second-plan handling or cross-project support. The production system still requires its relevant acceptance checks, including an actionable approved plan before coding. Record a native-review/dispatch/telemetry limitation explicitly rather than calling it solved because the app opened.
 
 ## D. Record results, commit the checked slice and stop
 
@@ -78,26 +80,28 @@ Report expected/actual behavior and exit code, redacted evidence, changed state,
 ## Copyable prompt for the next Codex session
 
 ```text
-Work in /home/zsom/MultiAgenticSystem. Read docs/UPGRADE_0.13.0.md and
-docs/STEP_1_RESULTS.md. Reuse Crew 0.13.0, Studio 2.0.1, local Bun and the
-installed CrewLab harness. Verify live Studio health and CrewLab hook consent,
-then start section C with CrewLab's tasks/01-fix-oversell.md exercise.
+Work in /home/zsom/MultiAgenticSystem. Read docs/STEP_1_RESULTS.md and resume
+only the remaining work in docs/NEXT_STEP.md: actual VS Code startup and
+section C, then results/commit. Reuse the prepared Studio 2.0.1 installation,
+local Bun and fixture; do not reinstall or rerun passed checks without cause.
 Read AGENTS, README, WORK_PLAN, RESEARCH_ALIGNMENT and the extension research.
 
 Crew is our fixed, trusted foundation. Reuse native features and the supplied
 extension/bridge first, adapt existing components for real gaps, then implement
 only what is missing. Do not benchmark or replace Crew or install several
-lifecycle systems. Preserve both planning approvals, smart multi-tool worker
+lifecycle systems. Preserve owner approval before implementation; treat a second
+planning stage/approval as optional. Preserve smart multi-tool worker
 selection, context handling, credit-aware decisions and independent review.
 
-This prompt authorizes the bounded planning/reviewer sessions in the plan.
-Preserve the installed app, harness, payload versions and notices;
+Inspect the pinned manifest/installer first. This prompt authorizes bounded
+app/dependency setup, per-app trust/enablement, fixture harness installation
+and planning/reviewer sessions in the plan. Preserve payload versions/notices;
 no blanket trust, unrelated upgrade, global agent replacement or Crew patches.
 Use ordinary Git here, no worktrees. All normal startup/restart uses the
 existing VS Code task Kiro Crew: Start. If UI/auth action is needed, identify
 it and wait for evidence; do not launch a substitute gateway.
 
-Use the CrewLab exercise, actual planning and a separate review. Verify the
+Use a harmless fixture, actual planning and a separate review. Verify the
 extension's hook/human-gate behavior, native usage, settings and context.
 Stop awaiting technical-plan approval; do not approve for me, implement,
 advance stages or pretend partial attribution proves complete metering.

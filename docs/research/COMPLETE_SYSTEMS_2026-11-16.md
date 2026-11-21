@@ -22,7 +22,9 @@ No installers, dependency builds, agent benchmarks, gateway sessions, paid model
 
 The user's required flow is preserved:
 
-`ChatGPT ideas → approved GitHub issue → Crew technical plan → user review → detailed implementation plan → approval → smart implementation → tests/CI → independent review → PR/report → human merge`
+`ChatGPT ideas → approved GitHub issue → Crew actionable plan/review → user approval → smart implementation → tests/CI → independent review → PR/report → human merge`
+
+**Later scope clarification (2026-11-16):** For complex tasks, an additional technical-plan approval followed by a detailed implementation plan and approval is an option, not a universal requirement. The original comparison of two-plan-capable candidate systems is retained as research background.
 
 Capabilities required during planning and execution: reusable specialist agents and skills; actual tool-capability knowledge; backend/model/effort selection; focused context and recovery; credit/usage monitoring that informs choices. Normal startup stays **VS Code → Kiro Crew: Start**. Development here uses ordinary Git commits, without a worktree requirement. A donor's worktree default is an adaptation point, not a reason to impose it on this repository.
 
@@ -147,7 +149,7 @@ If AI-DLC is tried next, its first gate is hook/approval compatibility, not a fu
 
 The earlier **5–7 focused working days** remains an aspirational pilot target, conditional on the first foundation passing. Research has identified a plausible route, not measured the adaptation effort. A first planning-slice trial is a working-session-sized investigation, not proof that a complete robust system takes a week.
 
-Use the existing day-2 checkpoint to decide from actual evidence whether the same week's goal remains realistic. The usable core must still include both planning stages, independent review, actual worker selection, context controls, and credit/usage-informed decisions. An unresolved host gate or telemetry source may require more time or an agreed architecture adjustment. Broad project hardening and online learned routing are separate from the initial pilot.
+Use the existing day-2 checkpoint to decide from actual evidence whether the same week's goal remains realistic. The usable core must still include actionable planning with pre-code owner approval, independent review, actual worker selection, context controls, and credit/usage-informed decisions; a second planning stage is optional. An unresolved host gate or telemetry source may require more time or an agreed architecture adjustment. Broad project hardening and online learned routing are separate from the initial pilot.
 
 ## 10. What changed from the earlier plan
 
