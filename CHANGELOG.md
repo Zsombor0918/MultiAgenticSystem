@@ -2,6 +2,8 @@
 
 ## 2026-11-21 — Conversation reset (partial)
 
+- Studio refused the supported archive operation for the displayed intent because a delivery requires reconciliation. Reconcile-from-disk left it uncertain, so the intent and two action cards remain; no delivery evidence was fabricated.
+
 - Used Crew's native dashboard API to close 15 open slots and clear 17 closed sessions; the sessions API returned zero. Studio's live health reported healthy with the bundled payload and Bun available.
 - The user restarted the VS Code task; zero sessions and slots persisted, and Studio health passed again. Complete workflow reset remains outstanding: Studio does not offer intent deletion, two prior action records remain, and old artifact deletion was rejected by automatic command review.
 

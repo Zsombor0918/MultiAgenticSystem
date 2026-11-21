@@ -6,6 +6,8 @@ Later on 2026-11-21 the user requested a complete reset through supported mechan
 
 After the user restarted the VS Code task, the gateway came back on Crew 0.13.0; the sessions and slots APIs both returned zero. Studio again reported healthy with its payload intact and Bun available. Two Studio action records remain. This verifies conversation-list persistence across restart, not a complete AI-DLC reset.
 
+After the user pointed out the remaining Action Center cards, the supported Studio archive endpoint was attempted for the displayed CrewLab intent. Studio refused with HTTP 409 `action_not_submittable`, reason `in_flight`: a delivery is `ReconciliationRequired`. The supported reconcile-from-disk operation returned successfully but the delivery remained uncertain, so the intent was not archived. Studio does not provide an intent-delete endpoint. No delivery result was fabricated, no decision was submitted, and no model session was started. Both the intent and its two action cards remain.
+
 Native `SkillsLoader.sync_builtins()` synchronized packaged skills without setting aside user skills. Doctor then exited 0, reported all 43 installed skills in step and confirmed the CLI V3 relay. The user started the normal VS Code task; gateway `/api/health` returned HTTP 200. Studio live health remains unverified.
 
 The user will turn on project hook consent for CrewLab and delete closed conversation history in the dashboard. Before that action, the native read showed consent off for CrewLab and this repository. An owner API request received HTTP 403; no security guard was bypassed. The failed CrewLab AI-DLC intent remains on disk and has not been reset. No paid session was started.
