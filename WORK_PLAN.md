@@ -1,6 +1,6 @@
 # System and build plan: intelligent Crew development workflow
 
-**2026-11-21:** Crew 0.13.0 is installed, but the post-upgrade doctor reports stale builtin skills and blocks startup. See [upgrade results](docs/UPGRADE_0.13.0.md) before resuming the pilot.
+**2026-11-21:** Crew 0.13.0 is running after native skill synchronization. CrewLab consent, history cleanup, failed intent reset and live Studio verification remain pending; see [upgrade results](docs/UPGRADE_0.13.0.md).
 
 Updated: 2026-11-16. Status: extension preparation complete; the first VS Code startup failure has a user-approved launcher correction applied. Four startup tests and the real Crew doctor pass. Awaiting the actual task retry; live planning/review remains unrun. See [step 1 results](docs/STEP_1_RESULTS.md).
 

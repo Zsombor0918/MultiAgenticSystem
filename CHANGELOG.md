@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-21 — Native skill sync
+
+- Ran Crew's native builtin skill synchronization; no user skill was set aside. Doctor now passes with all 43 builtins current, and the normal VS Code task starts the gateway with the V3 relay.
+- Recorded remaining owner actions, the failed intent reset, unverified Studio health and cleanup command rejection in `docs/UPGRADE_0.13.0.md`.
+
 ## 2026-11-21 — Crew 0.13.0 upgrade and blocker
 
 - Installed stable 0.13.0 with the official signed installer, preserving local state and retaining Kiro CLI V3 relay. Recorded backup and compatibility evidence in `docs/UPGRADE_0.13.0.md`.
