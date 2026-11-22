@@ -1,79 +1,51 @@
-# Közös AI-DLC specialistakiosztás natív Crew Decisions használatával
+# AI-DLC delegálás a Crew natív Jev modellválasztásával
 
-**2026-11-22 · Forrás alapján egyszerűsített architektúra.** Az első célpont egy valódi, külön indított AI-DLC tervreviewer. A [megvalósítási terv](NATIVE_DECISIONS_IMPLEMENTATION_PLAN.md) tartalmazza a javasolt egysoros Crew-változtatást, a Studio bekötését és az átvételhez szükséges bizonyítékot.
+**2026-11-22 · Végleges technikai terv jóváhagyásra.** A viszonyítási alap Kiro Crew 0.13.0, Kiro CLI 2.37.0 / KAS 0.66.70, AI-DLC Studio 2.0.1 (`8b3881d…`) és a csomagolt AI-DLC 2.11.3 (`a8721be3…`). A sorrendet, a fájlokat és az átvételi feltételeket a [megvalósítási terv](NATIVE_DECISIONS_IMPLEMENTATION_PLAN.md) rögzíti.
 
-## Ajánlott megoldás
+## Két egymásra épülő fázis
 
-**A saját Crew 0.13.0 telepítésünkhöz a javasolt futási változtatás egyetlen feltétel törlése.** A `subagent_parts/model_choice.py::_route_unpinned_start()` guardjából vegyük ki az `or info.agent` sort. Így a meglévő `spawn_run(agent=…, task=…, cwd=…)` hívásban a specialista neve megmarad, és a Crew a natív `model.route` döntést az adott feladathoz is alkalmazhatja. A meglévő MCP-séma, gateway és futtató szolgálja ki a hívást.
+| Fázis | Hatókör | Átvehető eredmény |
+| --- | --- | --- |
+| **I. Crew** | A `subagent_parts/model_choice.py::_route_unpinned_start()` guardjából töröljük az `or info.agent` sort. A teszt a Crew saját `spawn_run` eszközén indul, Studio és AI-DLC nélkül. | Offline igazolt precedencia és egy külön jóváhagyott Hosted Jev próba. A név szerinti worker profilja megmarad, és a KAS igazolja a tényleges modellt. |
+| **II. AI-DLC** | Az I. fázis átvétele után a Studio közös `spawn_run` szabályt kap. Az első bekötés a `domain-design` szakaszban kizárólag az `aidlc-architecture-reviewer-agent`. | Egy eredeti AI-DLC review-kéréshez egy Crew-futás tartozik. A valódi befejezésből az AI-DLC a saját review-fájlját és verdiktjét rögzíti, majd a meglévő emberi kapun folytatja. |
 
-**A hatókör a saját telepítés.** Az itt használt név szerinti agentprofilokon nincs rögzített modell, így külön profilmodell-ellenőrzés helyett elég a meglévő `info.model` és `agent.role_models['subagent']` guard. A `decisions.model_route_derive` a telepítés minden egyébként alkalmas név szerinti indítására kiterjed. A Studio oldali bekötés elsőként a `domain-design` önálló review-kérésére vonatkozik.
+A normál indítás továbbra is **Kiro Crew: Start**. A koordinátor a szülő sessionből hívja a Crew meglévő managed MCP eszközét. Az AI-DLC gondoskodik a szerepről, a briefről, a workflow állapotáról, a jogosultságokról és a kapukról. A Crew gondoskodik a modellfeloldásról, a futtatásról, a sorról és a terminális állapotról.
+
+## I. A Crew forrásában már létező út
+
+1. A `spawn_run` az aktív szülő sessionhöz köti a nevet és a `task` szöveget, majd a meglévő gateway és indítási ellenőrzések adják át a kérést a runnernek. A `_selection_kind()` a név szerint megadott agentet sablonként választja ki. A név megmarad egészen a tényleges worker indításáig. [MCP hívás](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/mcp_tools/spawn.py#L210) · [Sablonválasztás](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_parts/start_pricing.py#L73)
+2. A gyári `_route_unpinned_start()` a név jelenlétekor kihagyja a routingot. Az egy feltétel törlése után a meglévő `routed_spawn_model()` az engedélyezett briefet a szülő session katalógusával és kiinduló modelljével értékeli. Ehhez kell a `decisions.model_route_derive`, a működő Hosted Jev és az adott végpontra adott tulajdonosi `tool_args` consent. A pilot alapértelmezett KAS backendjét a gateway választja. [Guard](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_parts/model_choice.py#L83) · [Natív döntési pont](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/decisions/points/model_route.py#L996)
+3. Az `info.routed_model` a `_sharing_plan()` meglévő sorrendjében a kézi `model` és a `subagent` szerepmodell után következik. A konkrét modell külön worker sessionbe kerül, amelynél KAS-on a Crew a `model` session opciót állítja. Az alkalmazást a backend által visszaadott modellazonosító és a futás terminális `resolvedModel` mezője igazolja. [Modell átadása](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_manager/run_turn.py#L334) · [KAS modellopció](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/acp/session_handle_model_selection.py#L407)
+
+A helyi pilotban használt név szerinti profilok modellpin nélküliek. A meglévő explicit modell, `model="auto"`, szerepmodell, backend override, Crew tagként indítás és folytatás megtartja az eredeti elsőbbségét. A router bekapcsolása a telepítés összes egyébként jogosult név szerinti indítására vonatkozik. Ha nincs alkalmazható döntés, ugyanaz a már elfogadott Crew-futás a normál modellfeloldással folytatódik. Az effort a Crew meglévő beállításából érkezik.
+
+## II. Közös hívási szabály és az eredmény visszaadása
+
+A telepített AI-DLC a kiosztásokat a koordinátornak adja át a stage és protokoll leírásokban. A meglévő `skills/aidlc/SKILL.md` Kiro szakaszában legyen egy közös Crew szabály, amelyre az átvezetett hívóhelyek hivatkoznak. A `kiroDispatch()` felismeri a pontos managed MCP eszközazonosítót, majd a meglévő AI-DLC ellenőrzésekhez adja a szerepet és a briefet. A PreToolUse hook engedélyezi vagy tiltja a hívást. A hívandó eszközt a koordinátor választja ki a protokollból. [AI-DLC hívóhelyek és hookok](research/AI_DLC_CREW_ROUTING_INTEGRATION_2026-11-22.md#belépési-pontok-az-ai-dlc-ben)
 
 ```mermaid
 sequenceDiagram
-    participant A as AI-DLC koordinátor és engine
-    participant C as Crew spawn_run
-    participant J as Natív Decisions / Hosted Jev
-    participant W as AI-DLC reviewer
-    A->>A: REVIEW_REQUESTED, requestId és reviewFile
-    A->>C: spawn_run a reviewer nevével, brieffel és cwd-vel
-    C-->>A: Elfogadás, Crew runId
-    C->>J: A brief besorolása a szülő session alatt
-    J-->>C: Tier, amelyet a Crew modellre old fel
-    C->>W: Crew indítás a reviewer nevével és a feloldott modellel
-    W->>W: Review az eredeti reviewFile-ban
-    W-->>C: Valódi végállapot
-    C-->>A: Crew completion és státusz
-    A->>A: Kérelemhez kötött bizonyíték, recordVerdict, emberi kapu
+    participant A as AI-DLC koordinátor
+    participant C as Crew spawn_run és Decisions
+    participant W as Név szerinti reviewer
+    participant S as Studio és AI-DLC audit
+    A->>A: REVIEW_REQUESTED és az eredeti reviewFile
+    A->>C: Szerep, brief és ellenőrzött munkakönyvtár
+    C-->>A: Elfogadás és Crew run ID
+    C->>W: Natív Jev feloldás után indítás a Crew által
+    W->>W: Eredeti reviewFile elkészítése
+    W-->>C: Végeredmény
+    C-->>S: Hiteles terminális esemény a szülő sessionben
+    S->>A: Run ID és review-kérés szerint rögzített lezárás
+    A->>A: Meglévő verdikt, majd emberi kapu
 ```
 
-## A natív indítási út a forrásban
+A `spawn_run` nyugta elfogadást vagy várakozást igazol. A sikeres befejezés a kötött Studio slot `role="subagent"` sorából, a `meta.subagentCompletion` mezőből olvasható ki. A `HostBridge.recent_rows()` ehhez explicit `roles=("subagent",)` szűréssel hívható. A közös visszaút az eredeti AI-DLC célhoz köti a Crew run ID-t. Review esetén a pontos `requestId`, reviewer, `reviewFile` és a fájl lenyomata adja a `review --verdict` meglévő, manifestet és source állapotot is ellenőrző útjának bemenetét. A stage kaput az AI-DLC nyitja meg. [Crew completion mezők](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_completion_meta.py#L37) · [Studio HostBridge](https://github.com/warren830/kirocrew-app-aidlc/blob/8b3881d4737399c3394d8d187f102a5c95d6e528/backend/studio/sessions.py#L350)
 
-- A `spawn_run` már átadja az agentnevet, briefet, cwd-t és az esetleges kézi `model` és `reasoning_effort` mezőket a gatewaynek. A `_selection_kind()` a névvel megadott agentet sablonként kezeli. A név elhagyása másik agentprofilt eredményezhet. A stock 0.13.0 modellválasztása az `info.agent` miatt áll meg; a név szerinti indítást konfigurációval önmagában nem lehet bevonni. [MCP séma](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/mcp_tools/spawn_parts/schemas.py#L271) · [Agent kiválasztása](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_parts/start_pricing.py#L73) · [Routing guard](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_parts/model_choice.py#L83)
-- A meglévő `routed_spawn_model()` a briefet a szülő session kulcsával, élő providerével és modellkatalógusával dolgozza fel. A pilot feltétele a Hosted Jev beállítása, a `decisions.model_route_derive` és a tulajdonosi `tool_args` consent. A pilot a gateway alapértelmezett KAS backendjén fusson. Egy külön backendválasztás a szülőn vagy a hívásban a megmaradó guard miatt kihagyhatja a döntést. A modellmező maradjon el, ha routingot kérünk. A hívásban szereplő `model="auto"` is átugorja a Jev ágat, és a backend választását kéri. [A natív döntéshívás](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/decisions/points/model_route.py#L996) · [Backend öröklése](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/dashboard/messaging_api/spawn.py#L617)
-- A natív döntés `info.routed_model` mezője a `_sharing_plan()` modellválasztásába kerül. A sorrend kézi modell → `subagent` szerepmodell → routing eredménye. A konkrét override külön worker sessiont kap, és a providerhez már a meglévő úton jut el. KAS-on a Crew a `model` session opciót állítja. A specialista neve megmarad, az effortot a Crew külön kezeli. Az alkalmazott modellt a KAS session és a terminális `resolvedModel` igazolhatja. [Modellprioritás](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_manager/run_start.py#L124) · [Worker indítása](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_manager/run_turn.py#L334) · [KAS modellopció](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/acp/session_handle_model_selection.py#L407)
-- A Decisions REST útjai beállítást, consentet, állapotot és visszajelzést kezelnek. A SageMaker-próba egy kötött tesztkérdés. Nincs olyan támogatott MCP, REST vagy App SDK művelet, amelyik a valódi szülősession és worker modellkatalógusa alatt egy tetszőleges specialistabriefre futtatható modell ID-t ad. A Crew forrása technikailag importálható egy megbízható host appból, de a natív caller, provider, admission és státusz belső határait ekkor az adapternek kellene összekötnie. Az App Spawn SDK és az app-tokenes REST indítás saját apphoz kötött agentet, illetve szülőt enged. A managed `strictSession` app tool deklaráció a csomagolt első fél eszközeinek felülete. A Studio manifestjébe írt új deklaráció önmagában nem kapja meg ezt a kötést. [Decisions route-ok](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/dashboard/routes/system.py#L240) · [App határ az indításnál](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/dashboard/messaging_api/spawn.py#L509) · [Managed app tool](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/apps/app_agent_tools.py#L109)
+A pilot után ugyanez az indító és futásazonosító kötés használható a developer, lead, pipeline, ensemble, mob, wave, Unit review és swarm útvonalain. A protokollok továbbra is saját sorrendjüket, artefaktumaikat, jogosultságaikat és kapuikat adják. A `spawn_run` batch munkakönyvtára közös, ezért egy másik worktree ugyanennek az eszköznek külön hívása. Az inline lépésekben eleve a koordinátor dolgozik.
 
-## Felelősség és visszatérés
+## Ami már igazolt és ami átvételre vár
 
-| Gazda | Felelősség |
-| --- | --- |
-| AI-DLC engine és Studio | A brief, szerep, stage rules, jogosultság, review-kérés, fájl, `recordVerdict` és az emberi kapu. Egy közös protokoll köti a kérés azonosítóját a Crew-futáshoz. |
-| Crew `spawn_run` és Decisions | Hiteles szülő, admission, natív `model.route`, indítás és futási állapot. A hívás nyugtája a queue elfogadását vagy az indítást igazolja. |
-| AI-DLC eredményillesztés | Az eredeti `requestId` és a valódi Crew `runId` egyezése, terminális siker, reviewerazonosság és az eredeti `reviewFile` lenyomata. Újranyitáskor az ismert futáshoz tér vissza. |
-
-A koordinátor meglévő PreToolUse útja ellenőrzi a konkrét Crew MCP-hívást és az eredeti review-kérést. A PostToolUse nyugta a run ID társítására használható. A valódi befejezéshez a Crew a szülő sessionbe `subagent_completion` eseményt küld `meta.subagentCompletion` mezővel. A Studio meglévő `HostBridge.recent_rows()` függvénye ki tudja olvasni a kötött session metaadatait. A Studio ezt a jelzést illeszti az eredeti AI-DLC audithoz és review-fájlhoz. Az eredeti `recordVerdict` és emberi kapu így ugyanazt a kérést dolgozza fel. A hiteles metaadat tényleges eljutása az auditig és a reviewer jogosultságai a pilot átvételi feltételei. [Crew completion mezők](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_completion_meta.py#L37) · [Külön KAS review és AI-DLC audit](CREWLAB_TRIAL_REPORT.md)
-
-A natív routing a Crew-futás elfogadása után történik. Ha a döntés hiányzik, hibás vagy az örökölt modellt tartja meg, ugyanaz a Crew-futás a normál modellfeloldással folytatódik. Elfogadott vagy bizonytalan indítás esetén a Studio a meglévő futást egyezteti a review-kéréssel. Az eredeti KAS `subagent` út külön visszaállítási lehetőség a következő kéréshez, a Studio kötésének visszaállításával.
-
-## KAS, Crew és a hívóhelyek
-
-| Út | Döntés és teljes munkaköltség |
-| --- | --- |
-| Natív KAS `subagent` | A meglévő AI-DLC indítás, hookok és eredménykezelés itt igényelné a legkevesebb munkát, ha volna hívásonkénti konkrét modellátadás. A telepített Kiro CLI 2.37.0 / KAS 0.66.70 név szerinti `subagent_<név>` wrapperében ilyen mező nincs. Az `invoke_sub_agent` feltételes `modelCategory` mezője KAS-kategóriát fogad. A motor a regisztrált profil modelljét tudja használni, a Crew KAS-projekciója ezt a mezőt külön kihagyja. A permission-válasz engedélyez vagy tilt. A saját profilváltozatok és a szülő modelljének átmeneti állítása szerep-, versenyhelyzet- és jogosultsági problémát hozna. A natív út adja a dokumentált visszaállást. Egy támogatott per-child model override kevesebb eredményillesztést igényelhetne. |
-| Crew `spawn_run(agent=…, model=…)` | Patch nélküli futtatási és eredményátadási próba kézi modellel. Így külön mérhető a szerep, a jogosultság és az eredeti review-kérés lezárása. |
-| **Crew `spawn_run`, egy guard törlésével** | **Ajánlott a saját telepítéshez.** A Crew meglévő routingja, indítása és completionje használható a név szerinti profilhoz. A Studio módosítása a review indítására és lezárására szorítkozik. |
-| `spawn_sub_agents`, session/work-dispatch, Dynamic Workflows, App Spawn SDK | A blocking tool telepített sémájából hiányzik ez a konkrét modellparaméter. A session/work-dispatch és a Dynamic Workflows saját végrehajtási állapotot kérne az AI-DLC mellé. Az App Spawn SDK az app saját agentjeit indítja, eltérő parent- és jogosultsági úton. Studio Advisor, illetve a parent chat `Auto (decision model)` beállítása más döntési helyet fed le. |
-
-A Kiro újabb `updatedInput` dokumentációja a választott tool sémáján belüli módosítást írja le. A pilot a telepített verziók viselkedésén alapul. A korábbi négy valódi CrewLab natív specialistaindítás `modelId=auto`, `modelOverride=false`, `effortOverride=false` értéket mutatott. A kiszolgáló konkrét modelljét és az egyedi worker fogyasztását ebből nem ismerjük. [Kiro hook](https://kiro.dev/docs/hooks/types/#pre-tool-use) · [KAS-projekció](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/acp/kas_agents.py) · [CrewLab audit](CREWLAB_TRIAL_REPORT.md)
-
-**Első körben egy protokoll-kötés a meglévő Crew eszközökhöz és egy review-lezárási pont.** A natív review-kiosztás meglévő PreToolUse útján külön kizárási ellenőrzés szükséges ugyanarra a kérelemre. A Crew MCP-hívás nem egy központi AI-DLC TypeScript `dispatch()` helyettesítése. Jelenleg a protokollok a koordinátornak adják az indítási utasítást.
-
-| AI-DLC hívóhely | Közös kötés alkalmazása |
-| --- | --- |
-| `stage-protocol-reviewer.md` | Első binding az önálló tervreview-hoz. A javítási kör és az új review-iteráció is innen veheti át az eljárást, az új kérelem saját azonosítójával. |
-| `stage-protocol-ensemble.md` / `stage-protocol.md` | Egy további kötés a lead és supporter, a soros pipeline és a párhuzamos mob számára. Az esetleges közvetlen `stage-protocol.md` indítás ugyanarra az ensemble kötésre hivatkozik. A linknyugtát és a sorrendet az AI-DLC továbbra is maga kezeli. Külön specialisták a saját briefjükkel párhuzamosan futhatnak. |
-| `stage-protocol-wave.md` és `stage-protocol-reviewer-unit.md` | Egy wave-kötés és egy reviewer-unit előfeltétel: az utóbbi a közös reviewer-kötést használja, a `dispatchAgent` és a szűkebb Unit olvasási jog bizonyításával. A wave külön munkatételt és outputot ad. |
-| `stage-protocol-swarm.md` | Külön fan-out kötés a már jóváhagyott worktree-kre. Eltérő cwd, approvals, Unit check/review/finalize bizonyíték. Egyedi jogosultság vagy cwd mellett egyenkénti Crew indítás ugyanazzal az eljárással. |
-| Inline stage, inline build/test | Marad inline. Külön quality vagy tesztelő specialistát a saját meglévő delegáló protokollja vihet át. |
-
-Így a mai forrásból a bővítéshez **négy ütemezett protokoll-kötéssel** számolunk (reviewer, ensemble, wave és swarm), a `stage-protocol.md` hivatkozásával és a `reviewer-unit` scope-illesztésével. A közvetlen kiosztásokat az adott szakasz migrálásakor át kell vezetni. Négy ilyen stage-fájlt kell áttekinteni a telepített payloadban: `reverse-engineering.md` (scan/developer/architect), `practices-discovery.md` (első lead és integrálás), `code-generation.md` (Part 2 developer), `deployment-execution.md` (operation, csak külön engedéllyel). A `user-stories.md` már a közös stage-protokollra hivatkozik, a `reviewer-repair` a stage futtatási módjához tér vissza. Minden bekötött kiosztásnál az eredeti AI-DLC guardok és a Crew indítási ellenőrzései érvényesek. [Meglévő belépési pontok](research/AI_DLC_CREW_ROUTING_INTEGRATION_2026-11-22.md#belépési-pontok-az-ai-dlc-ben)
-
-## Megőrzés, bővítés és visszaállítás
-
-A Crew 0.13.0, Studio 2.0.1 (`8b3881d4737399c3394d8d187f102a5c95d6e528`), AI-DLC 2.11.3 és a Studio négy kompatibilitási javítása a viszonyítási alap. A pilot újrafelhasználja a specialista profilját, a stage-rules és plan-approval guardot, az eredeti auditot, review-logot és kaput, a Crew workerkezelését és a natív Decisions szolgáltatót. A KAS projektprofil-projekciója a promptot és a tool listát átveszi, a hookokat tulajdonosi consent mellett futtatja. Az `allowedTools`, `toolsSettings`, `resources` és `includeMcpJson` mezők teljes hatására külön futási bizonyíték kell. [KAS projektprofil](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/acp/harness/kas.py#L276) · [Érintett fájlok](NATIVE_DECISIONS_IMPLEMENTATION_PLAN.md#érintett-fájlok)
-
-A pilotban egy review-kéréshez egy futást rendeljünk. Igazoljuk az eredeti fájl- és eszközkorlátokat, a megfelelő szülőhöz és kéréshez tartozó sikeres completiont, valamint a valódi emberi döntést. A `model_route_derive` kikapcsolása visszaadja a Crew eredeti modellfeloldását. A Studio kötésének visszaállítása az új review-kéréseket a natív `subagent` útra tereli, miután a már elfogadott Crew-futások lezárultak vagy leálltak.
-
-Később a kötés a `backend/model/effort` paramétereket és ugyanazt a completiont tudja továbbadni. Másik backendnél saját katalógust és igazolt profilegyenértékűséget kell adni. Kötelező effort esetén a modellválasztás előtti képességszűrés a megfelelő hely. A natív run és session azonosítókhoz mérhető Kiro-kreditet vagy Codex-tokeneket lehet majd kötni. A kvóta, költség és modellek közötti automatikus választás külön bővítés.
-
-A korábbi upstream ellenőrzés 2026-11-22-i pillanatképe szerint a [#19376](https://github.com/kirodotdev/KiroCrew/pull/19376) beolvadt. A [#23733](https://github.com/kirodotdev/KiroCrew/pull/23733) draft, a [#23732](https://github.com/kirodotdev/KiroCrew/issues/23732) és [#25812](https://github.com/kirodotdev/KiroCrew/issues/25812) nyitott, a [#35488](https://github.com/kirodotdev/KiroCrew/pull/35488) tervezési RFC, a [#17132](https://github.com/kirodotdev/KiroCrew/pull/17132) nyitott PR volt. A [#38556](https://github.com/kirodotdev/KiroCrew/pull/38556) beolvadt, a helyi 0.13.0 még nem ismeri a `usage` alparancsot. A terv ezekből a későbbi felületekből egyet sem igényel.
+- **Korábban megfigyelt.** A CrewLab natív KAS útján külön specialisták, egy tényleges architecture review és emberi jóváhagyások működtek. A teljes projektprofil átadása és a tényleges worker modell nem volt igazolható. [CrewLab audit](CREWLAB_TRIAL_REPORT.md#2-agent-delegation-and-effective-settings)
+- **Forrásból igazolt.** A név szerinti kizárás, a modell tényleges sessionig vezető útja és a strukturált completion már a Crew része. A projektből töltött KAS profil viszont elhagyja többek között a `resources`, `allowedTools`, `toolsSettings` és `includeMcpJson` mezőket. A hookok owner consenthez kötöttek. Az eredeti jogokat és a szükséges szabályok elérését a tényleges workerben kell igazolni. [KAS profilfeloldás](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/acp/harness/kas.py#L352)
+- **A pilotban igazolandó.** A Studio koordinátor effektív `spawn_run` grantje, a Crew worker workflow kötése, az eredeti review-fájlhoz tartozó hiteles befejezés és a meglévő emberi kapu. A két helyi kompatibilitási korlát a CrewLab `cwd` engedélyezése és a `task` 5000 karakteres határa. A konkrét ellenőrzések és a visszaállás a [megvalósítási tervben](NATIVE_DECISIONS_IMPLEMENTATION_PLAN.md) szerepelnek.
