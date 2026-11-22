@@ -17,6 +17,8 @@ A cél az **elfogadott feladat teljes erőforrásigényének csökkentése**. Az
 
 A CrewLab futása igazolta a Studio szakaszait, a tényleges emberi jóváhagyásokat és az elkülönült natív Kiro-review-t. A natív Kiro-alügynökök egyenkénti fogyasztása és alkalmazott effortja nyitott kérdés. A Crew `spawn_run` explicit beállításokat fogad, de a név szerint vagy explicit backenddel indított workert a Crew automatikus `model_route_derive` útvonala kihagyja. [CrewLab-audit](CREWLAB_TRIAL_REPORT.md) · [Crew subagent dokumentáció](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/docs/subagents.md) · [Natív indítási döntés](https://github.com/kirodotdev/KiroCrew/blob/v0.13.0/src/kiro_crew/subagent_parts/model_choice.py#L83)
 
+A korábbi Crew 0.12.2 próbákon a Kiro → Codex (`752636c27154a574`) és a Codex → Kiro (`119d77c035366804`) delegálásból is visszaérkezett a worker eredménye és a completion esemény. A worker backendet mindkét esetben a futásrekord igazolja. A Kiro → Codex hívás paramétereit a felhasználó ellenőrizte, a Kiro szülőt a megőrzött chatrekord önállóan nem azonosítja. A kétirányú Crew-delegálásra építünk. A Studio próbája azt ellenőrzi, hogy a saját review-kéréséből át tudja adni a kiválasztott profilt, a worker eredményét pedig a meglévő review-protokoll fogadja. [Crew tesztjegyzőkönyv](history/RESULTS.md) · [Delegálási tesztlépések](history/TEST_GUIDE.md)
+
 ## Hogyan dönt a kiosztó?
 
 ```mermaid
