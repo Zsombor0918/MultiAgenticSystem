@@ -24,6 +24,7 @@ The research guides the initial choices, but we can try alternatives or write a 
 
 ## Plan and research
 
+- [Native Decisions for AI-DLC specialists](docs/NATIVE_DECISIONS_INTEGRATION.md) and [reviewer implementation plan](docs/NATIVE_DECISIONS_IMPLEMENTATION_PLAN.md) — proposed shared Crew delegation, starting with an independent design reviewer.
 - [Crew extension research and reuse plan](docs/research/CREW_EXTENSIONS_2026-11-16.md) — current recommendation: native features, actual Crew apps, adaptable libraries, and remaining custom gaps.
 - [Broader system/library comparison](docs/research/COMPLETE_SYSTEMS_2026-11-16.md) — BMAD, AI-DLC, metaswarm, AgentSys, GSD, and others as possible sources for Crew extensions.
 - [Next step and copyable execution prompt](docs/NEXT_STEP.md) — bounded AI-DLC Studio integration trial, with stop-on-first-failure instructions.

@@ -2,6 +2,8 @@
 
 **2026. november 22. · Megvalósítási javaslat tulajdonosi review-ra**
 
+**Későbbi döntés:** a közös átadási elv megmaradt. A jelenlegi ajánlás a natív Crew Decisions modellt használja, és a független reviewernél kezd. [Aktuális architektúra](NATIVE_DECISIONS_INTEGRATION.md) · [Megvalósítási terv](NATIVE_DECISIONS_IMPLEMENTATION_PLAN.md)
+
 **Javaslat.** Legyen egy közös delegálási eljárás, amely az AI-DLC kész feladatleírásából futtatási profilt választ, a koordinátor saját munkamenetéből meghívja a Crew `spawn_run` eszközét, majd a Crew eredményét visszaköti az eredeti AI-DLC kéréshez. Az első változathoz két vagy három ellenőrzött profil és egy kis helyi szabály elég lehet. A **RossLabs** az első külső jelölt, ha a Crew-ban igazolt profilok szűréséhez és rangsorolásához ténylegesen kevesebb munkát ad. A **Downshift** a legközelebbi Crew-specifikus jelölt, eltérő bemeneti igényekkel.
 
 Az AI-DLC adja a feladatot, a szerepet, a sorrendet, az engedélyezett hatókört, a várt kimenetet és az emberi döntési pontokat. Az illesztő kezeli a futtatási profilt, a worker indítását és az eredmény visszaadását. A Crew futtatja és méri a workert. Egy fejlesztő, egy reviewer és egy kötegnyi párhuzamos worker ugyanazt az illesztőt használhatja. Az ellenőrzés mehet lépésekben, mert minden meglévő hívónál van saját eredmény, amelynek vissza kell érnie. Az AI-DLC a saját munkamenetében végzett lépéseket közvetlenül végzi. [Munkaterv](../WORK_PLAN.md#3-what-makes-delegation-smart) · [Belépési pontok forráselemzése](research/AI_DLC_CREW_ROUTING_INTEGRATION_2026-11-22.md)
